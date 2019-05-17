@@ -2230,7 +2230,7 @@ function validaBenefiCompra(){
     if(benefiFaltante.length > 0){
         valido = false;
         nombresBenefis = benefiFaltante.join('<br>-');        
-        crearModal(idModal, 'Confirmaci\u00f3n', 'Por favor garantizar que los siguientes usurios pertenescan al menos a un programa.<br><br>-'+nombresBenefis, botonesModal, false, '', '');
+        crearModal(idModal, 'Confirmaci\u00f3n', 'Por favor garantizar que los siguientes usuarios pertenezcan al menos a un programa.<br><br>-'+nombresBenefis, botonesModal, false, '', '');
         $('#cerrarCB').click(function() {	                  	   
             $('#'+idModal).modal('hide');
         });

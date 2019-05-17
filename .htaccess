@@ -1,0 +1,27 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On 
+    RewriteBase /ventaproductos_salud-web/
+    RewriteCond %{REQUEST_FILENAME} !-f 
+    RewriteCond %{REQUEST_FILENAME} !-d 
+    RewriteRule ^(.*)$ /ventaproductos_salud-web/index.php/$1 [L] 
+    php_value upload_max_filesize 128M
+    php_value post_max_size 128M
+    php_value max_execution_time 120
+    AddDefaultCharset UTF-8
+
+</IfModule>
+<IfModule !mod_rewrite.c>
+    ErrorDocument 404 /ventaproductos_salud-web/index.php 
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+#RewriteEngine on
+#RewriteBase /
+## Hide the application and system directories by redirecting the request to index.php
+#RewriteRule ^(application|system|\.svn) /ventaproductos_salud-web/index.php/$1 [L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ /ventaproductos_salud-web/index.php/$1 [QSA,L]

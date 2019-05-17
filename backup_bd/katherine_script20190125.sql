@@ -1,0 +1,6 @@
+CREATE SEQUENCE  "VDIRMP"."VDIR_SEQ_PLANPROGRAMA"  MINVALUE 1 MAXVALUE 99999999999999 INCREMENT BY 1 START WITH 13 CACHE 20 ORDER  NOCYCLE;
+
+Insert into VDIR_PARAMETRO (COD_PARAMETRO,DES_PARAMETRO,VALOR_PARAMETRO,COD_ESTADO) values ('18','Extensiones permitidas Plan Programa','.jpg, .png, .gif, .bmp, .tif','1');
+Insert into VDIR_PARAMETRO (COD_PARAMETRO,DES_PARAMETRO,VALOR_PARAMETRO,COD_ESTADO) values ('19','Ruta archivos de coberturas','/venta_directa/asset/public/fileUpload/','1');
+
+COMMIT;

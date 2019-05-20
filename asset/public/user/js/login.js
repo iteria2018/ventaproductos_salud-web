@@ -781,12 +781,11 @@ function getDatosAsociados(){
               }                                                       
               },
               error: function(result) {
-										runLoading(false);
-										console.log("result",result); 
-                    //crearModal(idModal, 'Confirmaci\u00f3n','La operaci\u00f3n no se pudo completar por que ocurri&oacute; un error en la base de datos', botonesModal, false, '', '',true);
+										runLoading(false);										 
+                    crearModal(idModal, 'Confirmaci\u00f3n','La operaci\u00f3n no se pudo completar por que ocurri&oacute; un error en la base de datos', botonesModal, false, '', '',true);
 		            $('#cerrarMd').click(function() {
 		                $('.modal').modal('hide');
-		                //window.location.href = 'Login';
+		                window.location.href = 'Login';
 		            });                   
                  
               }

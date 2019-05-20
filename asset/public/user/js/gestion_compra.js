@@ -298,11 +298,12 @@ function fn_inicio(){
 
     $("#btn_consultar").on("click",getEncuestaSarlafDatos);
     $("#btn_encuesta").on("click",function(){
+        alertify.dismissAll();
         getEncuestaSarlaf(global_datos_contratante["COD_AFILIACION"],global_datos_contratante["COD_PERSONA"]);
     });    
 
     $(document.body).on('click', '.adjuntarArchivo', function(e) {
-      
+        alertify.dismissAll();
         var codPersona         = $(this).attr('codPersona');
         var nombreBeneficiario = $(this).attr('nombreBeneficiario');
         var codAfiliacion      = global_datos_contratante['COD_AFILIACION'];//global_registro_basico[0]['cod_afiliacion'];
@@ -1740,7 +1741,7 @@ function saveCotizacion(){
     if (mensaje != ''){
         var divRequired = $('<div id="div_required_nexos" class="required_nexos" style="left:'+posicion['left']+'px;top:'+(posicion['top']-35)+'px;"> </div>');
         $('body').append(divRequired);
-        alertify.notify(mensaje, 'error', 3, function(){ $('#div_required_nexos').remove(); });
+        alertify.notify(mensaje, 'error', 30, function(){ $('#div_required_nexos').remove(); });
     } else {
         if (validaOK){
             $('#tabs_compra').find('a[href="#paso_4"]').trigger('click');

@@ -161,7 +161,8 @@ function complementoEncuestaSalud(codigo_persona,codigo_afiliacion){
 }
 
 function getEncuestaSalud(edad,codigo_sexo,codigo_persona,codigo_afiliacion){
-
+   alertify.dismissAll();
+   
   var validaEncuestaSalud = validaEncuesta(codigo_persona,codigo_afiliacion,2);
    
   console.log("validaEncuestaSalud ", validaEncuestaSalud);

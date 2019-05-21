@@ -128,8 +128,11 @@ class Gc_paso_4 extends CI_Controller{
     		$parameters[] = $datos["EMAIL"];
     		$parameters[] = 'VDIR';
 
-    		
-            $datos = $this->Utilidades_model->getDataCurlSias('COREMP', 'CORE3302MP', 'SP_VDIR_GUARDAR_RECIBO', $parameters);
+            $sistema = $this->Utilidades_model->getParametro(79)->RESULTADO;
+            $token = $this->Utilidades_model->getParametro(80)->RESULTADO;
+            $nombre = $this->Utilidades_model->getParametro(81)->RESULTADO;
+            $datos = $this->Utilidades_model->getDataCurlSias($sistema, $token, $nombre, $parameters);
+            
             $respuestaDatos = json_decode($datos,true); 
             $length = count($respuestaDatos["respuesta"]);                          
             

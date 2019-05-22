@@ -16,9 +16,14 @@ class Pago extends CI_Controller{
 	public function responseUrl(){ 
 
 		if ($_REQUEST['transactionState'] == 4) {
-			  // comentar esta linea cuando se suba ha produccion.
-			 //$referenceCode = $_REQUEST['referenceCode'];$this->db->set('COD_FORMA_PAGO', 1);$this->db->where('COD_RECIBO', $referenceCode);$this->db->update('VDIR_FACTURA');
-
+			  $valida = $this->Utilidades_model->getParametro(82)->RESULTADO;
+			  if($valida == 0){
+				$referenceCode = $_REQUEST['referenceCode'];
+				$this->db->set('COD_FORMA_PAGO', 1);
+				$this->db->where('COD_RECIBO', $referenceCode);
+				$this->db->update('VDIR_FACTURA');
+			  }
+			 
 			 //$this->index();	
 			 redirect("Gestion_compra?param=1");			
 	    }else{

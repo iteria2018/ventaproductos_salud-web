@@ -22,12 +22,16 @@ class Gc_paso_4 extends CI_Controller{
         $cod_afiliacion = $this->input->post('cod_afiliacion');            
 
         $result = $this->Gc_paso_4_model->getDatosPago($cod_afiliacion);
-        $datos = $result[0];                
+        $datos = $result[0];          
+        
+        $server = $this->Utilidades_model->getParametro(3)->RESULTADO;
+        $path = $this->Utilidades_model->getParametro(83)->RESULTADO;        		
+		$baseUrl = $server.$_SERVER["HTTP_HOST"].$path;	
 
         $referenceCode = $this->generarCodigoSias($datos); 
 
-        $responseUrl = $datos["BASEURL"]."Pago/responseUrl";
-        $confirmationUrl = $datos["BASEURL"]."WebService/confirPago";
+        $responseUrl = $baseUrl."Pago/responseUrl";
+        $confirmationUrl = $baseUrl."WebService/confirPago";
         $aux_signature = $datos["APIKEY"].'~'.$datos["MERCHANTID"].'~'.$referenceCode.'~'.$datos["AMOUNT"].'~'.$datos["CURRENCY"];
         $signature = md5($aux_signature);
         $url_ejecucion =  $datos["URL_EJECUCION"];           

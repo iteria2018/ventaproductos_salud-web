@@ -195,14 +195,10 @@
       
       $identificacion = $this->input->post("identificacion_rest");      
       $resultDatos = $this->Login_model->getDatosPersona($identificacion);  
-      $array_data = array(); 
-      
-      $server = $this->Utilidades_model->getParametro(3)->RESULTADO;
-          $path = $this->Utilidades_model->getParametro(83)->RESULTADO;
-          $url = $server.$_SERVER["HTTP_HOST"].$path;
+      $array_data = array();            
 
       if ($resultDatos == false) {
-        $array_data['respuesta'] = 'La identificaci&oacute;n ingresada no existe. Por favor intente nuevamente '.$url;
+        $array_data['respuesta'] = 'La identificaci&oacute;n ingresada no existe. Por favor intente nuevamente ';
       }else{ 
 
           $cod_verificacion = $this->Login_model->updateCodigoSeg($identificacion);//rand(1000,9999);
@@ -216,9 +212,9 @@
           $param2 = 3;
           $aux_email = $resultDatos[0]["EMAIL"];
           $from = $this->Utilidades_model->getParametro($param1)->RESULTADO;
-          // $server = $this->Utilidades_model->getParametro($param2)->RESULTADO;
-          // $path = $this->Utilidades_model->getParametro(83)->RESULTADO;
-          // $url = $server.$_SERVER["HTTP_HOST"].$path;
+          $server = $this->Utilidades_model->getParametro($param2)->RESULTADO;
+          $path = $this->Utilidades_model->getParametro(83)->RESULTADO;
+          $url = $server.$_SERVER["HTTP_HOST"].$path;          
 
           $to = $aux_email; 
           $name = "Coomeva MP";

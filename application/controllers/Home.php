@@ -21,8 +21,10 @@ class Home extends CI_Controller{
 		$cod_parametro = 3;
 		$codigo_plan = $this->session->userdata('codigo_plan');
 		
-		$datos = $this->Home_model->getDataImgPromo($codigo_plan);		
-		$baseUrl = $this->Utilidades_model->getParametro($cod_parametro)->RESULTADO; 		
+		$datos = $this->Home_model->getDataImgPromo($codigo_plan);
+		$server = $this->Utilidades_model->getParametro($cod_parametro)->RESULTADO;
+    $path = $this->Utilidades_model->getParametro(83)->RESULTADO;        		
+		$baseUrl = $server.$_SERVER["HTTP_HOST"].$path;		
 		
 		$htmlImagenes = '';	
 		$htmlOl = '';

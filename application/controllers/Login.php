@@ -192,13 +192,17 @@
   }
 
   public function recordarContrasena(){       
-
+      
       $identificacion = $this->input->post("identificacion_rest");      
       $resultDatos = $this->Login_model->getDatosPersona($identificacion);  
-      $array_data = array();    
+      $array_data = array(); 
+      
+      $server = $this->Utilidades_model->getParametro(3)->RESULTADO;
+          $path = $this->Utilidades_model->getParametro(83)->RESULTADO;
+          $url = $server.$_SERVER["HTTP_HOST"].$path;
 
       if ($resultDatos == false) {
-        $array_data['respuesta'] = 'La identificaci&oacute;n ingresada no existe. Por favor intente nuevamente';
+        $array_data['respuesta'] = 'La identificaci&oacute;n ingresada no existe. Por favor intente nuevamente '.$url;
       }else{ 
 
           $cod_verificacion = $this->Login_model->updateCodigoSeg($identificacion);//rand(1000,9999);
@@ -212,7 +216,10 @@
           $param2 = 3;
           $aux_email = $resultDatos[0]["EMAIL"];
           $from = $this->Utilidades_model->getParametro($param1)->RESULTADO;
-          $url = $this->Utilidades_model->getParametro($param2)->RESULTADO;
+          // $server = $this->Utilidades_model->getParametro($param2)->RESULTADO;
+          // $path = $this->Utilidades_model->getParametro(83)->RESULTADO;
+          // $url = $server.$_SERVER["HTTP_HOST"].$path;
+
           $to = $aux_email; 
           $name = "Coomeva MP";
 
@@ -227,7 +234,7 @@
                           <p style="padding-left: 10px;">A continuaci&oacute;n confirmamos tus datos:</p>
                           <div style="padding-left: 10px;"> 
                             <p style="color:#0061a1">
-                              Nombre de usuario: <b>'.$resultDatos[0]["LOGIN"].'</b>                           
+                             Nombre de usuario: <b>'.$resultDatos[0]["LOGIN"].'</b>                           
                             </p>
                             <p style="color:#0061a1">                             
                               C&oacute;digo de seguridad: <b>'.$cod_verificacion.'</b>

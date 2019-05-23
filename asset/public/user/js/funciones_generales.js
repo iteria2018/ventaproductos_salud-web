@@ -410,13 +410,12 @@ function getColumnTable(tabla){
         {"column":"total", "label":"Total", "format":"miles"},
         {"column":"fecha_creacion", "label":"Fecha creaci&oacute;n"}            
     ],
-    "beneficiarios_cotiza" : [
-        {"column":"accion_cotiza", "label":"Acción"},
+    "beneficiarios_cotiza" : [        
         {"column":"tipoNroId", "label":"Identificación"},
         {"column":"nombre_completo", "label":"Nombre beneficiario"},
         {"column":"des_parentesco", "label":"Parantesco"},
-        {"column":"telefono", "label":"Teléfono"},
-        {"column":"correo", "label":"Correo electrónico"},
+        {"column":"soporte_eps", "label":"Soporte EPS"},
+        {"column":"salud", "label":"Declaración de salud"},
         {"column":"nombreProducto", "label":"Producto"}
     ],
     "realizar_pago" : [

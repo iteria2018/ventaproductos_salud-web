@@ -457,6 +457,17 @@
 		   }
 		});
 
+		$("#identificacion").on("keyup",function(){					 		
+			$("#nombre1").val("");
+			$("#nombre2").val("");
+			$("#apellido1").val("");
+			$("#apellido2").val("");
+			$("#fecha_nacimiento").val("");
+			$("#telefono").val("");
+			$("#celular").val("");
+			$("#correo").val("");
+		});
+
 		$("#correo").on("keyup",function(){
 			  disabledSendEmail(this.value);
 		});				

@@ -16,7 +16,10 @@ $(document).ready(function() {
             });
         }else{
             fn_inicio();
-        }             
+        }  
+        //se establece nacionalidad por defecto - colombiano/a
+        $('#pais_ctr option[value="36"]').attr("selected",true);
+        
     }else{
         global_registro_basico = actualizaGlobalRegistro(global_benefis_pend);
         traerBenefisPrograms(function(data){
@@ -1090,7 +1093,7 @@ function validBenefiProd(campo){
            
             var msj = '';    
             if(objAplica['disponibleVd'] != -1 || objAplica['disponibleAfilmed'] != -1){
-                msj = 'El beneficiario '+ global_aux_prodbenefi[producto][programa][llaveBenefi]['nombre_completo'] +', ya se encuentra afiliado a este producto.';
+                msj = 'El beneficiario '+ global_aux_prodbenefi[producto][programa][llaveBenefi]['nombre_completo'] +', ya se encuentra afiliado a este u otro producto.';
             }else{
                 if(objAplica['disponibleUbicacion'] != -1){
                     if(objAplica['disponibleUbicacion']['aprobado'] != 'S'){
@@ -1456,7 +1459,7 @@ function llenarDatosTab(abr_tab){
     //Se recorren los beneficiarios
     for(b in global_registro_basico){
 
-        botonAdjuntos += '<a title="Adjuntar archivos" id="adjuntar'+b+'" codPersona="'+global_registro_basico[b].cod_persona+'" nombreBeneficiario="'+global_registro_basico[b].nombre_completo+'" class="adjuntarArchivo btn-floating btn-lg blue lighten-1 mt-0 float-left"><i class="fa fa-paperclip" aria-hidden="true"></i></a>'; 
+        botonAdjuntos += '<a style="margin-left: 30px;" title="Adjuntar archivos" id="adjuntar'+b+'" codPersona="'+global_registro_basico[b].cod_persona+'" nombreBeneficiario="'+global_registro_basico[b].nombre_completo+'" class="adjuntarArchivo btn-floating btn-lg blue lighten-1 mt-0 float-left"><i class="fa fa-paperclip" aria-hidden="true"></i></a>'; 
         
         llaveBenefi   = global_registro_basico[b].tipoDocumento+'_'+global_registro_basico[b].numeroDocumento;
         global_registro_basico[b].telefono = global_registro_basico[b].telefono === null ? '' : global_registro_basico[b].telefono;
@@ -1634,10 +1637,11 @@ function llenarDatosTab(abr_tab){
         }
 
         if (mostrarEncuesta == 1){
-            botonEncuesta   += '<a title="Encuesta Salud" id="encuesta'+b+'" nombreBeneficiario="'+global_registro_basico[b].nombre_completo+'" codigoPersona="'+global_registro_basico[b].cod_persona+'" codigoAfiliacion="'+codigoAfiliacion+'" codigoSexo="'+global_registro_basico[b].tipoSexo+'" edad="'+global_registro_basico[b].edad+'" class="encuestaSalud btn-floating btn-lg blue lighten-1 mt-0 float-left"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>';
+            botonEncuesta   += '<a style="margin-left: 60px;" title="Encuesta Salud" id="encuesta'+b+'" nombreBeneficiario="'+global_registro_basico[b].nombre_completo+'" codigoPersona="'+global_registro_basico[b].cod_persona+'" codigoAfiliacion="'+codigoAfiliacion+'" codigoSexo="'+global_registro_basico[b].tipoSexo+'" edad="'+global_registro_basico[b].edad+'" class="encuestaSalud btn-floating btn-lg blue lighten-1 mt-0 float-left"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>';
+            global_registro_basico[b].salud =  botonEncuesta;    
         }
         
-        global_registro_basico[b].accion_cotiza = botonAdjuntos + botonEncuesta;          
+        global_registro_basico[b].soporte_eps = botonAdjuntos;          
 
         tarifaProducto   = '';
         nombreProducto   = '';

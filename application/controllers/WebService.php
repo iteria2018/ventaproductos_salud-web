@@ -179,8 +179,15 @@
         
 
             if ($_REQUEST['state_pol'] == 4 AND $_REQUEST['response_code_pol'] == 1 AND $signature == $sign) { 
+                 $formapago = 2;
+                 $metodopayu = $_REQUEST['payment_method_id'];
+                 if ($metodopayu == 2) {
+                    $formapago = 4;                                                                      
+                 } else if($metodopayu == 7){
+                    $formapago = 1;
+                 }
                  
-                 $this->db->set('COD_FORMA_PAGO', 1);
+                 $this->db->set('COD_FORMA_PAGO', $formapago);
                  $this->db->where('COD_RECIBO', $referenceCode);
                  $this->db->update('VDIR_FACTURA');
 

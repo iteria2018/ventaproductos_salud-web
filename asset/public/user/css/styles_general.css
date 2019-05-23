@@ -677,8 +677,8 @@ input[class*="campo-vd"]{
 }
 
 .btn-floating.btn-lg {
-    width: 30.1px;
-    height: 30.1px;
+    width: 45.1px;
+    height: 45.1px;
 }
 
 .blue.lighten-1 {
@@ -718,8 +718,8 @@ input[class*="campo-vd"]{
 }
 
 .btn-floating.btn-lg i {
-    font-size: 1.0rem;
-    line-height: 30.1px;
+    font-size: 1.7.0rem;
+    line-height: 45.1px;
 }
 
 .btn-floating i {

@@ -19,7 +19,14 @@ class Pago extends CI_Controller{
 			  $valida = $this->Utilidades_model->getParametro(82)->RESULTADO;
 			  if($valida == 0){
 				$referenceCode = $_REQUEST['referenceCode'];
-				$this->db->set('COD_FORMA_PAGO', 1);
+				$formapago = 2;
+				$metodopayu = $_REQUEST['polPaymentMethodType'];
+				if ($metodopayu == 2) {
+					$formapago = 4;                                                                      
+				} else if($metodopayu == 7){
+					$formapago = 1;
+				}
+				$this->db->set('COD_FORMA_PAGO', $formapago);
 				$this->db->where('COD_RECIBO', $referenceCode);
 				$this->db->update('VDIR_FACTURA');
 			  }

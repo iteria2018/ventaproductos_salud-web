@@ -4,7 +4,7 @@
         $tokenUrl = array();
         $url = ""; 
         $codigoDecript = 0;  
-        $aux_senal = 0;     
+        $aux_senal = 0;    
 
         if (isset($_GET['senal'])) {
            
@@ -79,7 +79,7 @@
                             <form autocomplete="off" class="form" id="form_login" name="form_login">
                                 <div class="text-center">
                                     <h4 class="card-title font-weight-bold" style="font-size: 25px;">
-                                        Iniciar sesi&oacute;n
+                                     Iniciar sesi&oacute;n
                                     </h4>
                                     <div class="social-line">
                                     </div>
@@ -130,16 +130,8 @@
                                         <a class="" href="#" id="btn-restablecer">
                                             Olvido su clave?
                                         </a>
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="material-icons">
-                                                    autorenew
-                                                </i>
-                                            </span>
-                                        </div>
-                                        <a href="#" id="btn-cambioClave">
-                                            Cambio clave
-                                        </a>                                        
+                                        
+                                                                               
                                     </div>
                                      <br>
                                 </div>

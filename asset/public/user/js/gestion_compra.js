@@ -597,6 +597,9 @@ function agregarBeneficiario(p_idx){
     formatDate('fechaNacimiento_'+idx);
     $('#fechaNacimiento_'+idx).attr('autocomplete','off');
     
+    //se establece nacionalidad por defecto - colombiano/a
+    $('#pais_bnf option[value="36"]').attr("selected",true);
+
     //Aplicar validacion por edad del beneficiario
     $('#fechaNacimiento_'+idx).change(function(){
         var fechaSel = $(this).val();
@@ -2459,28 +2462,24 @@ function finalizarVenta(){
             type: "POST",  
             dataType: "json",
             data: paramObj,   
-            success: function(resp){                
-                if(parseInt(resp.INCLUSION) > 0){
-                    $(".verContrato").each(function(){  
-
-                        codPrograma    = $(this).attr("codprograma");
-                        desPrograma    = $(this).attr("desPrograma");
-                        validaContrato = validaContratos(codigoAfiliacion,codigoPersona,codPrograma);
-                        
-                        
-                        
+            success: function(resp){  
+                 
+                for (let b in resp) {                    
+                    if (parseInt(resp[b].benficiario) > 0) {                        
+                        codPrograma    = resp[b].programa;
+                        desPrograma    = resp[b].des_programa;
+                        validaContrato = validaContratos(codigoAfiliacion,resp[b].beneficiario,codPrograma);
                         if (!validaContrato){
                 
-                            mensaje  = 'No ha firmado el contrato para el programa <b>'+desPrograma+'</b>. Recuerde firmar todos los contratos y despu&eacute;s presionar el bot&oacute;n "Finalizar"<br>';
+                            mensaje  += 'No ha firmado el contrato para el programa <b>'+desPrograma+'</b>. Recuerde firmar todos los contratos y despu&eacute;s presionar el bot&oacute;n "Finalizar"<br>';
                             posicion = $('#divPrograma_con_'+codPrograma).offset();
                             validaOK = false;
-                            return false;
+                            //return false;
                         }
-                        
-                    });
-                }
-                    
-            
+                    }
+                }      
+
+                                
                 if (mensaje != ''){
                     var divRequired = $('<div id="div_required_nexos" class="required_nexos" style="left:'+posicion['left']+'px;top:'+(posicion['top']-35)+'px;"> </div>');
                     $('body').append(divRequired);

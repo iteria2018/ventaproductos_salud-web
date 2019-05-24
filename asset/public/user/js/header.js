@@ -46,7 +46,7 @@ function gestionarImgPromo(){
 }
 
 function redHome(){
-	var url = pointToUrl()+"Home";
+	var url = pointToUrl()+"Gestion_compra";
     location.href = url;  
 }
 

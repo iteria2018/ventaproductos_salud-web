@@ -10,13 +10,13 @@ var global_accion_evento         = {};
 $(document).ready(function() {
 
    if(g_senal == 0){
-        if(global_datos_contratante['COD_AFILIACION'] == '-1'){
-            traerHabeasData(function(data){
-                validarHabeasData(data);        
-            });
-        }else{
+        // if(global_datos_contratante['COD_AFILIACION'] == '-1'){
+        //     traerHabeasData(function(data){
+        //         validarHabeasData(data);        
+        //     });
+        // }else{
             fn_inicio();
-        }  
+        // }  
         //se establece nacionalidad por defecto - colombiano/a
         $('#pais_ctr option[value="36"]').attr("selected",true);
         

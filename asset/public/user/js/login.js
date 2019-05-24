@@ -388,17 +388,19 @@
 	                 '<div class="row">'+
 		                 '<div class="col-md-6 col-sm-6  col-lg-6">'+
 		                      '<label for="usu" class="obligatorio">C&oacute;digo de confirmaci&oacute;n</label>'+
-							  '<div class="input-group">'+
-								  '<input id="cod_confirma" name="cod_confirma" type="text" disabled class="form-control campo-vd input-sm">'+                        
-			                      '<div class="input-group-append">'+
-								      '<button id="btn_enviar_email" onclick="enviarEmailCodSeg()" class="btn btn-primary" disabled type="button" style="border-radius: 5px;">'+
-								        '<i class="fa fa-envelope"  style="margin-top: -8px;" title="Enviar c&oacute;digo de seguridad"></i>'+
-								      '</button>'+
-							      '</div>'+ 
-							  '</div>'+
+							  			'<div class="input-group">'+
+								  			'<input id="cod_confirma" name="cod_confirma" type="text" disabled class="form-control campo-vd input-sm">'+                        
+			                	'<div class="input-group-append">'+
+								      		'<button id="btn_enviar_email" onclick="enviarEmailCodSeg()" class="btn btn-primary" disabled type="button" style="border-radius: 5px;">'+
+								        		'<i class="fa fa-envelope"  style="margin-top: -8px;" title="Enviar c&oacute;digo de seguridad"></i>'+
+								      		'</button>'+
+							      		'</div>'+ 
+							  		'</div>'+
 		                 '</div>'+
-                         '<div class="col-md-6 col-sm-6  col-lg-6 mt-4">'+ 
-		                 	'<label class="obligatorio">Debe seleccionar esta opci&oacute;n para enviar el c&oacute;digo de verificaci&oacute;n</label>'+
+												 '<div class="col-md-6 col-sm-6  col-lg-6 mt-4">'+ 
+												 '<a href="#" id="ltermino">Política de tratamiento de datos </a><br>'+
+											 '<label class="obligatorio"><input type="checkbox" name="termino" id="termino" > Acepto los t&eacute;rminos y condiciones</label>'+
+											 
 	                     '</div>'+
 	                 '</div>'+ 	 	                                 
 	                 '<br>'+
@@ -484,8 +486,14 @@
 
 		$('#fecha_nacimiento').bind("cut copy paste",function(e) {
       		 e.preventDefault();
-    	});		
-
+			});	
+		
+		$("#ltermino").click(function(e){
+			e.preventDefault();
+			traerHabeasData(function(data){
+                validarHabeasData(data);        
+            });
+					});
 		$('#saveMd').click(function(){
 
 			var camposRequeridos = [  
@@ -500,7 +508,8 @@
                       {"id":"usu", "texto":"Usuario"}, 
                       {"id":"contrasena", "texto":"Contrase\u00f1a"},                      
                       {"id":"contrasena_re", "texto":"Repetir contrase\u00f1a"},
-                      {"id":"cod_confirma", "texto":"C&oacute;digo de confirmaci&oacute;n"}
+											{"id":"cod_confirma", "texto":"C&oacute;digo de confirmaci&oacute;n"},
+											{"id":"termino", "texto":"Aceptar los t&eacute;rminos y condiciones"}
 					];
 
 				
@@ -520,6 +529,15 @@
 			if (validaClave1 == 0){
 				$("#contrasena").focus(); 
 			    return false;
+			}
+
+			if( !$('#termino').prop('checked') ) {
+				crearModal(idModal, 'Advertencia','Debe aceptar los términos y condiciones', botonesModal, false, '', '',true);
+		            $('#cerrarMd').click(function() {
+		                $('#'+idModal).modal('toggle');		                
+		          	});
+		            $("#correo").focus(); 
+				return false;
 			}
 
 			if (validaClave2 == 0){
@@ -924,3 +942,44 @@ function disabledSendEmail(valor){
 	}	
 }
 
+function traerHabeasData(calback){
+	runLoading(true);
+	var paramsObj = {};
+	//paramsObj['codContratante'] = codContratante;
+	
+	$.ajax({
+			url: "Gestion_compra/getHabeasData",  
+			type: "POST",  
+			dataType: "json",
+			data: paramsObj,   
+			success: function(resp){
+					runLoading(false);
+					calback(resp);           
+			},
+			error: function(result) {
+					runLoading(false);
+					crearModal(idModal, 'Confirmaci\u00f3n', 'Se presentaron problemas al realizar la operaci&oacute;n', botonesModal, false, '', '');
+					$('#cerrarMr').click(function(){
+							$('#'+idModal).modal('hide');
+					});
+			}
+	});
+}
+
+function validarHabeasData(data){
+	var idModal = 'modalHabeasData';
+	var botonesModal = [{"id":"cerrarHd","label":"Cerrar","class":"btn-primary"}];
+	var divHd = $('<div id="divHd" class="content-habeasData"></div>');
+	var labelHd = $('<label></label>');
+	
+	divHd.html(data['habeasData']);
+	divHd.append('<br><br>');
+	divHd.append(labelHd);
+
+	crearModal(idModal, 'Autorizaci&oacute;n para el tratamiento de los datos personales', divHd, botonesModal, false, 'modal-xl', '',true);
+	
+	$('#cerrarHd').click(function() {
+			$('#'+idModal).modal('hide');			
+	});
+
+}

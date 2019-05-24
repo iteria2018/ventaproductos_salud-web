@@ -124,11 +124,15 @@ class Gc_paso_5_model extends CI_Model{
 
     }
 
-    public function getValidaInclusion($codAfiliacion,$codContratante){
+    public function getValidaInclusion($codAfiliacion,$codContratante){        
 
-        $query = "SELECT VDIR_PACK_CONSULTA_CONTRATO.fnGetValidaInclusion(?,?) AS inclusion FROM DUAL";
-        $consulta = $this->db->query($query,array('param1' =>$codAfiliacion, 'param2' => $codContratante));        
-        return $consulta->row();
+        $query = ":curs_datos :=   VDIR_PACK_CONSULTA_CONTRATO.fnGetValidaInclusion(".$codAfiliacion.",".$codContratante.")";
+        $data = $this->Utilidades_model->getDataRefCursor($query);                
+        if (count($data) > 0) {
+            return $data;
+        }else{
+            return false;
+        }
 
     }
 }

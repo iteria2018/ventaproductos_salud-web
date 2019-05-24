@@ -128,6 +128,26 @@ class Gc_paso_5 extends CI_Controller{
 		$this->output->set_content_type('application/json')->set_output($result);
 	}
 
+	/**
+	 * Sirve para identificar, si es inclusion
+	 * @param string $cod_afiliado
+	 * @param string $cod_contratante
+	 * 
+	 * @return application/json indicando si no hay inclusion
+	 */
+
+	public function getInclusion(){
+
+		$datos = array();
+
+		$cod_afiliado     = $this->input->post("cod_afiliado");
+		$cod_contratante  = $this->input->post("cod_contratante");
+		
+		$datos = $this->p5->getValidaInclusion($cod_afiliado,$cod_contratante);
+		$result = json_encode($datos);
+		$this->output->set_content_type('application/json')->set_output($result);
+	}
+
 }
 
 ?>

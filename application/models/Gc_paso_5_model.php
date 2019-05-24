@@ -123,6 +123,14 @@ class Gc_paso_5_model extends CI_Model{
         return $consulta->row();
 
     }
+
+    public function getValidaInclusion($codAfiliacion,$codContratante){
+
+        $query = "SELECT VDIR_PACK_CONSULTA_CONTRATO.fnGetValidaInclusion(?,?) AS inclusion FROM DUAL";
+        $consulta = $this->db->query($query,array('param1' =>$codAfiliacion, 'param2' => $codContratante));        
+        return $consulta->row();
+
+    }
 }
 
 ?>

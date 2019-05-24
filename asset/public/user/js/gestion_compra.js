@@ -2450,64 +2450,94 @@ function finalizarVenta(){
     var idModal               = 'verMsgContrato';
     var botonesModal          = [{"id":"cerrarMsgContrato","label":"Aceptar","class":"btn-primary"}];
 
-    $(".verContrato").each(function(){  
+    var paramObj    = {};        
+        paramObj['cod_contratante']    = codigoPersona;
+        paramObj['cod_afiliado'] = codigoAfiliacion;
+        runLoading(true);
+        $.ajax({
+            url: pointToUrl()+"Gc_paso_5/getInclusion",  
+            type: "POST",  
+            dataType: "json",
+            data: paramObj,   
+            success: function(resp){                
+                if(parseInt(resp.INCLUSION) > 0){
+                    $(".verContrato").each(function(){  
 
-        codPrograma    = $(this).attr("codprograma");
-        desPrograma    = $(this).attr("desPrograma");
-        validaContrato = validaContratos(codigoAfiliacion,codigoPersona,codPrograma);
-        
-        if (!validaContrato){
-
-            mensaje  = 'No ha firmado el contrato para el programa <b>'+desPrograma+'</b>. Recuerde firmar todos los contratos y despu&eacute;s presionar el bot&oacute;n "Finalizar"<br>';
-            posicion = $('#divPrograma_con_'+codPrograma).offset();
-            validaOK = false;
-            return false;
-        }
-        
-    });
-
-    if (mensaje != ''){
-        var divRequired = $('<div id="div_required_nexos" class="required_nexos" style="left:'+posicion['left']+'px;top:'+(posicion['top']-35)+'px;"> </div>');
-        $('body').append(divRequired);
-        alertify.notify(mensaje, 'error', 3, function(){ $('#div_required_nexos').remove(); });
-    } else {
-        if (validaOK){
-           
-            var paramsObj    = {};
-            paramsObj['codAfiliacion'] = codigoAfiliacion;
-            runLoading(true);
-      
-            $.ajax({
-                url: pointToUrl()+"Gc_paso_5/actualizarAfiliacion",  
-                type: "POST",  
-                dataType: "json",
-                data: paramsObj,   
-                success: function(resp){
-                    runLoading(false);
-                   
-                    if (resp.ret){
-                        mensajeRespuesta =  msgFinalizarVenta; 
-                    } else {
-                        mensajeRespuesta = resp.errors;
-                    }
-
-                    crearModal(idModal, 'Confirmaci\u00f3n', '<p class="text-justify">'+mensajeRespuesta+'</p>', botonesModal, false, '', '');
-                    $('#cerrarMsgContrato').click(function(){
-                        $('#'+idModal).modal('hide');
-                        window.location.href = pointToUrl()+'Home';                        
-                    });
-                    
-                },
-                error: function(result) {
-                    runLoading(false);
-                    crearModal(idModal, 'Confirmaci\u00f3n', 'Se presentaron problemas al guardar el registro', botonesModal, false, '', '');
-                    $('#cerrarMsgContrato').click(function(){
-                        $('#'+idModal).modal('hide');
+                        codPrograma    = $(this).attr("codprograma");
+                        desPrograma    = $(this).attr("desPrograma");
+                        validaContrato = validaContratos(codigoAfiliacion,codigoPersona,codPrograma);
+                        
+                        
+                        
+                        if (!validaContrato){
+                
+                            mensaje  = 'No ha firmado el contrato para el programa <b>'+desPrograma+'</b>. Recuerde firmar todos los contratos y despu&eacute;s presionar el bot&oacute;n "Finalizar"<br>';
+                            posicion = $('#divPrograma_con_'+codPrograma).offset();
+                            validaOK = false;
+                            return false;
+                        }
+                        
                     });
                 }
-            });            
-        }
-    }
+                    
+            
+                if (mensaje != ''){
+                    var divRequired = $('<div id="div_required_nexos" class="required_nexos" style="left:'+posicion['left']+'px;top:'+(posicion['top']-35)+'px;"> </div>');
+                    $('body').append(divRequired);
+                    alertify.notify(mensaje, 'error', 3, function(){ $('#div_required_nexos').remove(); });
+                    runLoading(false);
+                } else {
+                    if (validaOK){
+                       
+                        var paramsObj    = {};
+                        paramsObj['codAfiliacion'] = codigoAfiliacion;
+                        runLoading(true);
+                  
+                        $.ajax({
+                            url: pointToUrl()+"Gc_paso_5/actualizarAfiliacion",  
+                            type: "POST",  
+                            dataType: "json",
+                            data: paramsObj,   
+                            success: function(resp){
+                                runLoading(false);
+                               
+                                if (resp.ret){
+                                    mensajeRespuesta =  msgFinalizarVenta; 
+                                } else {
+                                    mensajeRespuesta = resp.errors;
+                                }
+            
+                                crearModal(idModal, 'Confirmaci\u00f3n', '<p class="text-justify">'+mensajeRespuesta+'</p>', botonesModal, false, '', '');
+                                $('#cerrarMsgContrato').click(function(){
+                                    $('#'+idModal).modal('hide');
+                                    window.location.href = pointToUrl()+'Home';                        
+                                });
+                                
+                            },
+                            error: function(result) {
+                                runLoading(false);
+                                crearModal(idModal, 'Confirmaci\u00f3n', 'Se presentaron problemas al guardar el registro', botonesModal, false, '', '');
+                                $('#cerrarMsgContrato').click(function(){
+                                    $('#'+idModal).modal('hide');
+                                });
+                            }
+                        });                                   
+                    }
+                }
+
+
+
+            },
+            error: function(result) {
+                runLoading(false);
+                crearModal(idModal, 'Confirmaci\u00f3n', 'Se presentaron problemas al actualizar el registro', botonesModal, false, '', '');
+                $('#cerrarMsgContrato').click(function(){
+                    $('#'+idModal).modal('hide');
+                });
+            }
+        });     
+
+   
 
 }
 

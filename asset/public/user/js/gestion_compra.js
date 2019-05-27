@@ -123,42 +123,45 @@ function fn_pintarCoberturas(){
     $(document.body).on("click", ".verCoberturaPrograma", function() {
        
         var codPrograma   = $(this).attr('codPrograma');
-        var desPrograma   = $(this).attr('desPrograma');
+        // var desPrograma   = $(this).attr('desPrograma');
         var tipoCobertura = $(this).attr('tipoCobertura');
-        var desCobertura  = tipoCobertura == '1' ? 'Iniciales' : 'Finales';
+        // var desCobertura  = tipoCobertura == '1' ? 'Iniciales' : 'Finales';
         var codPlan       = global_datos_contratante['COD_PLAN'];
 
-        runLoading(true);
+        // runLoading(true);
 
         var idModal      = 'verCoberturas';
         var botonesModal = [{"id":"cerrarMd","label":"Aceptar","class":"btn-primary"}];
         var paramsObj    = {};
-
-        paramsObj['codPrograma']   = codPrograma;
-        paramsObj['codPlan']       = codPlan;
-        paramsObj['tipoCobertura'] = tipoCobertura;
-      
-        $.ajax({
-            url: pointToUrl()+"Gestion_compra/getImgCoberturas",  
-            type: "POST",  
-            dataType: "json",
-            data: paramsObj,   
-            success: function(resp){
-                runLoading(false);
-               
-                crearModal(idModal, 'Coberturas ' +desCobertura+' '+ desPrograma, resp.vista, botonesModal, false, 'modal-xl', '',true);
-                $('#cerrarMd').click(function() {                          
-                    $('.modal').modal('hide');
-                });
-            },
-            error: function(result) {
-                runLoading(false);
-                crearModal(idModal, 'Confirmaci\u00f3n', 'No se pueden visualizar las coberturas', botonesModal, false, '', '');
-                $('#cerrarMd').click(function(){
-                    $('#'+idModal).modal('hide');
-                });
-            }
+       
+        var url          = global_base_url + 'asset/public/uploadpdf/Cobertura/cobertura_'+codPrograma+'_'+codPlan+'.pdf'; 
+        crearModal(idModal, 'Informaci\u00f3n del Contrato', '<iframe id="cobertura" src="'+url+'" width="100%" height="100%" style="border: 0; overflow: hidden; min-height: 500px;"></iframe>', botonesModal, false, 'modal-xl', '',true);
+        $('#cerrarMd').click(function() {                          
+            $('.modal').modal('hide');
         });
+      
+        // $.ajax({
+        //     url: pointToUrl()+"Gestion_compra/getImgCoberturas",  
+        //     type: "POST",  
+        //     dataType: "json",
+        //     data: paramsObj,   
+        //     success: function(resp){
+        //         runLoading(false);
+               
+        //         crearModal(idModal, 'Coberturas ' +desCobertura+' '+ desPrograma, resp.vista, botonesModal, false, 'modal-xl', '',true);
+        //         $('#cerrarMd').click(function() {                          
+        //             $('.modal').modal('hide');
+        //         });
+                
+        //     },
+        //     error: function(result) {
+        //         runLoading(false);
+        //         crearModal(idModal, 'Confirmaci\u00f3n', 'No se pueden visualizar las coberturas', botonesModal, false, '', '');
+        //         $('#cerrarMd').click(function(){
+        //             $('#'+idModal).modal('hide');
+        //         });
+        //     }
+        // });
 
     });
 }
@@ -984,7 +987,7 @@ function pintarTabsProgramas(codProducto, objProgramas, abr_tab){
         cardBody.append(ulPrograma);
         if(abr_tab != '_con'){
             ulPrograma.append('<li style="cursor:pointer;" class="verDetallePrograma" detalle="'+programa['descripcion']+'" desPrograma="'+programa['des_programa']+'"><h6 class="card-title pricing-card-title">Ver Detalle</h6></li>');
-            ulPrograma.append('<li style="cursor:pointer;" class="verCoberturaPrograma" codPrograma="'+codPrograma+'" desPrograma="'+programa['des_programa']+'" tipoCobertura="'+tipoCobertura+'"><h6 class="card-title pricing-card-title">Coberturas</h6></li>');
+            ulPrograma.append('<li style="cursor:pointer;" tipoMostrarPDF="'+tipoMostrarPDF+'" class="verCoberturaPrograma" codPrograma="'+codPrograma+'" desPrograma="'+programa['des_programa']+'" tipoCobertura="'+tipoCobertura+'"><h6 class="card-title pricing-card-title">Coberturas</h6></li>');
         }       
        
         cardBody.append('<button type="button" class="verContrato btn btn-sm btn-block btn-primary" urlAdobeSign="'+urlAdobeSign+'" codPrograma="'+codPrograma+'" desPrograma="'+programa['des_programa']+'" tipoMostrarPDF="'+tipoMostrarPDF+'"> <i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size: 0.8rem;"></i> &nbsp;'+desContrato+'</button>');

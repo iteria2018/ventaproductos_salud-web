@@ -2471,7 +2471,7 @@ function finalizarVenta(){
                     if (parseInt(resp[b].benficiario) > 0) {                        
                         codPrograma    = resp[b].programa;
                         desPrograma    = resp[b].des_programa;
-                        validaContrato = validaContratos(codigoAfiliacion,resp[b].beneficiario,codPrograma);
+                        validaContrato = validaContratos(codigoAfiliacion,resp[b].benficiario,codPrograma);
                         if (!validaContrato){
                 
                             mensaje  += 'No ha firmado el contrato para el programa <b>'+desPrograma+'</b>. Recuerde firmar todos los contratos y despu&eacute;s presionar el bot&oacute;n "Finalizar"<br>';
@@ -2482,7 +2482,7 @@ function finalizarVenta(){
                     }
                 }      
 
-                                
+                runLoading(false);                
                 if (mensaje != ''){
                     var divRequired = $('<div id="div_required_nexos" class="required_nexos" style="left:'+posicion['left']+'px;top:'+(posicion['top']-35)+'px;"> </div>');
                     $('body').append(divRequired);

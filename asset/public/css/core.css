@@ -328,9 +328,9 @@ ul.gj-list-md li.disabled>[data-role="wrapper"]>[data-role="display"] {
 /* Material Design */
 .gj-picker-md {
     font-family: "Roboto","Helvetica","Arial",sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    letter-spacing: .04em;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: .02em;
     line-height: 1;
     color: rgba(0,0,0,.87);
     border: 1px solid #E0E0E0;

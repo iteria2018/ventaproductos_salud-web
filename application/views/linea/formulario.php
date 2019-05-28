@@ -56,44 +56,26 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-6">
-				<label class="<?php if($tipoAccion == 1) echo 'obligatorio'; ?>">Cobertura Inicial</label>
+				<label class="<?php if($tipoAccion == 1) echo 'obligatorio'; ?>">Cobertura</label>
 				<div class="file-field">
                     <a class="btn-floating btn-lg blue lighten-1 mt-0 float-left">
                         <i class="fa fa-paperclip" aria-hidden="true"></i>
                         <input class="adjuntarDocumentos" id="CoberturaInicial" name="CoberturaInicial" type="file"  accept="<?php echo $arrayExtensiones; ?>">
                     </a>
                     <div class="file-path-wrapper"  style="width: 16.8rem">
-                        <input id="showFileCoberturaInicial" class="form-control file-path validate" type="text" placeholder="Adjuntar cobertura Inicial"> 
+                        <input id="showFileCoberturaInicial" class="form-control file-path validate" type="text" placeholder="Adjuntar cobertura"> 
                     </div>
-                    <button id="btnVerFileCoberturaInicial" class="verArchivo btn btn-primary disabled btn-sm" upload="CoberturaInicial" type="button" title="Ver Adjunto" style="padding: 0.40625rem 0.6rem;">
-                        <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                    </button>
+                    
 				</div>
 			</div>
-			<div class="col-sm-6">
-				<label class="<?php if($tipoAccion == 1) echo 'obligatorio'; ?>">Cobertura Final</label>
-				<div class="file-field">
-                    <a class="btn-floating btn-lg blue lighten-1 mt-0 float-left">
-                        <i class="fa fa-paperclip" aria-hidden="true"></i>
-                        <input class="adjuntarDocumentos" id="CoberturaFinal" name="CoberturaFinal" type="file"  accept="<?php echo $arrayExtensiones; ?>">
-                    </a>
-                    <div class="file-path-wrapper" style="width: 16.8rem">
-                        <input id="showFileCoberturaFinal" class="form-control file-path" type="text" placeholder="Adjuntar cobertura Final"> 
-                    </div>
-                    <button id="btnVerFileCoberturaFinal" class="verArchivo btn btn-primary disabled" upload="CoberturaFinal" type="button" title="Ver Adjunto" style="padding: 0.40625rem 0.6rem;">
-                        <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                    </button>
-				</div>
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-sm-6">
 				<label class="obligatorio">C&oacute;digo de homolaci&oacute;n programa</label>
 				<div>
 					<input class="form-control campo-vd" id="programaHomologa" name="programaHomologa" type="text" max-length="100" value="<?php echo $codProgramaHomologa; ?>">				
 				</div>
-			</div>
+			</div>			
 		</div>
+		
 	</div>
 </fieldset>
 </form>

@@ -6,6 +6,21 @@ $(document).ready(function(){
         cargarFormulario(1,'');
     });
 
+    $(".admCobertura").click(function() {
+       
+        var codPrograma   = $(this).attr('codPrograma');
+        var codPlan       = $(this).attr('codPlan');
+        var idModal      = 'verCoberturas';
+        var botonesModal = [{"id":"cerrarMd","label":"Aceptar","class":"btn-primary"}];
+       
+        var url          =  global_url+'asset/public/uploadpdf/cobertura/Cobertura_'+codPrograma+'_'+codPlan+'.pdf'; 
+        crearModal(idModal, 'Informaci\u00f3n del Contrato', '<iframe id="cobertura" src="'+url+'" width="100%" height="100%" style="border: 0; overflow: hidden; min-height: 500px;"></iframe>', botonesModal, false, 'modal-xl', '',true);
+        $('#cerrarMd').click(function() {                          
+            $('.modal').modal('hide');
+        });      
+       
+    });
+
     $(document.body).on('click', '.parametrizarProductoEd', function(e) {
         cargarFormulario(2,$(this).attr('codPlanPrograma'));
     });
@@ -163,13 +178,9 @@ function guardarProductos(){
             camposRequeridos.push({"id":"CoberturaInicial", "texto":"Cobertura Inicial"});
         }
 
-        if($('#txtRutaCoberturaFin').val() == ''){
-            camposRequeridos.push({"id":"CoberturaFinal",   "texto":"Cobertura Final"});
-        }
-
     } else {
         camposRequeridos.push({"id":"CoberturaInicial", "texto":"Cobertura Inicial"});
-        camposRequeridos.push({"id":"CoberturaFinal",   "texto":"Cobertura Final"});
+       
     }
     
  
@@ -213,6 +224,6 @@ function guardarProductos(){
         });
 
     }
-
+    
     
 }

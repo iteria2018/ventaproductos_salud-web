@@ -118,9 +118,9 @@ class Linea extends CI_Controller{
 			$extensionCI      = pathinfo($nombreCI, PATHINFO_EXTENSION);
 			$archivoCI        = file_get_contents($nombreTemporalCI);
 			//Nombre del archivo cobertura inicial
-			$nombreArchivoCI  = 'coberturaInicial';
-			$nombreArchivoCI .= str_pad($codPrograma, 2, "0", STR_PAD_LEFT).'_';
-			$nombreArchivoCI .= str_pad($codPlan    , 2, "0", STR_PAD_LEFT).'_';
+			$nombreArchivoCI  = 'Cobertura_'.$codPrograma.'_'.$codPlan;
+			// $nombreArchivoCI .= str_pad($codPrograma, 1, "", STR_PAD_LEFT);
+			// $nombreArchivoCI .= str_pad($codPlan    , 1, "", STR_PAD_LEFT);
 			$nombreArchivoCI .= '.'.strtolower($extensionCI);
 			$rutaCI           = $rutaLocal.$nombreArchivoCI;
 
@@ -135,41 +135,19 @@ class Linea extends CI_Controller{
             $rutaCI = $this->input->post("txtRutaCoberturaIni");
 		}
 
-		if ($_FILES['CoberturaFinal']['name'] != ''){
-			//Archivo Cobertura Final
-			$nombreCF         = $_FILES['CoberturaFinal']['name'];
-			$nombreTemporalCF = $_FILES['CoberturaFinal']['tmp_name'];
-			$extensionCF      = pathinfo($nombreCF, PATHINFO_EXTENSION);
-			$archivoCF        = file_get_contents($nombreTemporalCF);
-			//Nombre del archivo cobertura inicial
-			$nombreArchivoCF  = 'coberturaFinal';
-			$nombreArchivoCF .= str_pad($codPrograma, 2, "0", STR_PAD_LEFT).'_';
-			$nombreArchivoCF .= str_pad($codPlan    , 2, "0", STR_PAD_LEFT).'_';
-			$nombreArchivoCF .= '.'.strtolower($extensionCF);
-			$rutaCF           = $rutaLocal.$nombreArchivoCF;
-
-			$uploadCoberturaFinal = file_put_contents($urlLocal.$nombreArchivoCF, $archivoCF);
-
-			if ($uploadCoberturaFinal === false){
-				$msgRespuesta .= 'Ocurrió un error al subir el archivo: '. $nombreCF .' al servidor \n';
-				$ret           = false;   	
-			}
-
-		} else {
-			$rutaCF = $this->input->post("txtRutaCoberturaFin");
-		}
+		
 
 		//Si nada fallo al subir los archivos
 		if ($ret == true){
 			//Si el tipo de acción es guardar
 			if ($tipoAccion == 1){
 				//Se guarda la información del programa asociado al plan
-				$data = $this->lm->savePlanPrograma($codPlan,$codPrograma,$codEstado,$rutaCI,$rutaCF,$codProgramHmgl);
+				$data = $this->lm->savePlanPrograma($codPlan,$codPrograma,$codEstado,$rutaCI,'',$codProgramHmgl);
 			//Si el tipo de acción es actualizar	
 			} else {
 				$codPlanPrograma = $this->input->post("txtCodPlanPrograma");
 				//Se guarda la información del programa asociado al plan
-				$data = $this->lm->updatePlanPrograma($codPlanPrograma,$codPlan,$codPrograma,$codEstado,$rutaCI,$rutaCF,$codProgramHmgl);
+				$data = $this->lm->updatePlanPrograma($codPlanPrograma,$codPlan,$codPrograma,$codEstado,$rutaCI,'',$codProgramHmgl);
 			}
 		} else {
 			$data['ret']    = $ret;

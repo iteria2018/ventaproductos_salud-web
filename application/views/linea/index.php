@@ -1,5 +1,5 @@
 <?php $this->load->view('header'); ?>  
- 
+ <script> global_url = <?php echo base_url()?>; </script>
 <div class="main main-raised">
 
 	<div class="container">
@@ -25,8 +25,7 @@
 							<th>Programas</th>
 							<th>Plan</th>
 							<th>Estado</th>
-							<th>Cobertura Inicial</th>
-							<th>Cobertura Final</th>
+							<th>Cobertura</th>							
 							<th>Modificar</th>
 						</tr>
 					</thead>	
@@ -38,11 +37,10 @@
 								<td><?php echo $lineas[$i]['DES_PLAN']; ?></td>
 								<td><?php echo $lineas[$i]['DES_ESTADO']; ?></td>
 								<td>
-							        <img src="<?php echo $lineas[$i]['COBERTURA_INICIAL']; ?>" class="img-fluid" alt="Cobertura Inicial">
-								</td>
-								<td>
-							        <img src="<?php echo $lineas[$i]['COBERTURA_FINAL']; ?>" class="img-fluid" alt="Cobertura Final">
-								</td>
+									<button style="cursor:pointer;" tipoMostrarPDF="1" class="admCobertura btn btn-outline-primary btn-sm" codPrograma=<?php echo $lineas[$i]['COD_PROGRAMA']; ?> codPlan=<?php echo $lineas[$i]['COD_PLAN']; ?> >
+									<i class="fa fa-eye" aria-hidden="true"></i>
+									 Ver pdf</i></button>
+								</td>								
 								<td style="text-align:center">
 									<i class="parametrizarProductoEd fa fa-pencil-square-o" aria-hidden="true" style="cursor:pointer;" codPlanPrograma="<?php echo $lineas[$i]['COD_PLAN_PROGRAMA']; ?>"></i>
 								</td>

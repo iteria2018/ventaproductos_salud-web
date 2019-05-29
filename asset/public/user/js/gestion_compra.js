@@ -928,10 +928,19 @@ function pintarTabsProgramas(codProducto, objProgramas, abr_tab){
 
      var verBeneficiarios = abr_tab == '_con' ? '' : 'seleccionarPrograma';
     //var productos = objProgramas;
-    var htmlTabsPrograma = '<div class="container">'+
+    if(codProducto == 3){
+        var htmlTabsPrograma = '<div class="container">'+
                                 '<div class="card-deck justify-content-center text-center" id="programas'+abr_tab+'_'+codProducto+'"></div>'+
+                                '<a href="#">a partir del próximo mes, se aplicará un valor por los días de proporcionalidad en caso de que apliquen</a>'
+                                '<div class="tab-content tab-space" id="divProgramas'+abr_tab+'_'+codProducto+'"></div>'+
+                            '</div>';    
+    }else{
+        var htmlTabsPrograma = '<div class="container">'+
+                                '<div class="card-deck justify-content-center text-center" id="programas'+abr_tab+'_'+codProducto+'"></div>'+                                
                                 '<div class="tab-content tab-space" id="divProgramas'+abr_tab+'_'+codProducto+'"></div>'+
                             '</div>';
+    }
+    
     var btnAddCar = '<div class="container">'+
                         '<div class="row">'+
                             '<div class="col-sm-12 col-md-3 col-lg-3 offset-md-9 offset-lg-9 text-rigth">'+
@@ -996,9 +1005,8 @@ function pintarTabsProgramas(codProducto, objProgramas, abr_tab){
 
         if(abr_tab == '_pro'){
             divPrograma.append(btnAddCar);
-        }
+        }        
         
-
         $('#programas'+abr_tab+'_'+codProducto).append(cardPrograma);
         $('#divProgramas'+abr_tab+'_'+codProducto).append(divPrograma);
     }

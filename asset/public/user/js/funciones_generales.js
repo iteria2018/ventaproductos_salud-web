@@ -1198,10 +1198,14 @@ function validaEdad(fechaNacimiento, formato){
     var difAnio = fchActual.getFullYear() - fchNacimiento.getFullYear();
     var difMes = fchActual.getMonth() - fchNacimiento.getMonth();
     var difdia = fchActual.getDate() - fchNacimiento.getDate();
-    var anios = 0;//difMes < 1 ? (difAnio >= 1 && difdia >= 0 ? difAnio : difAnio - 1 ): difAnio;
-    
+    var anios = 0;//difMes < 1 ? (difAnio >= 1 && difdia >= 0 ? difAnio : difAnio - 1 ): difAnio;    
     if(difAnio < 1){
         anios = 0;
+        if (difMes<=0) {            
+            if (difdia<0) {
+                anios = -1;
+            } 
+        } 
     }else{
         if(difMes < 1){
             if(difMes == 0){

@@ -604,13 +604,14 @@ function agregarBeneficiario(p_idx){
     $('#pais_bnf option[value="36"]').attr("selected",true);
 
     //Aplicar validacion por edad del beneficiario
-    $('#fechaNacimiento_'+idx).change(function(){
+    $('#fechaNacimiento_'+idx).change(function(){        
         var fechaSel = $(this).val();
         var idModalFch = 'modalValidFecha';
         var botonesFch = [{"id":"aceptarFch","label":"Aceptar","class":"btn-primary"}];
         var vEdadAdulto = 45;
         var vMayoriaEdad = 18;
-        var vEdadMenor = 1;
+        var vEdadMenor = 0;
+        
         if(fechaSel != ''){
             var edadPersona = validaEdad(fechaSel);
             if(edadPersona > vEdadAdulto || edadPersona < vEdadMenor){

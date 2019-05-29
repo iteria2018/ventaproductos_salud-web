@@ -169,6 +169,14 @@ function fn_pintarCoberturas(){
 function fn_pintarProgramas(){
     $(document.body).on("click", ".seleccionarPrograma", function() {
         tabProductos(event, $(this).attr('href'));
+        let producto = $(this).attr('href').split("_");
+        if(producto[1]=="pro" && producto[2]=="1"){
+            let botonesModal = [{"id":"aceptarHh","label":"Aceptar","class":"btn-primary mr-2"}];
+            crearModal("hrhabiles", 'Confirmaci\u00f3n', 'el servicio se realizará después de 48 horas hábiles.', botonesModal, false, '', '');
+                $('#aceptarHh').click(function() {	                  	   
+                    $('#hrhabiles').modal('hide');
+                });
+        }      
         $(".seleccionarPrograma").css("background", ""); 
         $(".seleccionarPrograma").css("color", "#000"); 
         $(this).css("background","#2196f3");
@@ -918,7 +926,7 @@ function pintarTabsProductos(abr_tab){
     $('#liProducto_3 a').click(function(){        
         setTimeout(function(){
             if ($('#tabs_compra').find('A[aria-selected="true"]').attr('href') != "#paso_5") {       
-                validarHabeasDataCem();
+                 validarHabeasDataCem();                
             }
         },1000);         
     });
@@ -927,11 +935,11 @@ function pintarTabsProductos(abr_tab){
 function pintarTabsProgramas(codProducto, objProgramas, abr_tab){
 
      var verBeneficiarios = abr_tab == '_con' ? '' : 'seleccionarPrograma';
-    //var productos = objProgramas;
-    if(codProducto == 3){
+    // //var productos = objProgramas;
+    if(codProducto == 3 && abr_tab == "_pro"){
         var htmlTabsPrograma = '<div class="container">'+
                                 '<div class="card-deck justify-content-center text-center" id="programas'+abr_tab+'_'+codProducto+'"></div>'+
-                                '<a href="#">a partir del próximo mes, se aplicará un valor por los días de proporcionalidad en caso de que apliquen</a>'
+                                '<p>a partir del próximo mes, se aplicará un valor por los días de proporcionalidad en caso de que apliquen</p>'+
                                 '<div class="tab-content tab-space" id="divProgramas'+abr_tab+'_'+codProducto+'"></div>'+
                             '</div>';    
     }else{

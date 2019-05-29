@@ -168,19 +168,25 @@ function fn_pintarCoberturas(){
 
 function fn_pintarProgramas(){
     $(document.body).on("click", ".seleccionarPrograma", function() {
-        tabProductos(event, $(this).attr('href'));
         let producto = $(this).attr('href').split("_");
         if(producto[1]=="pro" && producto[2]=="1"){
-            let botonesModal = [{"id":"aceptarHh","label":"Aceptar","class":"btn-primary mr-2"}];
-            crearModal("hrhabiles", 'Confirmaci\u00f3n', 'el servicio se realizará después de 48 horas hábiles.', botonesModal, false, '', '');
+            if($('#chAceptaCem').is(':checked')){
+                alertify.notify('el servicio se realizará después de 48 horas hábiles', 'success', 5, null);
+                tabProductos(event, $(this).attr('href'));            
+                $(".seleccionarPrograma").css("background", ""); 
+                $(".seleccionarPrograma").css("color", "#000"); 
+                $(this).css("background","#2196f3");
+                $(this).css("color","#fff");
+            }else{
+                let botonesModal = [{"id":"aceptarHh","label":"Aceptar","class":"btn-primary mr-2"}];
+                crearModal("hrhabiles", 'Confirmaci\u00f3n', 'Debe aceptar los términos y condiciones.', botonesModal, false, '', '');
                 $('#aceptarHh').click(function() {	                  	   
                     $('#hrhabiles').modal('hide');
                 });
-        }      
-        $(".seleccionarPrograma").css("background", ""); 
-        $(".seleccionarPrograma").css("color", "#000"); 
-        $(this).css("background","#2196f3");
-        $(this).css("color","#fff");
+            }
+            
+        }  
+        
     });
 }
 
@@ -926,7 +932,7 @@ function pintarTabsProductos(abr_tab){
     $('#liProducto_3 a').click(function(){        
         setTimeout(function(){
             if ($('#tabs_compra').find('A[aria-selected="true"]').attr('href') != "#paso_5") {       
-                 validarHabeasDataCem();                
+                //  validarHabeasDataCem();                
             }
         },1000);         
     });
@@ -939,7 +945,9 @@ function pintarTabsProgramas(codProducto, objProgramas, abr_tab){
     if(codProducto == 3 && abr_tab == "_pro"){
         var htmlTabsPrograma = '<div class="container">'+
                                 '<div class="card-deck justify-content-center text-center" id="programas'+abr_tab+'_'+codProducto+'"></div>'+
-                                '<p>a partir del próximo mes, se aplicará un valor por los días de proporcionalidad en caso de que apliquen</p>'+
+                                '<br><p class="text-muted">a partir del próximo mes, se aplicará un valor por los días de proporcionalidad en caso de que apliquen</p>'+                              
+                                '<input type="checkbox" id="chAceptaCem">'+
+                                '<label>  Comprendo y acepto los t&eacute;rminos, condiciones y restricciones alusivas al &Aacute;rea de Cobertura. </label><a href="http://cem.coomeva.com.co/publicaciones.php?id=33885" target="_blank"> Mas informacion</a>'+
                                 '<div class="tab-content tab-space" id="divProgramas'+abr_tab+'_'+codProducto+'"></div>'+
                             '</div>';    
     }else{
@@ -2565,10 +2573,10 @@ function validarHabeasDataCem(){
     var botonesModal = [{"id":"aceptarHdCem","label":"Aceptar","class":"btn-primary mr-2"},{"id":"cerrarHdCem","label":"Cancelar","class":"btn-primary"}];
     var divHd = $('<div id="divHdCem" class="content-habeasData"></div>');
     var labelHd = $('<label></label>');
-    var checkHd = $('<input type="checkbox" id="chAceptaCem">');
+    // var checkHd = $('<input type="checkbox" id="chAceptaCem">');
     var dataHabeasData = global_habeasDataCem;
 
-    labelHd.html(checkHd);
+    // labelHd.html(checkHd);
     labelHd.append(' Comprendo y acepto los t&eacute;rminos, condiciones y restricciones alusivas al &Aacute;rea de Cobertura y manifiesto mi deseo de contratar el Programa ofrecido.');
     divHd.html(dataHabeasData);
     divHd.append('<br><br>');

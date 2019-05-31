@@ -171,7 +171,7 @@ function fn_pintarProgramas(){
         let producto = $(this).attr('href').split("_");
         if(producto[1]=="pro" && producto[2]=="1"){
             if($('#chAceptaCem').is(':checked')){
-                alertify.notify('el servicio se realizará después de 48 horas hábiles', 'success', 5, null);
+                alertify.notify('el servicio se realizará después de 48 horas hábiles', 'success', 15, null);
                 tabProductos(event, $(this).attr('href'));            
                 $(".seleccionarPrograma").css("background", ""); 
                 $(".seleccionarPrograma").css("color", "#000"); 
@@ -1138,7 +1138,11 @@ function validBenefiProd(campo){
                     if(objAplica['disponibleUbicacion']['aprobado'] != 'S'){
                         //msj = 'El producto seleccionado no cuenta con cobertura en la ubicaci&oacute;n ingresada';
                         msj = objAplica['disponibleUbicacion']['mensaje'];
+                    }else{
+                        alertify.notify('La ubicacion ingresada si tiene cobertura', 'success', 5, null);
                     }
+                }else{
+                    alertify.notify('La ubicacion ingresada si tiene cobertura', 'success', 5, null);
                 }
             }
 

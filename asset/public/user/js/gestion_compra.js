@@ -8,7 +8,7 @@ var global_beneficiario_programa = {};
 var global_accion_evento         = {};
 
 $(document).ready(function() {
-
+   
    if(g_senal == 0){
         // if(global_datos_contratante['COD_AFILIACION'] == '-1'){
         //     traerHabeasData(function(data){
@@ -134,7 +134,7 @@ function fn_pintarCoberturas(){
         var botonesModal = [{"id":"cerrarMd","label":"Aceptar","class":"btn-primary"}];
         var paramsObj    = {};
        
-        var url          = global_base_url + 'asset/public/uploadpdf/Cobertura/cobertura_'+codPrograma+'_'+codPlan+'.pdf'; 
+        var url          = global_base_url + 'asset/public/uploadPdf/Cobertura/Cobertura_'+codPrograma+'_'+codPlan+'.pdf'; 
         crearModal(idModal, 'Informaci\u00f3n del Contrato', '<iframe id="cobertura" src="'+url+'" width="100%" height="100%" style="border: 0; overflow: hidden; min-height: 500px;"></iframe>', botonesModal, false, 'modal-xl', '',true);
         $('#cerrarMd').click(function() {                          
             $('.modal').modal('hide');
@@ -177,6 +177,7 @@ function fn_pintarProgramas(){
                 $(".seleccionarPrograma").css("color", "#000"); 
                 $(this).css("background","#2196f3");
                 $(this).css("color","#fff");
+                $('#chAceptaCem').attr('disabled',true);
             }else{
                 let botonesModal = [{"id":"aceptarHh","label":"Aceptar","class":"btn-primary mr-2"}];
                 crearModal("hrhabiles", 'Confirmaci\u00f3n', 'Debe aceptar los términos y condiciones.', botonesModal, false, '', '');
@@ -185,6 +186,13 @@ function fn_pintarProgramas(){
                 });
             }
             
+        }else{
+            tabProductos(event, $(this).attr('href'));            
+                $(".seleccionarPrograma").css("background", ""); 
+                $(".seleccionarPrograma").css("color", "#000"); 
+                $(this).css("background","#2196f3");
+                $(this).css("color","#fff");
+                $('#chAceptaCem').attr('disabled',false);
         }  
         
     });
@@ -679,7 +687,7 @@ function agregarBeneficiario(p_idx){
             traerInfoBeneficiario(tipoIdentifi, numIdentifi, tipoIdentiAbr);
         }
     });
-    $('#numeroDocumento_'+idx).attr("disabled","disabled");
+    $('#numeroDocumento_'+idx).attr("disabled","disabled");    
 }
 
 function quitarBeneficiarioConfirm(idxBenefi){

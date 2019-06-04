@@ -16,6 +16,58 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Parentesco</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['PARENTESCO'] ?>" disabled>
+                            </div> 
+                        </div>   
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Tipo Documento</label>
+                                <input type="text"  class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['TIPO_IDENTIFICACION'] ?>" disabled>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Número Documento</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['NUMERO_IDENTIFICACION'] ?>" disabled>
+                            </div> 
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Primer Apellido</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['APELLIDO_1'] ?>" disabled>
+                            </div> 
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Segundo Apellido</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['APELLIDO_2'] ?>" disabled>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Primer Nombre</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['NOMBRE_1'] ?>" disabled>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Segundo Nombre</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['NOMBRE_2'] ?>" disabled>
+                            </div>
+                        </div>
+                        <div class="row">                                
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Género</label>
+                                <input type="text"  class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['GENERO'] ?>" disabled>
+                            </div> 
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Fecha Nacimiento</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['FECHA_NACIMIENTO'] ?>" disabled>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Nacionalidad</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['NACIONALIDAD'] ?>" disabled>
+                            </div> 
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Estado Civil</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['ABR_ESTADO_CIVIL'] ?>" disabled>
+                            </div> 
+                            <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>EPS</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['DES_EPS'] ?>" disabled>
+                            </div> 
+                            <div class="col-sm-12 col-md-6 col-lg-2">
                                 <label>Tipo de compra</label>
                                 <?php $tiposVenta = explode(",", $beneficiario[$i]['TIPO_VENTA']); $totalTiposVenta = count($tiposVenta); ?>
                                 <?php if($totalTiposVenta > 1): ?>
@@ -27,8 +79,25 @@
                                 <?php else: ?>
                                     <input type="text" class="form-control form-control-sm campo-vd-sm" value="<?php echo $beneficiario[$i]['TIPO_VENTA'] ?>" disabled>
                                 <?php endif;?>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-2">
+                            </div> 
+                        </div>    
+                        <div class="row"> 
+                            <div class="col-sm-12 col-md-6 col-lg-2 text-center">
+                                <label></label><br>
+                                <button codPersona="<?php echo $beneficiario[$i]['COD_PERSONA'] ?>" codAfiliacion="<?php echo $beneficiario[$i]['COD_AFILIACION'] ?>" nombreBeneficiario="<?php echo $beneficiario[$i]['NOMBRE_1'].' '.$beneficiario[$i]['APELLIDO_1']; ?>" class="verArchivo btn btn-primary btn-sm" type="button" title="Ver Adjunto" style="padding: 0.40625rem 0.6rem;">
+                                    <i class="fa fa-file-image-o" aria-hidden="true"></i>&nbsp; Archivos Adjuntos
+                                </button>
+                            </div>                            
+                            <div class="col-sm-12 col-md-6 col-lg-2 text-center">
+                                <?php if ($beneficiario[$i]['IND_ENCUESTA_SALUD'] == 1): ?>                           
+                                    <label></label><br>
+                                    <button codigoPersona="<?php echo $beneficiario[$i]['COD_PERSONA'] ?>" codigoAfiliacion="<?php echo $beneficiario[$i]['COD_AFILIACION'] ?>" codigoSexo="<?php echo $beneficiario[$i]['COD_SEXO'] ?>" edad="<?php echo $beneficiario[$i]['EDAD'] ?>" class="encuestaSalud btn btn-primary boton-vd btn-sm" type="button" >
+                                        <i class="fa fa-check-square-o" aria-hidden="true"></i> &nbsp; Encuesta Salud
+                                    </button>
+                                <?php endif;?>
+                            </div>   
+                        </div>                                                              
+                        <!--    <div class="col-sm-12 col-md-6 col-lg-2">
                                 <label>Fecha inicio servicio</label>
                                 <?php $fechasServicio = explode(",", $beneficiario[$i]['FECHA_INICIO_SERVICIO']); $totalFechasServicio = count($fechasServicio); ?>
                                 <?php if($totalFechasServicio > 1): ?>
@@ -66,59 +135,9 @@
                                 <?php else: ?>
                                     <input type="text" class="form-control form-control-sm campo-vd-sm" value="<?php echo $beneficiario[$i]['COD_TARIFAS'] ?>" disabled>
                                 <?php endif;?>                                
-                            </div>             
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Parentesco</label>
-                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['PARENTESCO'] ?>" disabled>
-                            </div>                       
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Primer Apellido</label>
-                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['APELLIDO_1'] ?>" disabled>
-                            </div>                            
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Segundo Apellido</label>
-                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['APELLIDO_2'] ?>" disabled>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Primer Nombre</label>
-                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['NOMBRE_1'] ?>" disabled>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Segundo Nombre</label>
-                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['NOMBRE_2'] ?>" disabled>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Género</label>
-                                <input type="text"  class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['GENERO'] ?>" disabled>
-                            </div>    
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Tipo Documento</label>
-                                <input type="text"  class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['TIPO_IDENTIFICACION'] ?>" disabled>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Número Documento</label>
-                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['NUMERO_IDENTIFICACION'] ?>" disabled>
-                            </div>                                  
+                            </div>                                                                                                                     
                         </div>                    
-                        <div class="row"> 
-                        <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Fecha Nacimiento</label>
-                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['FECHA_NACIMIENTO'] ?>" disabled>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Nacionalidad</label>
-                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['NACIONALIDAD'] ?>" disabled>
-                            </div>   
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>Estado Civil</label>
-                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['ABR_ESTADO_CIVIL'] ?>" disabled>
-                            </div> 
-                            <div class="col-sm-12 col-md-6 col-lg-2">
-                                <label>EPS</label>
-                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['DES_EPS'] ?>" disabled>
-                            </div>                 
+                        <div class="row">                                    
                             <div class="col-sm-12 col-md-6 col-lg-2">
                                 <label>Tipo vía</label>
                                 <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['ABR_TIPO_VIA'] ?>" disabled>
@@ -163,21 +182,8 @@
                                 <label>Email</label>
                                 <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['EMAIL'] ?>" disabled>
                             </div>
-                            <div class="col-sm-12 col-md-6 col-lg-2 text-center">
-                                <label></label><br>
-                                <button codPersona="<?php echo $beneficiario[$i]['COD_PERSONA'] ?>" codAfiliacion="<?php echo $beneficiario[$i]['COD_AFILIACION'] ?>" nombreBeneficiario="<?php echo $beneficiario[$i]['NOMBRE_1'].' '.$beneficiario[$i]['APELLIDO_1']; ?>" class="verArchivo btn btn-primary btn-sm" type="button" title="Ver Adjunto" style="padding: 0.40625rem 0.6rem;">
-                                    <i class="fa fa-file-image-o" aria-hidden="true"></i>&nbsp; Archivos Adjuntos
-                                </button>
-                            </div>                            
-                            <div class="col-sm-12 col-md-6 col-lg-2 text-center">
-                                <?php if ($beneficiario[$i]['IND_ENCUESTA_SALUD'] == 1): ?>                           
-                                    <label></label><br>
-                                    <button codigoPersona="<?php echo $beneficiario[$i]['COD_PERSONA'] ?>" codigoAfiliacion="<?php echo $beneficiario[$i]['COD_AFILIACION'] ?>" codigoSexo="<?php echo $beneficiario[$i]['COD_SEXO'] ?>" edad="<?php echo $beneficiario[$i]['EDAD'] ?>" class="encuestaSalud btn btn-primary boton-vd btn-sm" type="button" >
-                                        <i class="fa fa-check-square-o" aria-hidden="true"></i> &nbsp; Encuesta Salud
-                                    </button>
-                                <?php endif;?>
-                            </div>                                                   
-                        </div>             	
+                                                                              
+                        </div>  -->           	
                     </div>
                 </div>
             </div> 

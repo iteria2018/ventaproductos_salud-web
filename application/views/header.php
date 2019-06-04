@@ -22,7 +22,7 @@
           redirect('Login');
       }else{
           if(array_search($nameControler, $paginasNoAplica_url)){
-              redirect('Home');
+              redirect('Gestion_compra');
           }
       }   
  ?>  

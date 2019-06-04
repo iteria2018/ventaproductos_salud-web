@@ -135,7 +135,7 @@ function fn_pintarCoberturas(){
         var paramsObj    = {};
        
         var url          = global_base_url + 'asset/public/uploadPdf/Cobertura/Cobertura_'+codPrograma+'_'+codPlan+'.pdf'; 
-        crearModal(idModal, 'Informaci\u00f3n del Contrato', '<iframe id="cobertura" src="'+url+'" width="100%" height="100%" style="border: 0; overflow: hidden; min-height: 500px;"></iframe>', botonesModal, false, 'modal-xl', '',true);
+        crearModal(idModal, 'Informaci\u00f3n de la Cobertura', '<iframe id="cobertura" src="'+url+'" width="100%" height="100%" style="border: 0; overflow: hidden; min-height: 500px;"></iframe>', botonesModal, false, 'modal-xl', '',true);
         $('#cerrarMd').click(function() {                          
             $('.modal').modal('hide');
         });
@@ -169,30 +169,19 @@ function fn_pintarCoberturas(){
 function fn_pintarProgramas(){
     $(document.body).on("click", ".seleccionarPrograma", function() {
         let producto = $(this).attr('href').split("_");
-        if(producto[1]=="pro" && producto[2]=="1"){
-            if($('#chAceptaCem').is(':checked')){
+        if(producto[1]=="pro" && producto[2]=="1"){            
                 alertify.notify('el servicio se realizará después de 48 horas hábiles', 'success', 15, null);
                 tabProductos(event, $(this).attr('href'));            
                 $(".seleccionarPrograma").css("background", ""); 
                 $(".seleccionarPrograma").css("color", "#000"); 
                 $(this).css("background","#2196f3");
-                $(this).css("color","#fff");
-                $('#chAceptaCem').attr('disabled',true);
-            }else{
-                let botonesModal = [{"id":"aceptarHh","label":"Aceptar","class":"btn-primary mr-2"}];
-                crearModal("hrhabiles", 'Confirmaci\u00f3n', 'Debe aceptar los términos y condiciones.', botonesModal, false, '', '');
-                $('#aceptarHh').click(function() {	                  	   
-                    $('#hrhabiles').modal('hide');
-                });
-            }
-            
+                $(this).css("color","#fff");                               
         }else{
             tabProductos(event, $(this).attr('href'));            
                 $(".seleccionarPrograma").css("background", ""); 
                 $(".seleccionarPrograma").css("color", "#000"); 
                 $(this).css("background","#2196f3");
-                $(this).css("color","#fff");
-                $('#chAceptaCem').attr('disabled',false);
+                $(this).css("color","#fff");              
         }  
         
     });
@@ -534,14 +523,14 @@ function fn_inicio(){
     });
 
     //Aplicar evento al pasar de la tab2 a la tab3
-    $('#siguiente_paso2').click(function(){
-        if(validaBenefiCompra()){
-            registrarFactura(function(){
-                //Actualizar variable aux con lo que posee la variable principal
-                global_aux_prodbenefi = pasar_obj_global(global_prod_benefi);
-                tabsCompra.eq(2).children('a').trigger('click');
-            });
-        }                
+    $('#siguiente_paso2').click(function(){        
+            if(validaBenefiCompra()){
+                registrarFactura(function(){
+                    //Actualizar variable aux con lo que posee la variable principal
+                    global_aux_prodbenefi = pasar_obj_global(global_prod_benefi);
+                    tabsCompra.eq(2).children('a').trigger('click');
+                });
+            }                              
     });
     
     //Aplicar evento para setear dato al obj global_registro_basico, cuando se cambia la el check mascota
@@ -2258,7 +2247,23 @@ function validaBenefiCompra(){
                 var programa = producto[x];
                 var llaveBenefi = benefi['tipoDocumento']+'_'+benefi['numeroDocumento'];
                 if(programa[llaveBenefi]['marcaAplica'] == 1){
-                    aplicaCompra = true;
+                    if(p == 3){
+                        if($('#chAceptaCem').is(':checked')){
+                            aplicaCompra = true;
+                        }else{
+                            let botonesModal = [{"id":"aceptarHh","label":"Aceptar","class":"btn-primary mr-2"}];
+                            crearModal("hrhabiles", 'Confirmaci\u00f3n', 'Debe aceptar los términos y condiciones.', botonesModal, false, '', '');
+                            $('#aceptarHh').click(function() {	                  	   
+                                $('#hrhabiles').modal('hide');
+                            });
+                            aplicaCompra = true;
+                            valido = false;
+                        }     
+                    }else{
+                        aplicaCompra = true;
+                    }                   
+                    
+                    
                 }
 
                 if(aplicaCompra){

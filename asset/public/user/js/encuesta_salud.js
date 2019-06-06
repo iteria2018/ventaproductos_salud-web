@@ -50,7 +50,7 @@ function saveEncuestaSalud(cod_persona,cod_afiliacion){
                     	  ];                        
 
    
-   if(validRequired(camposRequeridos)){
+   if(   (camposRequeridos)){
 
      	var datosJson = {};
 
@@ -58,7 +58,8 @@ function saveEncuestaSalud(cod_persona,cod_afiliacion){
       var codigo_persona    = cod_persona;
   		var codigo_encuesta   = 2; 
   		var arrayData         = [];
-  		var datosJson         = {};  
+      var datosJson         = {};  
+      var validaRespuesta = true;
   		$("#form_div_salud").find("input[type!='radio'],input[type='radio']:checked").each(function(){
   				 
   			  var name = this.name; 
@@ -66,7 +67,7 @@ function saveEncuestaSalud(cod_persona,cod_afiliacion){
   			  var codigo_pregunta = "";
   	      var codigo_respuesta = "";
   	      datosJson = {};  
-
+         
   			   if(this.type == "radio"){
   			      if($(this).is(":checked") && $(this).is(":visible")){
   				       valor_respuesta = $("input[name='"+name+"']:checked").val();
@@ -75,49 +76,58 @@ function saveEncuestaSalud(cod_persona,cod_afiliacion){
   	             datosJson =  {"codigo_encuesta":codigo_encuesta,"codigo_pregunta":codigo_pregunta,"codigo_respuesta":codigo_respuesta,"valor_respuesta":valor_respuesta,"codigo_afiliacion":codigo_afiliacion,"codigo_persona":codigo_persona}; 
   	             arrayData.push(datosJson); 
   			      }
-  			   }else if(this.type != "button" && $(this).is(":visible") && $(this).is(":enabled")){  				  
-    					   valor_respuesta = this.value.toString().replace(/\./g,'');
-    	           codigo_respuesta = $(this).closest(".div_container_respuesta").attr("data-respuesta");
-    					   codigo_pregunta = $(this).closest(".div_container_pregunta").attr("data-pregunta");
-    	           datosJson =  {"codigo_encuesta":codigo_encuesta,"codigo_pregunta":codigo_pregunta,"codigo_respuesta":codigo_respuesta,"valor_respuesta":valor_respuesta,"codigo_afiliacion":codigo_afiliacion,"codigo_persona":codigo_persona}; 
-    	           arrayData.push(datosJson);  
+  			   }else if(this.type != "button" && $(this).is(":visible") && $(this).is(":enabled")){  			
+                      valor_respuesta = this.value.toString().replace(/\./g,'');
+                      if (valor_respuesta=='') {
+                        validaRespuesta = false;
+                      } else {
+                        codigo_respuesta = $(this).closest(".div_container_respuesta").attr("data-respuesta");
+                        codigo_pregunta = $(this).closest(".div_container_pregunta").attr("data-pregunta");
+                        datosJson =  {"codigo_encuesta":codigo_encuesta,"codigo_pregunta":codigo_pregunta,"codigo_respuesta":codigo_respuesta,"valor_respuesta":valor_respuesta,"codigo_afiliacion":codigo_afiliacion,"codigo_persona":codigo_persona}; 
+                        arrayData.push(datosJson);  
+                      }
+    	            
   			   }				    
   		                      		    
   		  });        
-
-	 	      var idModal = 'modalConfirmarSave';		 
-          var botonesModal = [{
-        				            	"id": "cerrarMdSave",
-        				            	"label": "Cerrar",
-        				            	"class": "btn-primary"
-				         	           }];
-
-        console.log("arrayData encuesta salud ",arrayData);
-                   
-        runLoading(true);
-
-  	    $.ajax({    
-              url: "Encuesta_sarlaf/save_encuesta_salud", 
-              type: "POST",  
-              dataType: "json",
-              data:{datos:arrayData},  
-              success:function(data){
-                runLoading(false);                
-	             	crearModal(idModal, 'Confirmaci\u00f3n', data.respuesta, botonesModal, false, '', '',true);
-		            $('#cerrarMdSave').click(function() {
-		                $('.modal').modal('hide');	               
-		            });                                                                     
-              },
-              error: function(result) {
-                    runLoading(false);		                      
-	                  crearModal(idModal, 'Confirmaci\u00f3n', 'La operaci\u00f3n no se pudo completar por que ocurri\u00f3 un error en la base de datos', botonesModal, false, '', '',true);
-	                  $('#cerrarMdSave').click(function() {	                  	   
-	                        $('.modal').modal('hide');
-	                  });	
-              }
-
-        });
-
+          if (validaRespuesta) {
+            var idModal = 'modalConfirmarSave';		 
+            var botonesModal = [{
+                                     "id": "cerrarMdSave",
+                                     "label": "Cerrar",
+                                     "class": "btn-primary"
+                                     }];
+  
+            console.log("arrayData encuesta salud ",arrayData);
+                        
+            runLoading(true);
+   
+            $.ajax({    
+                  url: "Encuesta_sarlaf/save_encuesta_salud", 
+                  type: "POST",  
+                  dataType: "json",
+                  data:{datos:arrayData},  
+                  success:function(data){
+                     runLoading(false);                
+                        crearModal(idModal, 'Confirmaci\u00f3n', data.respuesta, botonesModal, false, '', '',true);
+                     $('#cerrarMdSave').click(function() {
+                           $('.modal').modal('hide');	               
+                     });                                                                     
+                  },
+                  error: function(result) {
+                        runLoading(false);		                      
+                        crearModal(idModal, 'Confirmaci\u00f3n', 'La operaci\u00f3n no se pudo completar por que ocurri\u00f3 un error en la base de datos', botonesModal, false, '', '',true);
+                        $('#cerrarMdSave').click(function() {	                  	   
+                              $('.modal').modal('hide');
+                        });	
+                  }
+   
+            });
+  
+          } else {
+             alertify.notify('Si selecciono <strong>SI</strong>, en alguna de las respuetas. Por favor especificar debajo de la respuesta', 'warning', 5, null);
+          }
+	 	
    }
 
 }

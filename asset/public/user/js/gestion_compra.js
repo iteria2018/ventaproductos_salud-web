@@ -1127,10 +1127,10 @@ function validBenefiProd(campo){
                     if(objAplica['disponibleUbicacion']['aprobado'] != 'S'){
                         //msj = 'El producto seleccionado no cuenta con cobertura en la ubicaci&oacute;n ingresada';
                         msj = objAplica['disponibleUbicacion']['mensaje'];
-                    }else{
+                    }else if(producto == 3){
                         alertify.notify('La ubicacion ingresada si tiene cobertura', 'success', 5, null);
                     }
-                }else{
+                }else if(producto == 3){
                     alertify.notify('La ubicacion ingresada si tiene cobertura', 'success', 5, null);
                 }
             }

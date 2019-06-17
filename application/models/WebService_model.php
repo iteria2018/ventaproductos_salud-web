@@ -3,7 +3,8 @@
 	class WebService_model extends CI_Model{
 		
 		public function __construct() {
-			parent::__construct(); 
+            parent::__construct(); 
+            $this->load->model('Utilidades_model'); 
 		} 
         
         public function getWsEstadoUsuario($tipoId,$nroId){
@@ -150,6 +151,18 @@
           } else {
               return false; 
           }    
+        }
+
+        public function validarUsuarioCoop($tipoId, $nroId){
+            $url = $this->Utilidades_model->getParametro(84)->RESULTADO;
+            try{
+                $client = new SoapClient($url);
+                // $something = $client->__getFunctions();
+                $result = $client->consultarAsociadoVida($nroId,$tipoId);
+                return $result;
+            }catch(Exception $e) {
+                return false;
+            }
         }
 
        

@@ -760,8 +760,7 @@ function getDatosAsociados(){
               encode:true,                
               success:function(data){
                 runLoading(false);  
-
-                console.log("data",data);              
+           
 
               if (data['tipo'] != 0){
 
@@ -804,8 +803,18 @@ function getDatosAsociados(){
 	                disabledSendEmail(data['datos']['EMAIL']);
 	                
                }else if(data['tipo'] == 3){
-								global_tipo_persona = 1;
-							 }
+					$("#nombre1").val(data['datos']['nombre1']);
+					$("#nombre2").val(data['datos']['nombre2']);
+					$("#apellido1").val(data['datos']['primerApellido']);
+					$("#apellido2").val(data['datos']['segundoApellido']); 
+					$("#telefono").val(data['datos']['telResidencia']);
+					$("#celular").val(data['datos']['celular']);
+					$("#correo").val(data['datos']['email']); 
+					$("#fecha_nacimiento").val(data['datos']['fecNacimiento']); 
+					$("#lit_sexo").val(data['datos']['codSexo']);
+					global_tipo_persona = 1;
+					disabledSendEmail(data['datos']['email']);
+				}
 
               }                                                       
               },

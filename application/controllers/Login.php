@@ -11,7 +11,6 @@
   	 }
 	 
 	 public function index() {
-
       $data["tipoIdentificacion"] =  $this->getSelTipoDocumento();
       $data["sexo"] = $this->getSelSexo();
       $this->load->view('login',$data);
@@ -317,9 +316,11 @@
         if ($datos != null) {
           if ($datos["errorBean"]["codigo"] == -1) {
             $datos = null;
-            $datos=$this->wsm->validaUsuarioAsociado($parametros["tipo_documento"],$parametros["documento"]);
-            if ($datos[0]['existe'] > 0) {
-              $retorno["datos"] =  'VACIO';
+            $datos=$this->wsm->validarUsuarioCoop($cod_tipo_ident,$identificacion);
+            if ($datos['codRetornoWS'] > 0) {
+              $date = new DateTime($datos->fecNacimiento);
+              $datos->fecNacimiento = $date->format('d/m/Y');
+              $retorno["datos"] =  $datos;
               $retorno["tipo"] =  3;
             } else {
               $retorno["datos"] =  'VACIO';
@@ -334,8 +335,7 @@
             $retorno["datos"] = 'VACIO';
             $retorno["tipo"] =  0;             
         }
-      }else{
-         //$datos = $this->Login_model->getInfoPersona_data($parametrosPerso); 
+      }else{               
             $retorno["datos"] =  $datos;
             $retorno["tipo"] =  2;        
       } 

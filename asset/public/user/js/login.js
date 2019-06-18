@@ -1,4 +1,5 @@
  var global_tipo_persona = 0;
+ var global_corte;
  //var global_codigo_verificacion = 0;
 
  $(document).ready(function() {
@@ -601,7 +602,8 @@
 
 	         	 var formData = $('#form_usuario').serializeArray();	
 	             formData.push({ name: "codigo_usuario", value: 0});
-	             formData.push({ name: "codigo_plan", value: global_tipo_persona});
+				 formData.push({ name: "codigo_plan", value: global_tipo_persona});
+				 formData.push({ name: "corte", value: global_corte});
 	             formData.push({ name: "codigo_tipo_persona", value: 1});             
 
 	           runLoading(true);
@@ -760,7 +762,7 @@ function getDatosAsociados(){
               encode:true,                
               success:function(data){
                 runLoading(false);  
-           
+           console.log(data);
 
               if (data['tipo'] != 0){
 
@@ -799,7 +801,7 @@ function getDatosAsociados(){
 	                $("#lit_sexo").val(data['datos']['COD_SEXO']);               
 	               
 	                global_tipo_persona = data['datos']['COD_PLAN'];
-
+					
 	                disabledSendEmail(data['datos']['EMAIL']);
 	                
                }else if(data['tipo'] == 3){
@@ -813,6 +815,7 @@ function getDatosAsociados(){
 					$("#fecha_nacimiento").val(data['datos']['fecNacimiento']); 
 					$("#lit_sexo").val(data['datos']['codSexo']);
 					global_tipo_persona = 1;
+					global_corte = data['datos']['corte'];
 					disabledSendEmail(data['datos']['email']);
 				}
 

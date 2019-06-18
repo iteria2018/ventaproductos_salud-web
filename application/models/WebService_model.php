@@ -158,8 +158,8 @@
             try{
                 $client = new SoapClient($url);
                 // $something = $client->__getFunctions();
-                $result = $client->consultarAsociadoVida($nroId,$tipoId);
-                return $result;
+                $result = $client->consultarAsociadoVida($nroId,$tipoId);                
+                return json_decode(json_encode($result),True);                
             }catch(Exception $e) {
                 return false;
             }

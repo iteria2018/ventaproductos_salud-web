@@ -9,7 +9,7 @@
      public function guardarUsuario($data){
 
       $response = ''; 
-      $s = oci_parse($this->db->conn_id, "begin VDIR_PACK_INICIO_SESSION.VDIR_SP_GUARDAR_USUARIO(:bind1,:bind2,:bind3,:bind4,:bind5,:bind6,TO_DATE(:bind7,'dd/mm/yyyy'),:bind8,:bind9,:bind10,:bind11,:bind12,:bind13,:bind14,:bind15,:bind16,:bind17); end;"); 
+      $s = oci_parse($this->db->conn_id, "begin VDIR_PACK_INICIO_SESSION.VDIR_SP_GUARDAR_USUARIO(:bind1,:bind2,:bind3,:bind4,:bind5,:bind6,TO_DATE(:bind7,'dd/mm/yyyy'),:bind8,:bind9,:bind10,:bind11,:bind12,:bind13,:bind14,:bind15,:bind16,:bind17,:bind18); end;"); 
       oci_bind_by_name($s, ":bind1", $data['tipo_identificacion']); 
       oci_bind_by_name($s, ":bind2", $data['identificacion']); 
       oci_bind_by_name($s, ":bind3", $data['nombre1'],300); 
@@ -25,8 +25,10 @@
       oci_bind_by_name($s, ":bind13", $data['clave'],300); 
       oci_bind_by_name($s, ":bind14", $data['codigo_tipo_persona']); 
       oci_bind_by_name($s, ":bind15", $data['codigo_plan']);
-      oci_bind_by_name($s, ":bind16", $data['estado']);      
-      oci_bind_by_name($s, ":bind17", $response,300); 
+      oci_bind_by_name($s, ":bind16", $data['estado']);  
+      oci_bind_by_name($s, ":bind17", $data['corte']);    
+      oci_bind_by_name($s, ":bind18", $response,300); 
+
       oci_execute($s, OCI_DEFAULT);       
 
       return $response; 

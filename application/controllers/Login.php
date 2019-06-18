@@ -166,6 +166,7 @@
                      'clave' => $clave,
                      'codigo_tipo_persona' =>  $this->input->post("codigo_tipo_persona"),
                      'codigo_plan' =>  $this->input->post("codigo_plan"),
+                     'corte' =>  $this->input->post("corte"),
                      'estado'  => 1                  
                      ); 
             
@@ -311,34 +312,34 @@
       $datos = $this->Login_model->getInfoPersona_data($parametrosPerso);
   
       if ($datos == false) {
-        $datos = null;
-        $datos = json_decode($this->Utilidades_model->getDataCurl($parametros),true);        
-        if ($datos != null) {
-          if ($datos["errorBean"]["codigo"] == -1) {
+          $datos = null;
+          $datos=$this->wsm->validarUsuarioCoop($cod_tipo_ident,$identificacion);   
+          $retornoWS = $datos['codRetornoWS'];          
+          if ($retornoWS > 0) {            
+            $date = new DateTime($datos['fecNacimiento']);                        
+            $datos['fecNacimiento'] = $date->format('d/m/Y');            
+            $retorno["datos"] =  $datos;            
+            $retorno["tipo"] =  3;            
+          } else {
             $datos = null;
-            $datos=$this->wsm->validarUsuarioCoop($cod_tipo_ident,$identificacion);
-            if ($datos['codRetornoWS'] > 0) {
-              $date = new DateTime($datos->fecNacimiento);
-              $datos->fecNacimiento = $date->format('d/m/Y');
-              $retorno["datos"] =  $datos;
-              $retorno["tipo"] =  3;
-            } else {
-              $retorno["datos"] =  'VACIO';
-              $retorno["tipo"] =  0;
+            $datos = json_decode($this->Utilidades_model->getDataCurl($parametros),true);        
+            if ($datos != null) {
+              if ($datos["errorBean"]["codigo"] == -1) {
+                $retorno["datos"] =  'VACIO';
+                $retorno["tipo"] =  0;
+              }else{
+                $retorno["datos"] =  $datos;
+                $retorno["tipo"] =  1;
+              }
+            }else{                    
+              $retorno["datos"] = 'VACIO';
+              $retorno["tipo"] =  0;             
             }
-            
-          }else{  
-            $retorno["datos"] =  $datos;
-            $retorno["tipo"] =  1;
-          } 
-        }else{                    
-            $retorno["datos"] = 'VACIO';
-            $retorno["tipo"] =  0;             
-        }
+          }
       }else{               
-            $retorno["datos"] =  $datos;
-            $retorno["tipo"] =  2;        
-      } 
+          $retorno["datos"] =  $datos;
+          $retorno["tipo"] =  2;        
+      }  
 
       $this->output->set_content_type('application/json')->set_output(json_encode($retorno));      
    }

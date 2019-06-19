@@ -2177,6 +2177,20 @@ function registrarBenefiPrograma(codProducto, codPrograma, tipoDocBenefi, numDoc
                 global_aux_prodbenefi[codProducto][codPrograma][llaveBenefi]['tarifa'] = tarifaAux;
                 //Actualizar columna tarifa
                 $('#'+idCampoCh).parent().parent().find('.class-pesos').html(formatMiles(tarifaAux));
+                $('#'+idCampoCh).parent().parent().parent().find('input[type=checkbox]:checked').each(function(index, elemento){
+                    var idElemt = elemento.id;
+                    var productoElement = $('#'+idElemt).attr('data-producto');
+                    var programaElement = $('#'+idElemt).attr('data-programa');
+                    var tipodocElement = $('#'+idElemt).attr('data-tipodoc');
+                    var numdocElement = $('#'+idElemt).attr('data-numdoc');
+                    var llaveElement = tipodocElement+'_'+numdocElement;
+
+                    //Actualizar propiedad tarifa            
+                    global_aux_prodbenefi[productoElement][programaElement][llaveElement]['tarifa'] = data['valorTarifa'];
+                    //Actualizar columna tarifa
+                    $('#'+idElemt).parent().parent().find('.class-pesos').html(formatMiles(data['valorTarifa']));
+
+                });
             }
 
             //Actualizar tipo solicitud (inclusion/venta nueva)           

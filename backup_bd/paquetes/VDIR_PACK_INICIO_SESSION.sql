@@ -1,3 +1,4 @@
+
 create or replace PACKAGE           "VDIR_PACK_INICIO_SESSION" AS 
 
   ----------------------------------------------- FUNCION PARA TRAER DATOS DEL TIPO DE DOCUMENTO  
@@ -23,7 +24,8 @@ create or replace PACKAGE           "VDIR_PACK_INICIO_SESSION" AS
                              p_clave IN VDIR_USUARIO.CLAVE%TYPE,
                              p_tipo_persona IN VDIR_TIPO_PERSONA.COD_TIPO_PERSONA%TYPE,
                              p_plan IN VDIR_PLAN.COD_PLAN%TYPE,
-                             p_cod_estado IN VDIR_ESTADO.COD_ESTADO%TYPE,                             
+                             p_cod_estado IN VDIR_ESTADO.COD_ESTADO%TYPE,
+                             p_corte IN VDIR_USUARIO.CORTE%TYPE,                             
                              p_respuesta OUT VARCHAR2                            
                              );  
 
@@ -62,6 +64,7 @@ END VDIR_PACK_INICIO_SESSION;
 
 /
 
+/*<TOAD_FILE_CHUNK>*/
 create or replace PACKAGE BODY           "VDIR_PACK_INICIO_SESSION" AS
 
   FUNCTION VDIR_FN_GET_TIPO_DOCUMENTO RETURN sys_refcursor AS
@@ -122,7 +125,8 @@ create or replace PACKAGE BODY           "VDIR_PACK_INICIO_SESSION" AS
                              p_clave IN VDIR_USUARIO.CLAVE%TYPE,
                              p_tipo_persona IN VDIR_TIPO_PERSONA.COD_TIPO_PERSONA%TYPE,
                              p_plan IN VDIR_PLAN.COD_PLAN%TYPE,
-                             p_cod_estado IN VDIR_ESTADO.COD_ESTADO%TYPE,                             
+                             p_cod_estado IN VDIR_ESTADO.COD_ESTADO%TYPE,
+                             p_corte IN VDIR_USUARIO.CORTE%TYPE,                             
                              p_respuesta OUT VARCHAR2 
                              )
  IS
@@ -237,14 +241,16 @@ create or replace PACKAGE BODY           "VDIR_PACK_INICIO_SESSION" AS
             clave,
             cod_persona,
             cod_estado,
-            cod_plan
+            cod_plan,
+            corte
         ) VALUES (
            vl_sec_usuario,
            p_usuario,
            p_clave,
            vl_sec_persona,
            p_cod_estado,
-           p_plan
+           p_plan,
+           p_corte
         );
     ELSE
 
@@ -254,7 +260,8 @@ create or replace PACKAGE BODY           "VDIR_PACK_INICIO_SESSION" AS
                 clave = p_clave,
                 cod_persona = vl_sec_persona,
                 cod_estado = p_cod_estado,
-                cod_plan = p_plan
+                cod_plan = p_plan,
+                corte = p_corte
         WHERE
             cod_usuario = vl_sec_usuario;
 
@@ -588,6 +595,3 @@ create or replace PACKAGE BODY           "VDIR_PACK_INICIO_SESSION" AS
 END VDIR_PACK_INICIO_SESSION;
 /
 
-
-
-/

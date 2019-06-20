@@ -2152,8 +2152,8 @@ function registrarBenefiPrograma(codProducto, codPrograma, tipoDocBenefi, numDoc
         success: function(resp){
             runLoading(false);
             var data = resp;
-            var tarifaAuxVal = chMarca == 1 ? parseInt(data['valorTarifa']) : 0;
-            var replicaTarifa = chMarca == 1 ? parseInt(data['replicaTarifa']) : 0;            
+            var tarifaAuxVal = parseInt(data['valorTarifa']);
+            var replicaTarifa = parseInt(data['replicaTarifa']);            
             var noTarifa = true;
             var tarifaAux = tarifaAuxVal != -1 ? tarifaAuxVal : 0;
 
@@ -2165,32 +2165,39 @@ function registrarBenefiPrograma(codProducto, codPrograma, tipoDocBenefi, numDoc
                     var tipodocElement = $('#'+idElemt).attr('data-tipodoc');
                     var numdocElement = $('#'+idElemt).attr('data-numdoc');
                     var llaveElement = tipodocElement+'_'+numdocElement;
-
-                    //Actualizar propiedad tarifa            
-                    global_aux_prodbenefi[productoElement][programaElement][llaveElement]['tarifa'] = tarifaAux;
-                    //Actualizar columna tarifa
-                    $('#'+idElemt).parent().parent().find('.class-pesos').html(formatMiles(tarifaAux));
+                    
+                    if (chMarca == 0) {
+                        //Actualizar propiedad tarifa            
+                        global_aux_prodbenefi[codProducto][codPrograma][llaveBenefi]['tarifa'] = 0;
+                        //Actualizar columna tarifa
+                        $('#'+idCampoCh).parent().parent().find('.class-pesos').html(formatMiles(0));  
+                    }else{
+                        global_aux_prodbenefi[codProducto][programaElement][llaveElement]['tipoTarifa'] = 1;
+                    }
+                    if (global_aux_prodbenefi[codProducto][programaElement][llaveElement]['tipoTarifa']==1) {
+                        
+                        
+                        //Actualizar propiedad tarifa            
+                        global_aux_prodbenefi[productoElement][programaElement][llaveElement]['tarifa'] = tarifaAux;
+                        //Actualizar columna tarifa
+                        $('#'+idElemt).parent().parent().find('.class-pesos').html(formatMiles(tarifaAux));    
+                    }                    
 
                 });
             }else{
-                //Actualizar propiedad tarifa            
-                global_aux_prodbenefi[codProducto][codPrograma][llaveBenefi]['tarifa'] = tarifaAux;
-                //Actualizar columna tarifa
-                $('#'+idCampoCh).parent().parent().find('.class-pesos').html(formatMiles(tarifaAux));
-                $('#'+idCampoCh).parent().parent().parent().find('input[type=checkbox]:checked').each(function(index, elemento){
-                    var idElemt = elemento.id;
-                    var productoElement = $('#'+idElemt).attr('data-producto');
-                    var programaElement = $('#'+idElemt).attr('data-programa');
-                    var tipodocElement = $('#'+idElemt).attr('data-tipodoc');
-                    var numdocElement = $('#'+idElemt).attr('data-numdoc');
-                    var llaveElement = tipodocElement+'_'+numdocElement;
-
+                if (chMarca == 0) {
                     //Actualizar propiedad tarifa            
-                    global_aux_prodbenefi[productoElement][programaElement][llaveElement]['tarifa'] = data['valorTarifa'];
+                    global_aux_prodbenefi[codProducto][codPrograma][llaveBenefi]['tarifa'] = 0;
                     //Actualizar columna tarifa
-                    $('#'+idElemt).parent().parent().find('.class-pesos').html(formatMiles(data['valorTarifa']));
-
-                });
+                    $('#'+idCampoCh).parent().parent().find('.class-pesos').html(formatMiles(0));  
+                }else{
+                    //Actualizar propiedad tarifa            
+                    global_aux_prodbenefi[codProducto][codPrograma][llaveBenefi]['tarifa'] = tarifaAux;
+                    global_aux_prodbenefi[codProducto][codPrograma][llaveBenefi]['tipoTarifa'] = 0;
+                    //Actualizar columna tarifa
+                    $('#'+idCampoCh).parent().parent().find('.class-pesos').html(formatMiles(tarifaAux));  
+                }
+                                         
             }
 
             //Actualizar tipo solicitud (inclusion/venta nueva)           

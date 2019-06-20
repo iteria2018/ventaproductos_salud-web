@@ -185,12 +185,12 @@ class Encuesta_sarlaf extends CI_Controller{
      	$cod_afiliacion = $this->input->post("codigo_afiliacion");
      	$datos = array();    	
      	$fomularioIni = '<form id="form_valida"><div class="container">
-     	                 <div class="row"><div class="col-12 text-justify"><label>La solicitud para los siguentes beneficiario(s) est&aacute; sujeta auditoria m&eacute;dica. Por favor comun&iacute;quese con un asesor.</label> </div></div>';
+     	                 <div class="row"><div class="col-12 text-justify"><label>Debido a la condición  de salud actual del beneficiario: </label> </div></div>';
      	$fomularioFin = '</div></form>';
      	$cadena = "";
      	$formularioFinal = "";
      	$campoDiv = '<div class="row"><div class="col-12 text-justify">
-     	             <label> *Para continuar con el proceso de compra debe eliminar los beneficiarios de la solicitud o seleccionar un producto diferente a medicina integral para estos beneficiarios</label>
+     	             <label> No se puede continuar con el proceso de compra de determinado producto, En breve un asesor se pondrá en contacto con usted</label>
      	            </div></div>';
 
      	$datos  = $this->Encuesta_sarlaf_model->validaEncuestaSalud($cod_afiliacion);

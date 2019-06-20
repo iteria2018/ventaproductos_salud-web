@@ -170,7 +170,7 @@ function fn_pintarProgramas(){
     $(document.body).on("click", ".seleccionarPrograma", function() {
         let producto = $(this).attr('href').split("_");
         if(producto[1]=="pro" && producto[2]=="1"){            
-                alertify.notify('el servicio se realizará después de 48 horas hábiles', 'success', 15, null);
+                //alertify.notify('el servicio se realizará después de 48 horas hábiles', 'success', 15, null);
                 tabProductos(event, $(this).attr('href'));            
                 $(".seleccionarPrograma").css("background", ""); 
                 $(".seleccionarPrograma").css("color", "#000"); 
@@ -942,7 +942,7 @@ function pintarTabsProgramas(codProducto, objProgramas, abr_tab){
     if(codProducto == 3 && abr_tab == "_pro"){
         var htmlTabsPrograma = '<div class="container">'+
                                 '<div class="card-deck justify-content-center text-center" id="programas'+abr_tab+'_'+codProducto+'"></div>'+
-                                '<br><p class="text-muted">a partir del próximo mes, se aplicará un valor por los días de proporcionalidad en caso de que apliquen</p>'+                              
+                                '<br>'+                              
                                 '<input type="checkbox" id="chAceptaCem">'+
                                 '<label>  Comprendo y acepto los t&eacute;rminos, condiciones y restricciones alusivas al &Aacute;rea de Cobertura. </label><a href="http://cem.coomeva.com.co/publicaciones.php?id=33885" target="_blank"> Mas informacion</a>'+
                                 '<div class="tab-content tab-space" id="divProgramas'+abr_tab+'_'+codProducto+'"></div>'+

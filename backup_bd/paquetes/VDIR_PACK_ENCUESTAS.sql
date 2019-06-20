@@ -161,6 +161,8 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_ENCUESTAS AS
                       vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-6 div_container_respuesta" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'">' ||fila2.des_respuesta||VDIR_PACK_ENCUESTAS.VDIR_FN_GET_LIST_MONEDA||'</div>';                      
                  ELSIF fila2.cod_respuesta = 48 THEN
                      vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-12 div_container_respuesta" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'">' || fila2.des_respuesta||VDIR_PACK_ENCUESTAS.VDIR_FN_GET_LIST_PARENTESCO||'</div> <br>'; 
+                 ELSIF fila2.cod_respuesta in(25,26) THEN
+                    vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-6 div_container_respuesta" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'">' ||fila2.des_respuesta||'></div>';
                  ELSE   
                      IF lnu_index_resp = 0 THEN
 					    vl_row_respuesta := vl_row_respuesta || '<div class="row">';
@@ -322,7 +324,7 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_ENCUESTAS AS
    END VDIR_FN_GUARDAR_ENCUESTA;
 
    --FUNCION PARA TRAER LA ENCUESTA SARLAF YA DILIGENCIADA-------------------------------
-   FUNCTION VDIR_FN_GET_DATOS_ENCT(p_codigo_afiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE,p_codigo_persona IN VDIR_PERSONA.COD_PERSONA%TYPE) RETURN CLOB
+      FUNCTION VDIR_FN_GET_DATOS_ENCT(p_codigo_afiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE,p_codigo_persona IN VDIR_PERSONA.COD_PERSONA%TYPE) RETURN CLOB
 
    AS
     vl_cadena CLOB;
@@ -384,11 +386,12 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_ENCUESTAS AS
                                   ON afe.COD_ENCUESTA_PERSONA = rm.COD_ENCUESTA_PERSONA
 
                                  INNER JOIN  vdir_persona_tipoper per
-                                  ON per.cod_persona = afe.cod_persona
+                                  ON per.cod_persona = afe.cod_persona,
+         (SELECT MAX(COD_AFILIACION) AS COD_AFILIADO FROM VDIR_ENCUESTA_PERSONA MEP WHERE MEP.COD_PERSONA = p_codigo_persona) MAXEP
 
                                  WHERE
                                    rm.cod_respuesta = re.cod_respuesta
-                                   AND afe.COD_AFILIACION = p_codigo_afiliacion
+                                   AND afe.COD_AFILIACION = MAXEP.COD_AFILIADO
                                    AND rm.cod_pregunta = fila.cod_pregunta
                                    AND afe.cod_persona = p_codigo_persona
                                    AND per.cod_tipo_persona = 1) AS checked,
@@ -401,11 +404,12 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_ENCUESTAS AS
                                   ON afe.COD_ENCUESTA_PERSONA = rm.COD_ENCUESTA_PERSONA
 
                                  INNER JOIN  vdir_persona_tipoper per
-                                  ON per.cod_persona = afe.cod_persona 
+                                  ON per.cod_persona = afe.cod_persona ,
+         (SELECT MAX(COD_AFILIACION) AS COD_AFILIADO FROM VDIR_ENCUESTA_PERSONA MEP WHERE MEP.COD_PERSONA = p_codigo_persona) MAXEP
 
                                  WHERE
                                    rm.cod_respuesta = re.cod_respuesta
-                                   AND afe.COD_AFILIACION = p_codigo_afiliacion
+                                   AND afe.COD_AFILIACION = MAXEP.COD_AFILIADO
                                    AND rm.cod_pregunta = fila.cod_pregunta
                                    AND afe.cod_persona = p_codigo_persona
                                    AND per.cod_tipo_persona = 1) AS val_respuesta       
@@ -468,8 +472,10 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_ENCUESTAS AS
                       vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-6 div_container_respuesta" data-val_respuesta = "'||fila2.val_respuesta||'" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'">' ||fila2.des_respuesta||VDIR_PACK_ENCUESTAS.VDIR_FN_GET_LIST_MONEDA||'</div>';                      
                  ELSIF fila2.cod_respuesta = 48 THEN
                      vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-12 div_container_respuesta" data-val_respuesta = "'||fila2.val_respuesta||'" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'">' || fila2.des_respuesta||VDIR_PACK_ENCUESTAS.VDIR_FN_GET_LIST_PARENTESCO||'</div> <br>'; 
-                 ELSIF fila2.cod_respuesta = 49 OR fila2.cod_respuesta = 50 OR fila2.cod_respuesta = 27 OR fila2.cod_respuesta = 25 OR fila2.cod_respuesta = 26 THEN
-                     vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-12 div_container_respuesta" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'" data-val_respuesta = "'||fila2.val_respuesta||'">' ||fila2.des_respuesta||'</div>';                
+                 ELSIF fila2.cod_respuesta = 49 OR fila2.cod_respuesta = 50 OR fila2.cod_respuesta = 27 THEN
+                     vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-12 div_container_respuesta" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'" data-val_respuesta = "'||fila2.val_respuesta||'">' ||fila2.des_respuesta||'</div>';
+                 ELSIF fila2.cod_respuesta in(51,25,26) THEN
+                    vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-6 div_container_respuesta" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'" data-val_respuesta = "'||fila2.val_respuesta||'">' ||fila2.des_respuesta||' value= "'||fila2.val_respuesta||'" disabled></div>';
 				 ELSE 
                     IF lnu_index_resp = 0 THEN
 					    vl_row_respuesta := vl_row_respuesta || '<div class="row">';
@@ -897,10 +903,11 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_ENCUESTAS AS
 
 	    CURSOR cu_valida_encuesta IS
 		SELECT COUNT(1)
-		  FROM VDIR_ENCUESTA_PERSONA
-	     WHERE COD_AFILIACION = inu_codAfiliacion
-		   AND COD_PERSONA    = inu_codPersona
-		   AND COD_ENCUESTA   = inu_codEncuesta;
+		  FROM VDIR_ENCUESTA_PERSONA per,
+		  (SELECT MAX(COD_AFILIACION) AS COD_AFILIADO FROM VDIR_ENCUESTA_PERSONA MEP WHERE MEP.COD_PERSONA = inu_codPersona) MAXEP
+	     WHERE per.COD_AFILIACION = MAXEP.COD_AFILIADO
+		   AND per.COD_PERSONA    = inu_codPersona
+		   AND per.COD_ENCUESTA   = inu_codEncuesta;
 
 		lnu_validaEncuesta NUMBER(1) := 0;
 

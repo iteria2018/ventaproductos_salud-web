@@ -50,7 +50,7 @@ function saveEncuestaSalud(cod_persona,cod_afiliacion){
                     	  ];                        
 
    
-   if(   (camposRequeridos)){
+   if(  validRequired(camposRequeridos)){
 
      	var datosJson = {};
 
@@ -60,6 +60,7 @@ function saveEncuestaSalud(cod_persona,cod_afiliacion){
   		var arrayData         = [];
       var datosJson         = {};  
       var validaRespuesta = true;
+      var lastInputVacio = null;
   		$("#form_div_salud").find("input[type!='radio'],input[type='radio']:checked").each(function(){
   				 
   			  var name = this.name; 
@@ -80,6 +81,7 @@ function saveEncuestaSalud(cod_persona,cod_afiliacion){
                       valor_respuesta = this.value.toString().replace(/\./g,'');
                       if (valor_respuesta=='') {
                         validaRespuesta = false;
+                        lastInputVacio = this;
                       } else {
                         codigo_respuesta = $(this).closest(".div_container_respuesta").attr("data-respuesta");
                         codigo_pregunta = $(this).closest(".div_container_pregunta").attr("data-pregunta");
@@ -124,8 +126,12 @@ function saveEncuestaSalud(cod_persona,cod_afiliacion){
    
             });
   
-          } else {
-             alertify.notify('Si selecciono <strong>SI</strong>, en alguna de las respuetas. Por favor especificar debajo de la respuesta', 'warning', 5, null);
+          } else {        
+            var posicion = $("#"+lastInputVacio.id).offset();
+            var divRequired = $('<div id="div_required_nexos" class="required_nexos" style="left:'+posicion['left']+'px;top:'+(posicion['top']-35)+'px;"> </div>');
+            $('body').append(divRequired);
+            $("#"+lastInputVacio.id).focus();
+            alertify.notify("Debes especificar tu respuesta", 'error', 3, function(){ $('#div_required_nexos').remove(); });            
           }
 	 	
    }

@@ -1270,6 +1270,7 @@ function calcularMiCarrito(verMsj){
     var prodBenefi = pasar_obj_global(global_aux_prodbenefi);
     var countProd = 0;
     var countVal = 0;
+    var aplicaCompra = false;
 
     //Si verMsj es falso, tabajar con la seleccion de producto actual(global_prod_benefi) y no la temporal(global_aux_prodbenefi)
     if(!verMsj){
@@ -1284,38 +1285,64 @@ function calcularMiCarrito(verMsj){
             var programa = producto[programas[a]];
             for(b in programa){
                 var beneficiario = programa[b];
-                if(beneficiario['marcaAplica'] == 1){
-                    countVal += typeof beneficiario['tarifa'] != 'number' ? parseInt(beneficiario['tarifa']) : beneficiario['tarifa'];
-                    cantidadBenefi++;
-                }
+                if (p==3 && verMsj) {
+                    if(beneficiario['marcaAplica'] == 1){
+                        if($('#chAceptaCem').is(':checked')){
+                            aplicaCompra = true;
+                        }else{
+                            aplicaCompra = false;
+                        }
+                    }else{
+                        aplicaCompra = true;
+                    } 
+                }else{
+                    aplicaCompra = true;
+                } 
+                if (aplicaCompra) {
+                    if(beneficiario['marcaAplica'] == 1){
+                        countVal += typeof beneficiario['tarifa'] != 'number' ? parseInt(beneficiario['tarifa']) : beneficiario['tarifa'];
+                        cantidadBenefi++;
+                    }
+                }                
             }               
         }
+        if (aplicaCompra) {
+            if(cantidadBenefi > 0){
+                countProd++;
+            }    
+        }               
+    }
+    if (aplicaCompra) {
+        $('#lbCantidadProd').html('('+countProd+') Productos');
+        $('#lbValProd').html('Total $ '+formatMiles(countVal));
         
-        if(cantidadBenefi > 0){
-            countProd++;
-        }        
-    }
-
-    $('#lbCantidadProd').html('('+countProd+') Productos');
-    $('#lbValProd').html('Total $ '+formatMiles(countVal));
+        if(verMsj){
+            crearModal(idModal, 'Confirmaci\u00f3n', '¡Se adicionaron correctamente a mi carrito!', botonesModal, false, '', '');
+            $('#cerrarCar').click(function(){
+                $('#'+idModal).modal('hide');
+            });
     
-    if(verMsj){
-        crearModal(idModal, 'Confirmaci\u00f3n', '¡Se adicionaron correctamente a mi carrito!', botonesModal, false, '', '');
-        $('#cerrarCar').click(function(){
-            $('#'+idModal).modal('hide');
+            //Actualizar variable global, con los productos seleccionados por beneficiario
+            global_prod_benefi = prodBenefi;
+            //Inactivar boton para agregar(calcular) al carrito 
+            $('.add-prodcar').addClass('disabled-add-prodcar');
+        }
+    
+        
+        
+        actualizarMiCarrito(function(data){ console.log('Se actualizo correctamente mi carrito..') });
+    
+        return countVal; 
+    }else{
+        $('#chAceptaCem').focus();
+        let botonesModal = [{"id":"aceptarHh","label":"Aceptar","class":"btn-primary mr-2"}];
+        crearModal("hrhabiles", 'Confirmaci\u00f3n', 'Debe aceptar los términos y condiciones.', botonesModal, false, '', '');
+        $('#aceptarHh').click(function() {	                  	   
+            $('#hrhabiles').modal('hide');            
         });
-
-        //Actualizar variable global, con los productos seleccionados por beneficiario
-        global_prod_benefi = prodBenefi;
-        //Inactivar boton para agregar(calcular) al carrito 
-        $('.add-prodcar').addClass('disabled-add-prodcar');
+        return 0;
     }
-
     
-    
-    actualizarMiCarrito(function(data){ console.log('Se actualizo correctamente mi carrito..') });
-
-    return countVal;
 }
 
 function detalleMiCarrito(){

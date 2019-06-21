@@ -81,7 +81,7 @@ class Gestion_compra_model extends CI_Model{
     public function agregarBeneficiario_data($objParam){
         $response = '';
 
-        $s = oci_parse($this->db->conn_id, "BEGIN VDIR_PACK_REGISTRO_DATOS.sp_set_beneficiario(:bind1,:bind2,:bind24,:bind3,:bind4,:bind5,:bind6,TO_DATE(:bind7,'dd/mm/yyyy'),:bind8,:bind9,:bind10,:bind11,:bind12,:bind13,:bind14,:bind15,:bind16,:bind17,:bind18,:bind19,:bind20,:bind21,:bind22,:bind23); END;");
+        $s = oci_parse($this->db->conn_id, "BEGIN VDIR_PACK_REGISTRO_DATOS.sp_set_beneficiario(:bind1,:bind2,:bind24,:bind3,:bind4,:bind5,:bind6,TO_DATE(:bind7,'dd/mm/yyyy'),:bind8,:bind9,:bind10,:bind11,:bind12,:bind13,:bind14,:bind15,:bind16,:bind17,:bind18,:bind19,:bind20,:bind21,:bind22,:bind23,:bind25); END;");
       
         oci_bind_by_name($s, ":bind1", $objParam['codContratante'], 300);
         oci_bind_by_name($s, ":bind2", $objParam['tipoDocumento'], 300);
@@ -106,7 +106,8 @@ class Gestion_compra_model extends CI_Model{
         oci_bind_by_name($s, ":bind20", $objParam['parentesco'], 300);
         oci_bind_by_name($s, ":bind21", $objParam['estado'], 300);
         oci_bind_by_name($s, ":bind22", $objParam['codAfiliacion'], 300);
-        oci_bind_by_name($s, ":bind23", $response, 300); 
+        oci_bind_by_name($s, ":bind23", $objParam['codDireccion'], 300);
+        oci_bind_by_name($s, ":bind25", $response, 300); 
         oci_execute($s, OCI_DEFAULT);
 
         return $response; 

@@ -235,9 +235,24 @@ class Gestion_compra extends CI_Controller{
 			$paramObj['codContratante'] = $codContratante;
 			$paramObj['codAfiliacion'] = $cod_afiliacion;
 			$llaveBenefi = $paramObj['tipoDocumento'].'_'.$paramObj['numeroDocumento'];
-			
+
+			$direccion = $paramObj['tipoVia_abr'].' '.$paramObj['numeroTipoVia'].' '.$paramObj['numeroPlaca'];//.' '.$benefi['complemento'];
+			$objParametros = array(
+				$paramObj['nombre_completo'],
+				$paramObj['numeroDocumento'],
+				$paramObj['tipoDocumento_abr'],
+				$direccion,
+				$paramObj['municipio']
+			);
+
+			$reusult_serv = $this->Utilidades_model->getDataCurlServ(4, $objParametros, '/');
+			$cod_ubi = "";
+			if ($reusult_serv["aprobado"] == "S") {
+				$parteMensj = explode(" ", $reusult_serv["mensaje"]);
+				$cod_ubi = preg_replace("/[.]/","",$parteMensj[14]);
+			}
+			$paramObj['codDireccion'] = $cod_ubi;
 			$cod_afiliacion = $this->Gestion_compra_model->agregarBeneficiario_data($paramObj);
-			
 			if ($cod_afiliacion == -1) {
 			   break;	
 			}

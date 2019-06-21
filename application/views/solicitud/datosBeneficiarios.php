@@ -19,8 +19,6 @@
                                 <label>Parentesco</label>
                                 <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['PARENTESCO'] ?>" disabled>
                             </div> 
-                        </div>   
-                        <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-2">
                                 <label>Tipo Documento</label>
                                 <input type="text"  class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['TIPO_IDENTIFICACION'] ?>" disabled>
@@ -29,6 +27,8 @@
                                 <label>Número Documento</label>
                                 <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['NUMERO_IDENTIFICACION'] ?>" disabled>
                             </div> 
+                        </div>   
+                        <div class="row">                            
                             <div class="col-sm-12 col-md-6 col-lg-2">
                                 <label>Primer Apellido</label>
                                 <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['APELLIDO_1'] ?>" disabled>
@@ -45,8 +45,6 @@
                                 <label>Segundo Nombre</label>
                                 <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['NOMBRE_2'] ?>" disabled>
                             </div>
-                        </div>
-                        <div class="row">                                
                             <div class="col-sm-12 col-md-6 col-lg-2">
                                 <label>Género</label>
                                 <input type="text"  class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['GENERO'] ?>" disabled>
@@ -54,6 +52,12 @@
                             <div class="col-sm-12 col-md-6 col-lg-2">
                                 <label>Fecha Nacimiento</label>
                                 <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['FECHA_NACIMIENTO'] ?>" disabled>
+                            </div>
+                        </div>
+                        <div class="row">                                
+                        <div class="col-sm-12 col-md-6 col-lg-2">
+                                <label>Cod Cobertura</label>
+                                <input type="text" class="form-control campo-vd-sm" value="<?php echo $beneficiario[$i]['COD_DIRECCION'] ?>" disabled>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-2">
                                 <label>Nacionalidad</label>

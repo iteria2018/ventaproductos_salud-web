@@ -1,10 +1,10 @@
 /*<TOAD_FILE_CHUNK>*/
 CREATE OR REPLACE PACKAGE VDIR_PACK_CONSULTA_SOLICITUD AS
 /* ---------------------------------------------------------------------
- Copyright  Tecnolog�a Inform�tica Coomeva - Colombia
+ Copyright  Tecnolog?a Inform?tica Coomeva - Colombia
  Package     : VDIR_PACK_CONSULTA_SOLICITUD
  Caso de Uso : 
- Descripci�n : Procesos para la consulta las afiliaciones - VENTA DIRECTA
+ Descripci?n : Procesos para la consulta las afiliaciones - VENTA DIRECTA
  --------------------------------------------------------------------
  Autor : katherine.latorre@kalettre.com
  Fecha : 08-02-2018  
@@ -13,7 +13,7 @@ CREATE OR REPLACE PACKAGE VDIR_PACK_CONSULTA_SOLICITUD AS
  --------------------------------------------------------------------
  Historia de Modificaciones
  ---------------------------------------------------------------------
- Fecha Autor Modificaci�n
+ Fecha Autor Modificaci?n
  ----------------------------------------------------------------- */
  
 	-- ---------------------------------------------------------------------
@@ -160,10 +160,10 @@ END VDIR_PACK_CONSULTA_SOLICITUD;
 /*<TOAD_FILE_CHUNK>*/
 CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 /* ---------------------------------------------------------------------
- Copyright  Tecnolog�a Inform�tica Coomeva - Colombia
+ Copyright  Tecnolog?a Inform?tica Coomeva - Colombia
  Package     : VDIR_PACK_CONSULTA_SOLICITUD
  Caso de Uso : 
- Descripci�n : Procesos para la consulta las afiliaciones - VENTA DIRECTA
+ Descripci?n : Procesos para la consulta las afiliaciones - VENTA DIRECTA
  --------------------------------------------------------------------
  Autor : katherine.latorre@kalettre.com
  Fecha : 08-02-2018  
@@ -172,7 +172,7 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
  --------------------------------------------------------------------
  Historia de Modificaciones
  ---------------------------------------------------------------------
- Fecha Autor Modificaci�n
+ Fecha Autor Modificaci?n
  ----------------------------------------------------------------- */
  	
 	-- ---------------------------------------------------------------------
@@ -188,23 +188,23 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN type_cursor IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna los datos de las afiliaciones
+	 Descripci?n : Retorna los datos de las afiliaciones
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 08-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :     Descripci�n:
-	    inu_codAfiliacion  N�mero de la solicitud o c�digo de la afiliaci�n
-		idt_fechaInicia    Fecha Inicial de radicaci�n
-		idt_fechaFinal     Fecha Final de radicaci�n
-		inu_codEstado      C�digo del estado de la afiliaci�n
+	 Par?metros :     Descripci?n:
+	    inu_codAfiliacion  N?mero de la solicitud o c?digo de la afiliaci?n
+		idt_fechaInicia    Fecha Inicial de radicaci?n
+		idt_fechaFinal     Fecha Final de radicaci?n
+		inu_codEstado      C?digo del estado de la afiliaci?n
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 	    lvc_query VARCHAR2(32767);
@@ -272,25 +272,25 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN type_cursor IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna los datos de las afiliaciones
+	 Descripci?n : Retorna los datos de las afiliaciones
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 08-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :     Descripci�n:
-	    inu_codEstado           C�digo del estado de la afiliaci�n
-	    inu_codAfiliacion       N�mero de la solicitud o c�digo de la afiliaci�n		
-		ivc_fechaRadicaInicia   Fecha Inicial de radicaci�n
-		ivc_fechaRadicaFinal    Fecha Final de radicaci�n
-		ivc_fechaGestionInicia  Fecha Inicial de radicaci�n
-		ivc_fechaGestionFinal   Fecha Final de radicaci�n
+	 Par?metros :     Descripci?n:
+	    inu_codEstado           C?digo del estado de la afiliaci?n
+	    inu_codAfiliacion       N?mero de la solicitud o c?digo de la afiliaci?n		
+		ivc_fechaRadicaInicia   Fecha Inicial de radicaci?n
+		ivc_fechaRadicaFinal    Fecha Final de radicaci?n
+		ivc_fechaGestionInicia  Fecha Inicial de radicaci?n
+		ivc_fechaGestionFinal   Fecha Final de radicaci?n
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 	    lvc_query VARCHAR2(32767);
@@ -377,20 +377,20 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN type_cursor IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna los datos del contratante por afiliaci�n
+	 Descripci?n : Retorna los datos del contratante por afiliaci?n
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 13-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :       Descripci�n:
-	 inu_codAfiliacion   C�digo de la afiliaci�n
+	 Par?metros :       Descripci?n:
+	 inu_codAfiliacion   C?digo de la afiliaci?n
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		ltc_datos type_cursor;
@@ -425,7 +425,8 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
                pers.telefono,
                pers.email,
                pers.cod_persona,
-               afil.cod_afiliacion
+               afil.cod_afiliacion,
+               pers.COD_DIRECCION
 		  FROM VDIR_AFILIACION               afil,
 			   VDIR_CONTRATANTE_BENEFICIARIO cobe,
 			   VDIR_PERSONA                  pers,
@@ -460,20 +461,20 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN type_cursor IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna los datos del beneficiario por afiliaci�n
+	 Descripci?n : Retorna los datos del beneficiario por afiliaci?n
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 13-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :       Descripci�n:
-	 inu_codAfiliacion   C�digo de la afiliaci�n
+	 Par?metros :       Descripci?n:
+	 inu_codAfiliacion   C?digo de la afiliaci?n
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		ltc_datos type_cursor;
@@ -516,7 +517,8 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
                 afil.cod_afiliacion,
                 pers.cod_sexo,
                 TRUNC(MONTHS_BETWEEN(SYSDATE,pers.fecha_nacimiento)/12) edad,
-				VDIR_PACK_ENCUESTAS.fnGetValidaEncuesta(afil.cod_afiliacion, pers.cod_persona,'2') ind_encuesta_salud
+				VDIR_PACK_ENCUESTAS.fnGetValidaEncuesta(afil.cod_afiliacion, pers.cod_persona,'2') ind_encuesta_salud,
+				pers.COD_DIRECCION
 		  FROM VDIR_AFILIACION               afil,
 			   VDIR_CONTRATANTE_BENEFICIARIO cobe,
 			   VDIR_PERSONA                  pers,
@@ -556,22 +558,22 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN VARCHAR2 IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna los tipos de compras por programa
+	 Descripci?n : Retorna los tipos de compras por programa
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 21-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :       Descripci�n:
-	 inu_codAfiliacion   C�digo de la afiliaci�n
-	 inu_codBeneficiario C�digo del beneficiario
-	 inu_codPlan         C�digo del plan
+	 Par?metros :       Descripci?n:
+	 inu_codAfiliacion   C?digo de la afiliaci?n
+	 inu_codBeneficiario C?digo del beneficiario
+	 inu_codPlan         C?digo del plan
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		ltc_datos type_cursor;
@@ -610,22 +612,22 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN VARCHAR2 IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna las fechas de inicio de los servicios
+	 Descripci?n : Retorna las fechas de inicio de los servicios
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 21-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :       Descripci�n:
-	 inu_codAfiliacion   C�digo de la afiliaci�n
-	 inu_codContrante    C�digo del contratante
-	 inu_codPlan         C�digo del plan
+	 Par?metros :       Descripci?n:
+	 inu_codAfiliacion   C?digo de la afiliaci?n
+	 inu_codContrante    C?digo del contratante
+	 inu_codPlan         C?digo del plan
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		ltc_datos type_cursor;
@@ -667,22 +669,22 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN VARCHAR2 IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna los c�digos de los programas por cada beneficiario
+	 Descripci?n : Retorna los c?digos de los programas por cada beneficiario
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 14-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :       Descripci�n:
-	 inu_codAfiliacion   C�digo de la afiliaci�n
-	 inu_codBeneficiario C�digo del beneficiario
-	 inu_codPlan         C�digo del plan
+	 Par?metros :       Descripci?n:
+	 inu_codAfiliacion   C?digo de la afiliaci?n
+	 inu_codBeneficiario C?digo del beneficiario
+	 inu_codPlan         C?digo del plan
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		ltc_datos type_cursor;
@@ -719,21 +721,21 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN VARCHAR2 IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna los c�digos de las tarifas por cada beneficiario
+	 Descripci?n : Retorna los c?digos de las tarifas por cada beneficiario
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 14-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :       Descripci�n:
-	 inu_codAfiliacion   C�digo de la afiliaci�n
-	 inu_codBeneficiario C�digo del beneficiario
+	 Par?metros :       Descripci?n:
+	 inu_codAfiliacion   C?digo de la afiliaci?n
+	 inu_codBeneficiario C?digo del beneficiario
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		ltc_datos type_cursor;
@@ -767,21 +769,21 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN type_cursor IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna los datos de la trazabilidad realizada a la
-	               afiliaci�n
+	 Descripci?n : Retorna los datos de la trazabilidad realizada a la
+	               afiliaci?n
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 14-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :       Descripci�n:
-	 inu_codAfiliacion   C�digo de la afiliaci�n
+	 Par?metros :       Descripci?n:
+	 inu_codAfiliacion   C?digo de la afiliaci?n
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		ltc_datos type_cursor;
@@ -815,21 +817,21 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN NUMBER IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Indica si la afiliaci�n existe en la cola
+	 Descripci?n : Indica si la afiliaci?n existe en la cola
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 14-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :     Descripci�n:
-	   inu_codAfiliacion    C�digo de la afiliaci�n
-	   inu_codUsuario       C�digo del usuario 	   
+	 Par?metros :     Descripci?n:
+	   inu_codAfiliacion    C?digo de la afiliaci?n
+	   inu_codUsuario       C?digo del usuario 	   
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		lnu_valida            NUMBER(1)  := 0;
@@ -896,21 +898,21 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN VARCHAR2 IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna el nombre del usuario que tiene la solicitud 
+	 Descripci?n : Retorna el nombre del usuario que tiene la solicitud 
 	               en la cola	  
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 14-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :     Descripci�n:
-	   inu_codAfiliacion    C�digo de la afiliaci�n 
+	 Par?metros :     Descripci?n:
+	   inu_codAfiliacion    C?digo de la afiliaci?n 
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		lnu_nombreUsuario VARCHAR2(1000);		
@@ -941,20 +943,20 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN type_cursor IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Retorna los datos de las solicitudes pendientes
+	 Descripci?n : Retorna los datos de las solicitudes pendientes
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 14-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :       Descripci�n:
-	 inu_codUsuario      C�digo del usuario
+	 Par?metros :       Descripci?n:
+	 inu_codUsuario      C?digo del usuario
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		ltc_datos type_cursor;
@@ -1000,20 +1002,20 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 	RETURN NUMBER IS
 	
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog�a Inform�tica Coomeva - Colombia
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
 	 Caso de Uso : 
-	 Descripci�n : Valida si el usuario actual tiene una solicitud en gesti�n
+	 Descripci?n : Valida si el usuario actual tiene una solicitud en gesti?n
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 14-02-2019  
 	 ----------------------------------------------------------------------
-	 Par�metros :     Descripci�n:	  
-	   inu_codUsuario       C�digo del usuario 	   
+	 Par?metros :     Descripci?n:	  
+	   inu_codUsuario       C?digo del usuario 	   
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci�n
+	 Fecha Autor Modificaci?n
 	 ----------------------------------------------------------------- */
 	 
 		lnu_codAfiliacion VDIR_COLA_SOLICITUD.COD_AFILIACION%TYPE;  		

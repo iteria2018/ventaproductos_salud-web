@@ -20,8 +20,8 @@
       //Validar si el usuario tiene session activa, de ser asi, se valida que tambein tenga permisos para la pagina actual
       if(!$codUser){
           redirect('Login');
-      }else{
-          if(array_search($nameControler, $paginasNoAplica_url)){
+      }else{       
+          if(array_search(ucfirst($nameControler), $paginasNoAplica_url)){
               redirect('Home');
           }
       }   

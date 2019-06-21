@@ -44,6 +44,10 @@
 			    <label>Código DANE</label>
 				<input type="text" id="txtCodigoDane" class="form-control campo-vd-sm" value="<?php echo $contratante[0]['CODIGO_DANE'] ?>" disabled>
 			</div>	
+			<div class="col-sm-12 col-md-6 col-lg-2">
+			    <label>Código Cobertura</label>
+				<input type="text" id="txtCodigoCobertura" class="form-control campo-vd-sm" value="<?php echo $contratante[0]['COD_DIRECCION'] ?>" disabled>
+			</div>	
 		</div><br>		
 		<legend> E-mail</legend>
 		<div class="row">

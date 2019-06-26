@@ -37,9 +37,33 @@ class Gc_paso_5 extends CI_Controller{
 		$codPrograma   = $this->input->post("codPrograma");
 		$codAfiliacion   = $this->input->post("codAfiliacion");
 		$datosContrato = $this->fdm->getContrato($nombrePdf,$codPersona,$codPrograma,$codAfiliacion);
+
+		
 		$diaActual     = date('d');
+		$corte = strtoupper($this->session->userdata('corte'));
+		$cortes = $this->Utilidades_model->getParametro(86)->RESULTADO;
+		$arrayCorte = explode(',', $cortes);
+		
 	
-        $msgInicioServicio  = ($diaActual <= 15) ? $this->Utilidades_model->getParametro(12)->RESULTADO : $this->Utilidades_model->getParametro(13)->RESULTADO;
+		if (empty($corte)) {
+			if($diaActual <= 15){
+				$msgInicioServicio = $this->Utilidades_model->getParametro(12)->RESULTADO;
+			}else{
+				$msgInicioServicio = $this->Utilidades_model->getParametro(13)->RESULTADO;
+			}
+		} else {
+			if ($corte == $arrayCorte[0] || $corte == $arrayCorte[1] || $corte == $arrayCorte[2] || $corte == $arrayCorte[3] || $corte == $arrayCorte[4]) {
+				if($diaActual <= 15){
+					$msgInicioServicio = $this->Utilidades_model->getParametro(12)->RESULTADO;
+				}else{
+					$msgInicioServicio = $this->Utilidades_model->getParametro(85)->RESULTADO;
+				}
+			} else if($corte == $arrayCorte[5] || $corte == $arrayCorte[6]){
+				$msgInicioServicio = $this->Utilidades_model->getParametro(13)->RESULTADO;
+			}
+			
+		}
+
 		$msgInicioServicio .= ' '.$this->Utilidades_model->getParametro(38)->RESULTADO;
 		$msgFinalizarVenta  = $this->Utilidades_model->getParametro(39)->RESULTADO;
 

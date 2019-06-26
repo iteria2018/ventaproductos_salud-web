@@ -98,6 +98,7 @@
                                         'tipo_identificacion_abr' => $fila["DES_TIP_IDENT_SMALL"],
                                         'paginas_no_aplica_css' => $paginasNoAplica['css'],
                                         'paginas_no_aplica_url' => $paginasNoAplica['url'],
+                                        'corte' => $fila["CORTE"],
                                         'class_paginas_no_aplica' => $this->getCalssPageNot($paginasNoAplica['css'])                                        
                                         );
 

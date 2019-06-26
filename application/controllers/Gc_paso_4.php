@@ -34,7 +34,11 @@ class Gc_paso_4 extends CI_Controller{
         $confirmationUrl = $baseUrl."WebService/confirPago";
         $aux_signature = $datos["APIKEY"].'~'.$datos["MERCHANTID"].'~'.$referenceCode.'~'.$datos["AMOUNT"].'~'.$datos["CURRENCY"];
         $signature = md5($aux_signature);
-        $url_ejecucion =  $datos["URL_EJECUCION"];           
+        $url_ejecucion =  $datos["URL_EJECUCION"]; 
+        $por_iva = $this->Utilidades_model->getParametro(87)->RESULTADO; 
+        $val_iva = $datos["AMOUNT"] * $por_iva;
+        $val_base = $datos["AMOUNT"] - $val_iva;   
+        
 
         $formulario = '<form method="post" id="form_payu" action="'.$url_ejecucion.'">
 						<input name="merchantId"    type="hidden"  value="'.$datos["MERCHANTID"].'">                       
@@ -42,8 +46,8 @@ class Gc_paso_4 extends CI_Controller{
                         <input name="accountId"     type="hidden"  value="'.$datos["ACCOUNTID"].'" >
 						<input name="description"   type="hidden"  value="'.$datos["DESCRIPTION"].'"  >
 						<input name="amount"  		type="hidden"  value="'.$datos["AMOUNT"].'">
-						<input name="tax"           type="hidden"  value="0"  >
-						<input name="taxReturnBase" type="hidden"  value="0" >
+						<input name="tax"           type="hidden"  value="'.$val_iva.'">
+						<input name="taxReturnBase" type="hidden"  value="'.$val_base.'">
 						<input name="currency"      type="hidden"  value="'.$datos["CURRENCY"].'" >
 						<input name="signature"     type="hidden"  value="'.$signature.'"  >
 						<input name="test"          type="hidden"  value="'.$datos["TESTT"].'" >

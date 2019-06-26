@@ -1,9 +1,10 @@
+/*<TOAD_FILE_CHUNK>*/
 CREATE OR REPLACE PACKAGE SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
 /* ---------------------------------------------------------------------
- Copyright  Tecnolog铆a Inform谩tica Coomeva - Colombia
+ Copyright  Tecnolog韆 Inform醫ica Coomeva - Colombia
  Package     : VDIR_PACK_CONSULTA_CONTRATO
  Caso de Uso : 
- Descripci贸n : Procesos para la consulta los archivos de contratos
+ Descripci髇 : Procesos para la consulta los archivos de contratos
  --------------------------------------------------------------------
  Autor : katherine.latorre@kalettre.com
  Fecha : 20-02-2018  
@@ -12,14 +13,25 @@ CREATE OR REPLACE PACKAGE SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
  --------------------------------------------------------------------
  Historia de Modificaciones
  ---------------------------------------------------------------------
- Fecha Autor Modificaci贸n
+ Fecha Autor Modificaci髇
  ----------------------------------------------------------------- */
 
 	-- ---------------------------------------------------------------------
 	-- Declaracion de estructuras dinamicas
 	-- ---------------------------------------------------------------------
 	TYPE type_cursor IS REF CURSOR;
-
+    TYPE type_cadena IS TABLE OF VARCHAR2(2000)
+            INDEX BY BINARY_INTEGER;
+            
+-- ---------------------------------------------------------------------
+    -- fn_CadenatoArray
+    -- ---------------------------------------------------------------------            
+    FUNCTION fn_CadenatoArray
+    (
+        pvc_cadena       VARCHAR2 ,
+        pch_separador CHAR DEFAULT ','
+    )
+    RETURN type_cadena;
 	-- ---------------------------------------------------------------------
     -- fnGetDatosContrato
     -- ---------------------------------------------------------------------
@@ -54,12 +66,13 @@ END VDIR_PACK_CONSULTA_CONTRATO;
 
 /
 
+/*<TOAD_FILE_CHUNK>*/
 CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
 /* ---------------------------------------------------------------------
- Copyright  Tecnolog铆a Inform谩tica Coomeva - Colombia
+ Copyright  Tecnolog韆 Inform醫ica Coomeva - Colombia
  Package     : VDIR_PACK_CONSULTA_CONTRATO
  Caso de Uso : 
- Descripci贸n : Procesos para la consulta los archivos de contratos
+ Descripci髇 : Procesos para la consulta los archivos de contratos
  --------------------------------------------------------------------
  Autor : katherine.latorre@kalettre.com
  Fecha : 20-02-2018  
@@ -68,9 +81,64 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
  --------------------------------------------------------------------
  Historia de Modificaciones
  ---------------------------------------------------------------------
- Fecha Autor Modificaci贸n
+ Fecha Autor Modificaci髇
  ----------------------------------------------------------------- */
+FUNCTION fn_CadenatoArray
+    (
+    pvc_cadena       VARCHAR2 ,
+    pch_separador CHAR DEFAULT ','
+    )
+    RETURN type_cadena IS
+    
+    TYPE type_posicion IS TABLE OF INTEGER
+      INDEX BY BINARY_INTEGER;
+  
+      ltb_posiciones type_posicion;
+       ltb_datos        type_cadena;
+    
+    li_posicion_vector PLS_INTEGER;
+    li_pos_simbolo        PLS_INTEGER;
+    li_pos_simbolo_tmp PLS_INTEGER;
+    li_nro_palabras       PLS_INTEGER;
+    li_pos_inicial       PLS_INTEGER;
+    li_limite           PLS_INTEGER;
+    x                   PLS_INTEGER := 0;
 
+      BEGIN
+           -- Obtiene las Posiciones del S韒bolo Separador de Datos
+        li_posicion_vector := 1;
+        li_pos_simbolo     := 1;
+        LOOP
+            li_pos_simbolo_tmp := INSTR(pvc_cadena,pch_separador,li_pos_simbolo);
+
+            IF(li_pos_simbolo_tmp IS NULL) THEN
+                li_pos_simbolo_tmp := 0;
+            END IF;      
+            
+            IF li_pos_simbolo_tmp > 0 THEN
+               ltb_posiciones(li_posicion_vector) := li_pos_simbolo_tmp;
+               li_pos_simbolo := li_pos_simbolo_tmp + 1;
+               li_posicion_vector := li_posicion_vector + 1;
+            END IF;
+          EXIT WHEN li_pos_simbolo_tmp = 0;
+        END LOOP;
+        -- Almacena las Palabras en un Arreglo
+        li_nro_palabras := ltb_posiciones.COUNT + 1;
+        li_pos_simbolo := 1;
+        li_pos_inicial := 1;
+        li_limite := li_nro_palabras - 1;
+        
+
+        FOR i IN 1..li_limite LOOP
+            ltb_datos(i) := SUBSTR(pvc_cadena,li_pos_inicial,ltb_posiciones(i) - li_pos_inicial);    
+            li_pos_inicial := ltb_posiciones(i) + 1;
+            x:=i;
+        END LOOP;
+        x := x + 1;
+        ltb_datos(x) := SUBSTR(pvc_cadena,li_pos_inicial,(LENGTH(pvc_Cadena) - li_pos_inicial) + 1);
+
+        RETURN ltb_datos;
+    END fn_CadenatoArray;
 	-- ---------------------------------------------------------------------
     -- fnGetDatosContrato
     -- ---------------------------------------------------------------------
@@ -84,32 +152,28 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
 
 
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog铆a Inform谩tica Coomeva - Colombia
+	 Copyright   : Tecnolog韆 Inform醫ica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_CONTRATO
 	 Caso de Uso : 
-	 Descripci贸n : Retorna una cadena con los datos llenos del contrato
+	 Descripci髇 : Retorna una cadena con los datos llenos del contrato
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 20-02-2019  
 	 ----------------------------------------------------------------------
-	 Par谩metros :     Descripci贸n:	
-	 inu_codPersona    C贸digo de la persona contratante
-	 inu_codPrograma   C贸digo del programa asociado al beneficiario
+	 Par醡etros :     Descripci髇:	
+	 inu_codPersona    C骴igo de la persona contratante
+	 inu_codPrograma   C骴igo del programa asociado al beneficiario
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci贸n
+	 Fecha Autor Modificaci髇
 	 ----------------------------------------------------------------- */
 
 	    CURSOR cu_contratante(lty_pago NUMBER) IS
 		SELECT usua.cod_plan tipoPlan,
                pers.nombre_1||' '|| pers.nombre_2||' '||pers.apellido_1||' '||pers.apellido_2 nombreContratante,
 			   pers.numero_identificacion numeroIdentificacion,
-			   CASE WHEN EXTRACT(DAY FROM SYSDATE) <= 15 THEN 
-				   TO_DATE('16/'||TO_CHAR(SYSDATE,'MM/YYYY'),'DD/MM/YYYY') 
-			   ELSE 
-			       TO_DATE('01/'||TO_CHAR(ADD_MONTHS(SYSDATE, 1),'MM/YYYY'),'DD/MM/YYYY') 
-			   END fechaVigencia,
+			   UPPER(usua.corte) corte,
 			   '0' tarifaCuota,
 			   lty_pago formaPago,
 			   '1' periodoPago,
@@ -154,6 +218,10 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
             and bp.COD_PROGRAMA = inu_codPrograma
             and fd.COD_BENEFICIARIO_PROGRAMA = bp.COD_BENEFICIARIO_PROGRAMA
             and fd.COD_FACTURA = vf.COD_FACTURA;
+            
+        CURSOR CU_PARAMETRO IS
+		SELECT VALOR_PARAMETRO FROM VDIR_PARAMETRO
+            WHERE COD_PARAMETRO = 86;
 
 		ltc_contratante   cu_contratante%ROWTYPE;
 		ltc_beneficiarios cu_beneficiarios%ROWTYPE;
@@ -163,6 +231,10 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
 		lnu_val_tarifa    NUMBER(16) := 0;
 		lvh_formatMil_tarifa VARCHAR2(100);
 		lnu_forma_pago      NUMBER(2);
+		ltd_fecha       DATE;
+		lvc_cortes      VARCHAR2(2000);		
+		lty_array_cad type_cadena; 
+		
 	BEGIN
 
 		-- ---------------------------------------------------------------------
@@ -180,6 +252,10 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
 		 OPEN cu_contratante(lnu_forma_pago); 
 		FETCH cu_contratante INTO ltc_contratante; 
 		CLOSE cu_contratante;
+		
+		OPEN CU_PARAMETRO; 
+		FETCH CU_PARAMETRO INTO lvc_cortes; 
+		CLOSE CU_PARAMETRO;
 
 		lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||lnu_nroContrato||'","fieldName": "txtNumeroContrato"},';
         lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||lnu_nroContrato||'","fieldName": "txtNumeroContrato1"},';
@@ -208,12 +284,33 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
 
 		END IF;
 
-		lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||ltc_contratante.nombreContratante             ||'","fieldName": "txtNombreContratante"},';	
-		lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||ltc_contratante.numeroIdentificacion          ||'","fieldName": "txtNumeroIdentificacion"},';
-		lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||TO_CHAR(ltc_contratante.fechaVigencia, 'YYYY')||'","fieldName": "txtYearVigencia"},';
-		lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||TO_CHAR(ltc_contratante.fechaVigencia, 'MM')  ||'","fieldName": "txtMesVigencia"},';
-        lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||TO_CHAR(ltc_contratante.fechaVigencia, 'DD')  ||'","fieldName": "txtDiaVigencia"},';
-		lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||TO_CHAR(ADD_MONTHS(ltc_contratante.fechaVigencia, 12), 'DD/MM/YYYY')||'","fieldName": "txtVigencia"},';
+		lty_array_cad := VDIR_PACK_CONSULTA_CONTRATO.fn_CadenatoArray(lvc_cortes);
+		IF ltc_contratante.corte IS NULL THEN
+               IF (EXTRACT(DAY FROM SYSDATE) <= 15) THEN 
+				   ltd_fecha := TO_DATE('16/'||TO_CHAR(SYSDATE,'MM/YYYY'),'DD/MM/YYYY'); 
+			   ELSE 
+			       ltd_fecha := TO_DATE('01/'||TO_CHAR(ADD_MONTHS(SYSDATE, 1),'MM/YYYY'),'DD/MM/YYYY'); 
+			   END IF;			  
+		ELSE 
+		
+            IF ltc_contratante.corte IN (lty_array_cad(1),lty_array_cad(2),lty_array_cad(3),lty_array_cad(4),lty_array_cad(5)) THEN
+                IF (EXTRACT(DAY FROM SYSDATE) <= 15) THEN 
+                    ltd_fecha := TO_DATE('16/'||TO_CHAR(SYSDATE,'MM/YYYY'),'DD/MM/YYYY'); 
+                ELSE
+                    ltd_fecha := TO_DATE('16/'||TO_CHAR(ADD_MONTHS(SYSDATE, 1),'MM/YYYY'),'DD/MM/YYYY'); 
+                END IF;
+            ELSIF ltc_contratante.corte IN (lty_array_cad(6),lty_array_cad(7)) THEN
+                ltd_fecha := TO_DATE('01/'||TO_CHAR(ADD_MONTHS(SYSDATE, 1),'MM/YYYY'),'DD/MM/YYYY'); 
+            END IF;
+               
+		END IF;
+		
+           lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||ltc_contratante.nombreContratante             ||'","fieldName": "txtNombreContratante"},';	
+           lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||ltc_contratante.numeroIdentificacion          ||'","fieldName": "txtNumeroIdentificacion"},';
+           lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||TO_CHAR(ltd_fecha, 'YYYY')||'","fieldName": "txtYearVigencia"},';
+           lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||TO_CHAR(ltd_fecha, 'MM')  ||'","fieldName": "txtMesVigencia"},';
+           lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||TO_CHAR(ltd_fecha, 'DD')  ||'","fieldName": "txtDiaVigencia"},';
+           lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||TO_CHAR(ADD_MONTHS(ltd_fecha, 12), 'DD/MM/YYYY')||'","fieldName": "txtVigencia"},';
     	--lvc_datosContrato := lvc_datosContrato||'{"defaultValue": "'||ltc_contratante.tarifaCuota                   ||'","fieldName": "txtTarifaCuota"},';
 
 		OPEN cu_beneficiarios; 
@@ -323,22 +420,22 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
 	RETURN NUMBER IS
 
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog铆a Inform谩tica Coomeva - Colombia
+	 Copyright   : Tecnolog韆 Inform醫ica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_CONTRATO
 	 Caso de Uso : 
-	 Descripci贸n : Retorna 1 = Si / 0 = No si el contrante firmo el contrato
+	 Descripci髇 : Retorna 1 = Si / 0 = No si el contrante firmo el contrato
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 20-02-2019  
 	 ----------------------------------------------------------------------
-	 Par谩metros :     Descripci贸n:
-	 inu_codAfiliacion       C贸digo de la afiliaci贸n
-	 inu_codPersona          C贸digo de la persona contratante
-	 inu_codPrograma         C贸digo del programa
+	 Par醡etros :     Descripci髇:
+	 inu_codAfiliacion       C骴igo de la afiliaci髇
+	 inu_codPersona          C骴igo de la persona contratante
+	 inu_codPrograma         C骴igo del programa
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci贸n
+	 Fecha Autor Modificaci髇
 	 ----------------------------------------------------------------- */
 
 	    CURSOR cu_valida_contrato IS
@@ -406,3 +503,4 @@ FUNCTION fnGetValidaInclusion
 
 END VDIR_PACK_CONSULTA_CONTRATO;
 /
+

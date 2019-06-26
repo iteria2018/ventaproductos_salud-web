@@ -424,7 +424,8 @@ create or replace PACKAGE BODY           "VDIR_PACK_INICIO_SESSION" AS
         usu.LOGIN,
         VDIR_FN_GET_ROLES_PERSONA(usu.COD_USUARIO) as ROLESS,
         usu.COD_PLAN AS CODIGO_PLAN,
-        VDIR_PACK_INICIO_SESSION.fn_get_keyPagesNot(usu.COD_USUARIO) AS PAGINAS_NO_APLICA
+        VDIR_PACK_INICIO_SESSION.fn_get_keyPagesNot(usu.COD_USUARIO) AS PAGINAS_NO_APLICA,
+        usu.CORTE        
     FROM
         vdir_persona persona
 

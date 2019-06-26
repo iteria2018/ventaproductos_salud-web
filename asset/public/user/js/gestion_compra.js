@@ -2602,7 +2602,7 @@ function finalizarVenta(){
                                 crearModal(idModal, 'Confirmaci\u00f3n', '<p class="text-justify">'+mensajeRespuesta+'</p>', botonesModal, false, '', '');
                                 $('#cerrarMsgContrato').click(function(){
                                     $('#'+idModal).modal('hide');
-                                    window.location.href = pointToUrl()+'Home';                        
+                                    window.location.href = pointToUrl()+'Gestion_compra';                        
                                 });
                                 
                             },

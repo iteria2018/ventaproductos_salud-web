@@ -1,3 +1,4 @@
+/*<TOAD_FILE_CHUNK>*/
 create or replace PACKAGE           "VDIR_PACK_UTILIDADES" AS 
  
    
@@ -59,11 +60,14 @@ create or replace PACKAGE           "VDIR_PACK_UTILIDADES" AS
       VDIR_FN_GET_DATOS_KIT BIENVENIDA: funcion para obtener los datos del kit de bienvenida
      ----------------------------------------------------------------------- */
    FUNCTION VDIR_FN_GET_DATOS_KIT_BIENV(p_cod_afiliacion  vdir_afiliacion.cod_afiliacion%TYPE) RETURN sys_refcursor;
+   
+   FUNCTION VDIR_FN_GET_INFO_PAGO(p_cod_afiliacion  vdir_afiliacion.cod_afiliacion%TYPE) RETURN sys_refcursor;
 
 
 END VDIR_PACK_UTILIDADES;
 /
 
+/*<TOAD_FILE_CHUNK>*/
 create or replace PACKAGE BODY           "VDIR_PACK_UTILIDADES" AS
 
   FUNCTION VDIR_FN_GETCOLECCION_WHERE(p_nom_cod_tabla IN VARCHAR2,p_nom_des_tabla IN VARCHAR2,p_nom_table IN VARCHAR2,p_aux_where IN VARCHAR2,p_fila_order IN VARCHAR2) RETURN sys_refcursor 
@@ -264,6 +268,8 @@ create or replace PACKAGE BODY           "VDIR_PACK_UTILIDADES" AS
             DISTINCT
              factura.cod_factura AS CODIGO_FACTURA,
              factura.total_pagar as AMOUNT,
+             factura.SUB_TOTAL as BASE,
+             factura.VALOR_IMPUESTO as IVA,
              COALESCE(persona.nombre_1,' ')||' '|| COALESCE(persona.nombre_2,' ')||' '|| COALESCE(persona.apellido_1,' ')||' '||COALESCE(persona.apellido_2,' ') AS NOMBRE_COMPLETO,
              persona.email AS EMAIL,
              persona.NUMERO_IDENTIFICACION AS NUMERO_IDENTIFICACION,
@@ -462,6 +468,44 @@ create or replace PACKAGE BODY           "VDIR_PACK_UTILIDADES" AS
   RETURN  vl_cursor;
  
  END VDIR_FN_GET_DATOS_KIT_BIENV;
+ 
+ FUNCTION VDIR_FN_GET_INFO_PAGO(p_cod_afiliacion  vdir_afiliacion.cod_afiliacion%TYPE) 
+ 
+ RETURN sys_refcursor
+ 
+ IS
+ 
+ vl_cursor sys_refcursor; 
+ 
+ BEGIN 
+  
+  OPEN vl_cursor
+    FOR
+    
+        SELECT               
+            VDIR_PACK_UTILIDADES.VDIR_FN_GET_PARAMETRO(29) AS Descripcion,
+            f.COD_RECIBO AS Referencia,
+            f.TOTAL_PAGAR AS Valor,            
+            VDIR_PACK_UTILIDADES.VDIR_FN_GET_PARAMETRO(30) AS Moneda,
+            f.FECHA_PAGO AS Fecha,
+            cb.DES_FORMA_PAGO||' '||f.FRANQUICIA_PAGO AS Metodo            
+         FROM
+            vdir_factura f
+            
+            INNER JOIN vdir_factura_detalle fd
+             ON fd.cod_factura = f.cod_factura
+             
+             INNER JOIN vdir_forma_pago cb
+             ON f.COD_FORMA_PAGO = cb.COD_FORMA_PAGO
+                           
+         WHERE
+            f.cod_afiliacion = p_cod_afiliacion;
+    
+      
+ 
+  RETURN  vl_cursor;
+ 
+ END VDIR_FN_GET_INFO_PAGO;
  
 
 END VDIR_PACK_UTILIDADES;

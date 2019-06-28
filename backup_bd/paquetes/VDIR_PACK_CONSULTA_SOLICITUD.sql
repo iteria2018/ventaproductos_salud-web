@@ -219,19 +219,24 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 						     esta.des_estado,
 	                         TO_CHAR(afil.fecha_creacion, ''dd/mm/yyyy'') fecha_radicacion,
 							 esta.cod_estado
-					    FROM VDIR_AFILIACION               afil,
+					    FROM (select pc.cod_persona, pc.cod_afiliacion, af.FECHA_CREACION,af.COD_ESTADO 
+                            from VDIR_AFILIACION af,
+                                 VDIR_PERSONA_CONTRATO pc
+                                 where af.COD_AFILIACION = pc.COD_AFILIACION
+                                   AND af.cod_estado = '|| nvl(inu_codEstado,7)||'
+                                   group by pc.cod_persona, pc.cod_afiliacion, af.FECHA_CREACION,af.COD_ESTADO ) afil,
 						     VDIR_ENCUESTA_PERSONA         cobe,
 						     VDIR_PERSONA                  pers,
 						     VDIR_USUARIO                  usua,
 						     VDIR_ESTADO                   esta,
 						     VDIR_PLAN                     plan
-					   WHERE afil.cod_afiliacion  = cobe.cod_afiliacion
+					   WHERE afil.COD_PERSONA = cobe.cod_persona      
 					     AND cobe.cod_persona     = pers.cod_persona 
 					     AND pers.cod_persona     = usua.cod_persona
 					     AND usua.cod_plan        = plan.cod_plan
 					     AND afil.cod_estado      = esta.cod_estado
-					     AND cobe.cod_encuesta    = 1
-						 AND afil.cod_estado	  <> 3';
+					     AND cobe.cod_encuesta    = 1';
+					     
 
 		IF inu_codEstado <> -1  AND inu_codEstado IS NOT NULL THEN
 			lvc_query := lvc_query||' AND afil.cod_estado = '||inu_codEstado;
@@ -248,6 +253,14 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 		lvc_query := lvc_query||' AND TO_DATE(TO_CHAR(afil.fecha_creacion,''dd/mm/yyyy''),''dd/mm/yyyy'') BETWEEN TO_DATE('''||ivc_fechaInicia||''',''dd/mm/yyyy'') AND TO_DATE('''||ivc_fechaFinal||''',''dd/mm/yyyy'')';
 			
 		END IF;
+		
+		lvc_query := lvc_query||'group by afil.cod_afiliacion,
+						     INITCAP(pers.nombre_1), 
+						     INITCAP(pers.apellido_1), 
+						     plan.des_plan,
+						     esta.des_estado,
+	                         TO_CHAR(afil.fecha_creacion, ''dd/mm/yyyy''),
+							 esta.cod_estado';
 		
 		--DBMS_OUTPUT.PUT_LINE(lvc_query);
 		--Se retorna el cursor
@@ -971,22 +984,33 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 			   esta.des_estado,
 			   TO_CHAR(afil.fecha_creacion, 'dd/mm/yyyy') fecha_radicacion,
 			   esta.cod_estado
-		  FROM VDIR_AFILIACION               afil,
+		  FROM (select pc.cod_persona, pc.cod_afiliacion, af.FECHA_CREACION,af.COD_ESTADO 
+                            from VDIR_AFILIACION af,
+                                 VDIR_PERSONA_CONTRATO pc
+                                 where af.COD_AFILIACION = pc.COD_AFILIACION
+                                   AND af.cod_estado = 4 
+                                   group by pc.cod_persona, pc.cod_afiliacion, af.FECHA_CREACION,af.COD_ESTADO ) afil,
 		  	   VDIR_ENCUESTA_PERSONA         cobe,
 			   VDIR_PERSONA                  pers,
 			   VDIR_USUARIO                  usua,
 			   VDIR_ESTADO                   esta,
 			   VDIR_PLAN                     plan,
 			   VDIR_COLA_SOLICITUD           coso
-	     WHERE afil.cod_afiliacion  = cobe.cod_afiliacion
+	     WHERE afil.cod_persona  = cobe.cod_persona
 		   AND cobe.cod_persona     = pers.cod_persona 
 		   AND pers.cod_persona     = usua.cod_persona
 		   AND usua.cod_plan        = plan.cod_plan
 		   AND afil.cod_estado      = esta.cod_estado
 		   AND afil.cod_afiliacion  = coso.cod_afiliacion
 		   AND cobe.cod_encuesta    = 1		   
-		   AND afil.cod_estado      = 4
-		   AND coso.cod_usuario     = inu_codUsuario;
+		   AND coso.cod_usuario     = inu_codUsuario
+		   GROUP BY afil.cod_afiliacion,
+			   pers.nombre_1,
+			   pers.apellido_1,
+			   plan.des_plan,
+			   esta.des_estado,
+			   TO_CHAR(afil.fecha_creacion, 'dd/mm/yyyy'),
+			   esta.cod_estado;
 		   
 		RETURN ltc_datos;
 	 

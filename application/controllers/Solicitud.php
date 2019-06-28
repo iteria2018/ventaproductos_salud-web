@@ -268,4 +268,10 @@ class Solicitud extends CI_Controller{
 
 	}
 
+	public function infoPago(){
+		$codigo_afiliacion = $this->input->post("codAfiliacion");
+		$data = $this->Utilidades_model->getInformacionPago($codigo_afiliacion)[0];		
+		$result = json_encode($data);
+		$this->output->set_content_type('application/json')->set_output($result);	
+	}
 }

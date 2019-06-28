@@ -115,8 +115,14 @@
 			    <label></label><br>
 				<button id="btnEncuestaSarlaf" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" class="btn btn-primary boton-vd btn-sm" type="button" >
 					<i class="fa fa-check-square-o" aria-hidden="true"></i> &nbsp; Encuesta SARLAFT
+				</button>				
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-2 text-center">
+				<label></label><br>
+				<button  id="btnInfoPago" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" class="btn btn-primary boton-vd btn-sm" type="button" >
+					<i class="fa fa-credit-card-alt" aria-hidden="true"></i> &nbsp; Informacion de pago
 				</button>
 			</div>
 		</div>				
-	</div>
+	</div>	
 </fieldset>

@@ -31,6 +31,10 @@ $(document).ready(function(){
         getEncuestaSarlaf($(this).attr('codAfiliacion'),$(this).attr('codPersona'));
     });
 
+    $(document.body).on('click', '#btnInfoPago', function(e) {
+        getInfoPago($(this).attr('codAfiliacion'));
+    });
+
     $(document.body).on('click', '.enGestion', function(e) {
         solicitudGestion($(this).attr('codSolicitud'));        
     });
@@ -339,6 +343,45 @@ function validaEncuesta(codPersona,codAfiliacion,codEncuesta){
 
     return valida;
 
+}
+
+function getInfoPago(codAfiliacion) {
+    var parametrosObj    = {};
+    parametrosObj['codAfiliacion']  = codAfiliacion;
+    var botonesModal          = [{"id":"cerrarInfoPago","label":"Aceptar","class":"btn-primary"}];
+    var idModal = 'modalInfoPago';
+    runLoading(true);
+
+    $.ajax({
+        url: "Solicitud/infoPago",  
+        type: "POST",  
+        dataType: "json",
+        data:parametrosObj,       
+        success: function(resp){
+            runLoading(false);
+            var mensajeRespuesta = '';
+            for (const key in resp) {
+                if (resp.hasOwnProperty(key)) {
+                    const element = resp[key];
+                    mensajeRespuesta += '<div class="col-sm-12 col-md-12 col-lg-12"><label>'+key+'</label>';
+                    mensajeRespuesta += '<input type="text" id="txtDescripcion" class="form-control campo-vd-sm" value="  '+element+'" disabled>'        
+                    mensajeRespuesta += '</div>';
+                }
+            }
+            
+            crearModal(idModal, 'Datos de la transacción:', mensajeRespuesta, botonesModal, false, '', '');
+            $('#cerrarInfoPago').click(function(){
+                $('#'+idModal).modal('hide');
+            });
+        },
+        error: function(resp) {
+            runLoading(false);
+            crearModal(idModal, 'Confirmaci\u00f3n', 'No se puede ver la informacion del pago', botonesModal, false, '', '');
+            $('#cerrarInfoPago').click(function(){
+                $('#'+idModal).modal('hide');
+            });
+        }
+    });
 }
 
 function solicitudPendiente(){

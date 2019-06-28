@@ -26,6 +26,8 @@ class Pago extends CI_Controller{
 				} else if($metodopayu == 7){
 					$formapago = 1;
 				}
+				$this->db->set('FECHA_PAGO', "to_date('".$_REQUEST['processingDate']."','yyyy-mm-dd')",false);
+                $this->db->set('FRANQUICIA_PAGO', $_REQUEST['lapPaymentMethod']);
 				$this->db->set('COD_FORMA_PAGO', $formapago);
 				$this->db->where('COD_RECIBO', $referenceCode);
 				$this->db->update('VDIR_FACTURA');

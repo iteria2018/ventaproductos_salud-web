@@ -70,7 +70,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 ml-auto mr-auto my-auto">
-                        <img src="<?php echo base_url()?>asset/public/images/logo_coomeva_mp.png" style="width:100%;">
+                        <img src="<?php echo base_url()?>asset/public/images/logo_coomeva_mp.png" style="width:100%;height:20%">
                     </div>
                     <div class="col-lg-8 col-md-8 ml-auto mr-auto my-auto">                        
                         <div class="card card-login">

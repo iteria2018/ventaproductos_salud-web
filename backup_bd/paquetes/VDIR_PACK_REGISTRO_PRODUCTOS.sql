@@ -541,6 +541,10 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_REGISTRO_PRODUCTOS AS
     lv_existe integer;
     lv_valor_tarifa number;
     lv_aux_valor_total number;
+    lnu_iva NUMBER := VDIR_PACK_UTILIDADES.VDIR_FN_GET_PARAMETRO(87);
+    lnu_impuesto NUMBER := 0;
+    lnu_base NUMBER := 0;
+        
  BEGIN
     
     --Consultar valor total de la factura
@@ -569,10 +573,22 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_REGISTRO_PRODUCTOS AS
         WHEN NO_DATA_FOUND THEN
             lv_sec_factura := 0;
     END;
-       
+    
+    IF lv_aux_valor_total > 0 THEN
+
+            lnu_base :=  round(lv_aux_valor_total / lnu_iva,0);
+            lnu_impuesto := lv_aux_valor_total - lnu_base;
+    ELSE  
+
+        lnu_base := 0;
+        lnu_impuesto := 0;  
+    END IF;    
+
     IF lv_sec_factura < 1 THEN
+    
         --Consultar secuencia factura
-        SELECT VDIR_SEQ_FACTURA.NEXTVAL INTO lv_sec_factura FROM DUAL;        
+        SELECT VDIR_SEQ_FACTURA.NEXTVAL INTO lv_sec_factura FROM DUAL;
+          
         --Insertar datos factura
         INSERT INTO vdir_factura(
             cod_factura,
@@ -589,9 +605,9 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_REGISTRO_PRODUCTOS AS
         ) VALUES (
             lv_sec_factura,
             lv_aux_valor_total,
-            NULL,
+            lnu_impuesto,
             SYSDATE,
-            lv_aux_valor_total,
+            lnu_base,
             NULL,
             NULL,
             NULL,
@@ -601,14 +617,16 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_REGISTRO_PRODUCTOS AS
         );    
     ELSE            
         --Actualizar datos factura
+        
         UPDATE vdir_factura
         SET
             total_pagar = lv_aux_valor_total,
-            sub_total = lv_aux_valor_total
+            sub_total = lnu_base,
+            valor_impuesto = lnu_impuesto
         WHERE
             cod_factura = lv_sec_factura;
     END IF;
-    
+
     --Registrar detalle factura
     FOR fila IN (SELECT 
                         COALESCE(tr.valor, 0) AS valor,
@@ -631,10 +649,22 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_REGISTRO_PRODUCTOS AS
             AND cod_beneficiario_programa = fila.cod_beneficiario_programa;
         --Consultar valor tarifa
         lv_valor_tarifa := fila.valor; --SELECT valor INTO lv_valor_tarifa FROM vdir_tarifa WHERE cod_tarifa = fila.cod_tarifa;
-        
+        IF lv_valor_tarifa > 0 THEN
+
+            lnu_base :=  round((lv_valor_tarifa / lnu_iva),0);
+            lnu_impuesto := lv_valor_tarifa - lnu_base;
+        ELSE
+
+            lnu_base := 0;
+            lnu_impuesto := 0;            
+        END IF;
         IF lv_existe < 1 THEN
+
             --Consultar secuencia factura detalle
             SELECT VDIR_SEQ_FACTURA_DETALLE.NEXTVAL INTO lv_sec_factura_detalle FROM DUAL;
+            lnu_base := 0;
+            lnu_impuesto := 0;
+            
             
             INSERT INTO vdir_factura_detalle(
                 cod_factura_detalle,
@@ -650,9 +680,9 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_REGISTRO_PRODUCTOS AS
             )VALUES(
                 lv_sec_factura_detalle,
                 lv_valor_tarifa,
-                lv_valor_tarifa,
+                lnu_base,
                 1,
-                NULL,
+                lnu_impuesto,
                 NULL,
                 lv_valor_tarifa,
                 NULL,
@@ -663,8 +693,8 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_REGISTRO_PRODUCTOS AS
             UPDATE vdir_factura_detalle
             SET
                 valor_total = lv_valor_tarifa,
-                sub_total = lv_valor_tarifa,
-                valor_tarifa = lv_valor_tarifa
+                sub_total = lnu_base,
+                valor_impuesto = lnu_impuesto
             WHERE
                 cod_beneficiario_programa = fila.cod_beneficiario_programa
                 AND cod_factura = lv_sec_factura;
@@ -673,6 +703,7 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_REGISTRO_PRODUCTOS AS
         pty_cod_factura := lv_sec_factura;
     
     END LOOP;
+       
      
  END sp_registra_factura;
  

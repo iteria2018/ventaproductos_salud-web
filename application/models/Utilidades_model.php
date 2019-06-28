@@ -1263,6 +1263,18 @@
         return $ress;
     }
 
+    public function getInformacionPago($codigo_afiliacion){      
+
+        $query = ":curs_datos :=  VDIR_PACK_UTILIDADES.VDIR_FN_GET_INFO_PAGO(".$codigo_afiliacion.")";
+        
+        $data = $this->Utilidades_model->getDataRefCursor($query); 
+
+         if (count($data) > 0) {
+             return $data;
+         }else{
+             return false;
+         }
+   }
 
  }
 

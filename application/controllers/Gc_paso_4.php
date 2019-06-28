@@ -36,8 +36,8 @@ class Gc_paso_4 extends CI_Controller{
         $signature = md5($aux_signature);
         $url_ejecucion =  $datos["URL_EJECUCION"]; 
         $por_iva = $this->Utilidades_model->getParametro(87)->RESULTADO; 
-        $val_iva = $datos["AMOUNT"] * $por_iva;
-        $val_base = $datos["AMOUNT"] - $val_iva;   
+        $val_base = round($datos["BASE"],0);
+        $val_iva = $datos["IVA"];   
         
 
         $formulario = '<form method="post" id="form_payu" action="'.$url_ejecucion.'">

@@ -1,3 +1,51 @@
+CREATE OR REPLACE PACKAGE SALUDMP.VDIR_PACK_ENCUESTAS AS 
+
+--FUNCION PARA TRAER UNA ENCUESTA DE SARLAF-------------------------------
+    FUNCTION VDIR_FN_GET_ENCUESTA_SARLAF(p_codigo_afiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE ,p_codigo_persona IN VDIR_PERSONA.COD_PERSONA%TYPE) RETURN CLOB;
+
+ --FUNCION PARA TRAER UNA LISTA DE MONEDAS
+   FUNCTION VDIR_FN_GET_LIST_MONEDA RETURN VARCHAR2;
+
+  --FUNCION PARA TRAER UNA LISTA DE PARENTESCOS
+   FUNCTION VDIR_FN_GET_LIST_PARENTESCO RETURN VARCHAR2;
+
+   --PROCEDIMIENTO PARA GUARDAR LA ENCUESTA
+   PROCEDURE VDIR_FN_GUARDAR_ENCUESTA(p_codigo_encuesta IN VDIR_ENCUESTA.COD_ENCUESTA%TYPE,p_codigo_pregunta IN VDIR_PREGUNTA.COD_PREGUNTA%TYPE,p_codigo_respuesta IN VDIR_RESPUESTA.COD_RESPUESTA%TYPE,p_cod_afiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE,p_valor_respuesta IN VDIR_RESPUESTAS_MARCADAS.VALOR_RESPUESTA%TYPE,p_codigo_persona IN VDIR_PERSONA.COD_PERSONA%TYPE,p_respuesta OUT VARCHAR2);
+
+ --FUNCION PARA TRAER LA ENCUESTA SARLAF YA DILIGENCIADA-------------------------------
+   FUNCTION VDIR_FN_GET_DATOS_ENCT(p_codigo_afiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE,p_codigo_persona IN VDIR_PERSONA.COD_PERSONA%TYPE) RETURN CLOB;
+
+   --FUNCION PARA TRAER UNA ENCUESTA DE SALUD-------------------------------
+    FUNCTION VDIR_FN_GET_ENCUESTA_DE_SALUD(p_edad IN NUMBER,p_sexo IN NUMBER,p_codigo_afiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE ,p_codigo_persona IN VDIR_PERSONA.COD_PERSONA%TYPE) RETURN CLOB; 
+
+    --FUNCION PARA TRAER LA ENCUESTA DE SALUD YA DILIGENCIADA-------------------------------
+   FUNCTION VDIR_FN_GET_DATOS_ENCT_SALUD(p_edad IN NUMBER,p_sexo IN NUMBER,p_codigo_afiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE,p_codigo_persona IN VDIR_PERSONA.COD_PERSONA%TYPE) RETURN CLOB;
+
+    -- ---------------------------------------------------------------------
+    -- fnGetValidaEncuesta
+    -- ---------------------------------------------------------------------
+    FUNCTION fnGetValidaEncuesta
+    (
+        inu_codAfiliacion IN VDIR_ENCUESTA_PERSONA.COD_AFILIACION%TYPE,
+		inu_codPersona    IN VDIR_ENCUESTA_PERSONA.COD_PERSONA%TYPE,
+		inu_codEncuesta   IN VDIR_ENCUESTA_PERSONA.COD_ENCUESTA%TYPE
+    )
+	RETURN NUMBER;
+
+    -- ---------------------------------------------------------------------
+    -- VDIR_FN_VALIDA_ENCUESTA_SALUD
+    -- ---------------------------------------------------------------------
+
+   FUNCTION VDIR_FN_VALIDA_ENCUESTA_SALUD
+   (
+        p_codigo_afiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE       
+    ) 
+    RETURN sys_refcursor; 
+
+END VDIR_PACK_ENCUESTAS;
+/
+
+
 CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_ENCUESTAS AS
 
  FUNCTION VDIR_FN_GET_LIST_MONEDA RETURN VARCHAR2 AS
@@ -82,10 +130,11 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_ENCUESTAS AS
          ON P.COD_PERSONA = EP.COD_PERSONA    
 
         INNER JOIN VDIR_PERSONA_TIPOPER TIPOP
-         ON TIPOP.COD_PERSONA = P.COD_PERSONA
+         ON TIPOP.COD_PERSONA = P.COD_PERSONA,
+         (SELECT MAX(COD_AFILIACION) AS COD_AFILIADO FROM VDIR_ENCUESTA_PERSONA MEP WHERE MEP.COD_PERSONA = p_codigo_persona) MAXEP
 
       WHERE
-        EP.COD_AFILIACION = p_codigo_afiliacion
+        EP.COD_AFILIACION = MAXEP.COD_AFILIADO
         AND EP.COD_PERSONA = p_codigo_persona
         AND TIPOP.COD_TIPO_PERSONA = 1
 		AND EP.COD_ENCUESTA = 1;        
@@ -324,7 +373,7 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_ENCUESTAS AS
    END VDIR_FN_GUARDAR_ENCUESTA;
 
    --FUNCION PARA TRAER LA ENCUESTA SARLAF YA DILIGENCIADA-------------------------------
-      FUNCTION VDIR_FN_GET_DATOS_ENCT(p_codigo_afiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE,p_codigo_persona IN VDIR_PERSONA.COD_PERSONA%TYPE) RETURN CLOB
+   FUNCTION VDIR_FN_GET_DATOS_ENCT(p_codigo_afiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE,p_codigo_persona IN VDIR_PERSONA.COD_PERSONA%TYPE) RETURN CLOB
 
    AS
     vl_cadena CLOB;
@@ -473,10 +522,10 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_ENCUESTAS AS
                  ELSIF fila2.cod_respuesta = 48 THEN
                      vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-12 div_container_respuesta" data-val_respuesta = "'||fila2.val_respuesta||'" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'">' || fila2.des_respuesta||VDIR_PACK_ENCUESTAS.VDIR_FN_GET_LIST_PARENTESCO||'</div> <br>'; 
                  ELSIF fila2.cod_respuesta = 49 OR fila2.cod_respuesta = 50 OR fila2.cod_respuesta = 27 THEN
-                     vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-12 div_container_respuesta" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'" data-val_respuesta = "'||fila2.val_respuesta||'">' ||fila2.des_respuesta||'</div>';
+                     vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-12 div_container_respuesta" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'" data-val_respuesta = "'||fila2.val_respuesta||'">' ||fila2.des_respuesta||'</div>';      
                  ELSIF fila2.cod_respuesta in(51,25,26) THEN
-                    vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-6 div_container_respuesta" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'" data-val_respuesta = "'||fila2.val_respuesta||'">' ||fila2.des_respuesta||' value= "'||fila2.val_respuesta||'" disabled></div>';
-				 ELSE 
+                    vl_row_respuesta := vl_row_respuesta || '<div class="col-lg-6 div_container_respuesta" data-respuesta = "'||CAST(fila2.cod_respuesta AS VARCHAR2)||'" data-val_respuesta = "'||fila2.val_respuesta||'">' ||fila2.des_respuesta||' value= "'||fila2.val_respuesta||'" disabled></div>';          
+				  ELSE 
                     IF lnu_index_resp = 0 THEN
 					    vl_row_respuesta := vl_row_respuesta || '<div class="row">';
 					END IF;

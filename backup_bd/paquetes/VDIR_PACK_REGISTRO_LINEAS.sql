@@ -1,3 +1,4 @@
+/*<TOAD_FILE_CHUNK>*/
 CREATE OR REPLACE PACKAGE VDIR_PACK_REGISTRO_LINEAS AS
 /* ---------------------------------------------------------------------
  Copyright  Tecnología Informática Coomeva - Colombia
@@ -31,7 +32,11 @@ CREATE OR REPLACE PACKAGE VDIR_PACK_REGISTRO_LINEAS AS
 		inu_codEstado         IN VDIR_PLAN_PROGRAMA.COD_ESTADO%TYPE,
 		ivc_coberturaInicial  IN VDIR_PLAN_PROGRAMA.COBERTURA_INICIAL%TYPE,
 		ivc_coberturaFinal    IN VDIR_PLAN_PROGRAMA.COBERTURA_FINAL%TYPE,
-        ivc_codProgramaHologa IN VDIR_PLAN_PROGRAMA.COD_PROGRAMA_HOMOLOGA%TYPE
+        ivc_codProgramaHologa IN VDIR_PLAN_PROGRAMA.COD_PROGRAMA_HOMOLOGA%TYPE,
+        ivc_cuenta IN VDIR_PLAN_PROGRAMA.CUENTA%TYPE,
+        ivc_sub_cuenta IN VDIR_PLAN_PROGRAMA.SUB_CUENTA%TYPE,
+        ivc_programa IN VDIR_PLAN_PROGRAMA.PROGRAMA%TYPE,
+        ivc_tarifa IN VDIR_PLAN_PROGRAMA.TARIFA%TYPE
     );
 	
 	-- ---------------------------------------------------------------------
@@ -45,12 +50,17 @@ CREATE OR REPLACE PACKAGE VDIR_PACK_REGISTRO_LINEAS AS
 		inu_codEstado         IN VDIR_PLAN_PROGRAMA.COD_ESTADO%TYPE,
 		ivc_coberturaInicial  IN VDIR_PLAN_PROGRAMA.COBERTURA_INICIAL%TYPE,
 		ivc_coberturaFinal    IN VDIR_PLAN_PROGRAMA.COBERTURA_FINAL%TYPE,
-        ivc_codProgramaHologa IN VDIR_PLAN_PROGRAMA.COD_PROGRAMA_HOMOLOGA%TYPE
+        ivc_codProgramaHologa IN VDIR_PLAN_PROGRAMA.COD_PROGRAMA_HOMOLOGA%TYPE,
+        ivc_cuenta IN VDIR_PLAN_PROGRAMA.CUENTA%TYPE,
+        ivc_sub_cuenta IN VDIR_PLAN_PROGRAMA.SUB_CUENTA%TYPE,
+        ivc_programa IN VDIR_PLAN_PROGRAMA.PROGRAMA%TYPE,
+        ivc_tarifa IN VDIR_PLAN_PROGRAMA.TARIFA%TYPE
     );
   
 END VDIR_PACK_REGISTRO_LINEAS;
 /
 
+/*<TOAD_FILE_CHUNK>*/
 CREATE OR REPLACE PACKAGE BODY VDIR_PACK_REGISTRO_LINEAS AS
 /* ---------------------------------------------------------------------
  Copyright  Tecnología Informática Coomeva - Colombia
@@ -79,7 +89,11 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_REGISTRO_LINEAS AS
 		inu_codEstado         IN VDIR_PLAN_PROGRAMA.COD_ESTADO%TYPE,
 		ivc_coberturaInicial  IN VDIR_PLAN_PROGRAMA.COBERTURA_INICIAL%TYPE,
 		ivc_coberturaFinal    IN VDIR_PLAN_PROGRAMA.COBERTURA_FINAL%TYPE,
-        ivc_codProgramaHologa IN VDIR_PLAN_PROGRAMA.COD_PROGRAMA_HOMOLOGA%TYPE
+        ivc_codProgramaHologa IN VDIR_PLAN_PROGRAMA.COD_PROGRAMA_HOMOLOGA%TYPE,
+        ivc_cuenta IN VDIR_PLAN_PROGRAMA.CUENTA%TYPE,
+        ivc_sub_cuenta IN VDIR_PLAN_PROGRAMA.SUB_CUENTA%TYPE,
+        ivc_programa IN VDIR_PLAN_PROGRAMA.PROGRAMA%TYPE,
+        ivc_tarifa IN VDIR_PLAN_PROGRAMA.TARIFA%TYPE
     )
 	IS
 	
@@ -98,6 +112,10 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_REGISTRO_LINEAS AS
 	   inu_codEstado         Código del estado
 	   ivc_coberturaInicial  Cobertura inicial
 	   ivc_coberturaFinal    Cobertura final
+	   ivc_cuenta            Solicitado por operaciones
+	   ivc_sub_cuenta        Solicitado por operaciones
+	   ivc_programa          Solicitado por operaciones
+	   ivc_tarifa            Solicitado por operaciones
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
@@ -126,7 +144,11 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_REGISTRO_LINEAS AS
 				COD_ESTADO, 
 				COBERTURA_INICIAL,
 				COBERTURA_FINAL,
-                COD_PROGRAMA_HOMOLOGA
+                COD_PROGRAMA_HOMOLOGA,
+                CUENTA,
+                SUB_CUENTA,
+                PROGRAMA,
+                TARIFA
 			) 
 			VALUES 
 			(
@@ -136,7 +158,11 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_REGISTRO_LINEAS AS
 				inu_codEstado,
 				ivc_coberturaInicial,
 				ivc_coberturaFinal,
-                ivc_codProgramaHologa
+                ivc_codProgramaHologa,
+                ivc_cuenta,
+                ivc_sub_cuenta,
+                ivc_programa,
+                ivc_tarifa
 			);
 			
 		EXCEPTION WHEN OTHERS THEN
@@ -158,7 +184,11 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_REGISTRO_LINEAS AS
 		inu_codEstado         IN VDIR_PLAN_PROGRAMA.COD_ESTADO%TYPE,
 		ivc_coberturaInicial  IN VDIR_PLAN_PROGRAMA.COBERTURA_INICIAL%TYPE,
 		ivc_coberturaFinal    IN VDIR_PLAN_PROGRAMA.COBERTURA_FINAL%TYPE,
-        ivc_codProgramaHologa IN VDIR_PLAN_PROGRAMA.COD_PROGRAMA_HOMOLOGA%TYPE
+        ivc_codProgramaHologa IN VDIR_PLAN_PROGRAMA.COD_PROGRAMA_HOMOLOGA%TYPE,
+        ivc_cuenta IN VDIR_PLAN_PROGRAMA.CUENTA%TYPE,
+        ivc_sub_cuenta IN VDIR_PLAN_PROGRAMA.SUB_CUENTA%TYPE,
+        ivc_programa IN VDIR_PLAN_PROGRAMA.PROGRAMA%TYPE,
+        ivc_tarifa IN VDIR_PLAN_PROGRAMA.TARIFA%TYPE
     )
 	IS
 	
@@ -178,6 +208,10 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_REGISTRO_LINEAS AS
 	   inu_codEstado         Código del estado
 	   ivc_coberturaInicial  Cobertura inicial
 	   ivc_coberturaFinal    Cobertura final
+	   ivc_cuenta            Solicitado por operaciones
+	   ivc_sub_cuenta        Solicitado por operaciones
+	   ivc_programa          Solicitado por operaciones
+	   ivc_tarifa            Solicitado por operaciones
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
@@ -197,7 +231,11 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_REGISTRO_LINEAS AS
 				   COD_ESTADO        = inu_codEstado, 
 				   COBERTURA_INICIAL = ivc_coberturaInicial,
 				   COBERTURA_FINAL   = ivc_coberturaFinal,
-                   COD_PROGRAMA_HOMOLOGA = ivc_codProgramaHologa
+                   COD_PROGRAMA_HOMOLOGA = ivc_codProgramaHologa,
+                   CUENTA            = ivc_cuenta,
+                   SUB_CUENTA        = ivc_sub_cuenta,
+                   PROGRAMA         = ivc_programa, 
+                   TARIFA           = ivc_tarifa
 		     WHERE COD_PLAN_PROGRAMA = inu_codPlanPrograma;
 	
 		EXCEPTION WHEN OTHERS THEN
@@ -210,3 +248,4 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_REGISTRO_LINEAS AS
  
 END VDIR_PACK_REGISTRO_LINEAS;
 /
+

@@ -53,7 +53,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-6 col-lg-2">
 			    <label>Email</label>
-				<input type="text" id="txtEmail" class="form-control campo-vd-sm" value="<?php echo $contratante[0]['EMAIL'] ?>" disabled>
+				<input type="text" id="txtEmail" class="form-control campo-vd-sm" style="width:300px" value="<?php echo $contratante[0]['EMAIL'] ?>" disabled>
 			</div>	
 		</div><br>
 		<legend> Informaci&oacute;n del contratante </legend>

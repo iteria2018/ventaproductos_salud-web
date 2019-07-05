@@ -141,17 +141,21 @@ class Linea_model extends CI_Model{
      * @param string   $coberturaInicial    Ruta de la carpeta donde se guarda la cobertura inicial
      * @param string   $coberturaFinal      Ruta de la carpeta donde se guarda la cobertura final
      * @param string   $codProgramaHomologa Código de hologacion presmed para el programa (Producto)
+     * @param string   $cuenta Solicitado por operaciones
+     * @param string   $sub_cuenta Solicitado por operaciones
+     * @param string   $programa Solicitado por operaciones
+     * @param string   $tarifa Solicitado por operaciones
      * 
      * @return array  Retorna array indicando si se guarda exitosamente o si hubieron errores
      */
-    public function savePlanPrograma($codPlan,$codPrograma,$codEstado,$coberturaInicial,$coberturaFinal,$codProgramaHomologa){
+    public function savePlanPrograma($codPlan,$codPrograma,$codEstado,$coberturaInicial,$coberturaFinal,$codProgramaHomologa,$cuenta,$sub_cuenta,$programa,$tarifa){
 
         $errors = array();
         $ret    = true;
         //Abrir la transacción db
         $this->db->trans_begin();
             
-        $s = oci_parse($this->db->conn_id, "BEGIN VDIR_PACK_REGISTRO_LINEAS.prGuardarPlanPrograma(:inu_codPlan,:inu_codPrograma,:inu_codEstado,:ivc_coberturaInicial,:ivc_coberturaFinal,:ivc_codProgramaHomologa); END;");
+        $s = oci_parse($this->db->conn_id, "BEGIN VDIR_PACK_REGISTRO_LINEAS.prGuardarPlanPrograma(:inu_codPlan,:inu_codPrograma,:inu_codEstado,:ivc_coberturaInicial,:ivc_coberturaFinal,:ivc_codProgramaHomologa, :cuenta, :sub_cuenta, :programa, :tarifa); END;");
         
         oci_bind_by_name($s, ":inu_codPlan", $codPlan);
         oci_bind_by_name($s, ":inu_codPrograma", $codPrograma);
@@ -159,6 +163,10 @@ class Linea_model extends CI_Model{
         oci_bind_by_name($s, ":ivc_coberturaInicial", $coberturaInicial);
         oci_bind_by_name($s, ":ivc_coberturaFinal", $coberturaFinal);
         oci_bind_by_name($s, ":ivc_codProgramaHomologa", $codProgramaHomologa);
+        oci_bind_by_name($s, ":cuenta", $cuenta);
+        oci_bind_by_name($s, ":sub_cuenta", $sub_cuenta);
+        oci_bind_by_name($s, ":programa", $programa);
+        oci_bind_by_name($s, ":tarifa", $tarifa);        
         oci_execute($s, OCI_DEFAULT);
             
         if ($this->db->trans_status() === FALSE){
@@ -193,16 +201,20 @@ class Linea_model extends CI_Model{
      * @param string   $coberturaInicial    Ruta de la carpeta donde se guarda la cobertura inicial
      * @param string   $coberturaFinal      Ruta de la carpeta donde se guarda la cobertura final
      * @param string   $codProgramaHomologa Código de hologacion presmed para el programa (Producto)
+     * @param string   $cuenta Solicitado por operaciones
+     * @param string   $sub_cuenta Solicitado por operaciones
+     * @param string   $programa Solicitado por operaciones
+     * @param string   $tarifa Solicitado por operaciones
      * @return array  Retorna array indicando si se guarda exitosamente o si hubieron errores
      */
-    public function updatePlanPrograma($codPlanPrograma,$codPlan,$codPrograma,$codEstado,$coberturaInicial,$coberturaFinal,$codProgramaHomologa){
+    public function updatePlanPrograma($codPlanPrograma,$codPlan,$codPrograma,$codEstado,$coberturaInicial,$coberturaFinal,$codProgramaHomologa,$cuenta,$sub_cuenta,$programa,$tarifa){
 
         $errors = array();
         $ret    = true;
         //Abrir la transacción db
         $this->db->trans_begin();
             
-        $s = oci_parse($this->db->conn_id, "BEGIN VDIR_PACK_REGISTRO_LINEAS.prActualizarPlanPrograma(:inu_codPlanPrograma,:inu_codPlan,:inu_codPrograma,:inu_codEstado,:ivc_coberturaInicial,:ivc_coberturaFinal,:ivc_codProgramaHomologa); END;");
+        $s = oci_parse($this->db->conn_id, "BEGIN VDIR_PACK_REGISTRO_LINEAS.prActualizarPlanPrograma(:inu_codPlanPrograma,:inu_codPlan,:inu_codPrograma,:inu_codEstado,:ivc_coberturaInicial,:ivc_coberturaFinal,:ivc_codProgramaHomologa, :cuenta, :sub_cuenta, :programa, :tarifa); END;");
         
         oci_bind_by_name($s, ":inu_codPlanPrograma", $codPlanPrograma);
         oci_bind_by_name($s, ":inu_codPlan", $codPlan);
@@ -211,6 +223,10 @@ class Linea_model extends CI_Model{
         oci_bind_by_name($s, ":ivc_coberturaInicial", $coberturaInicial);
         oci_bind_by_name($s, ":ivc_coberturaFinal", $coberturaFinal);
         oci_bind_by_name($s, ":ivc_codProgramaHomologa", $codProgramaHomologa);
+        oci_bind_by_name($s, ":cuenta", $cuenta);
+        oci_bind_by_name($s, ":sub_cuenta", $sub_cuenta);
+        oci_bind_by_name($s, ":programa", $programa);
+        oci_bind_by_name($s, ":tarifa", $tarifa);     
         oci_execute($s, OCI_DEFAULT);
             
         if ($this->db->trans_status() === FALSE){

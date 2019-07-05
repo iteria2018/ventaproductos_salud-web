@@ -1,9 +1,10 @@
+/*<TOAD_FILE_CHUNK>*/
 CREATE OR REPLACE PACKAGE SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
 /* ---------------------------------------------------------------------
- Copyright  Tecnolog铆a Inform谩tica Coomeva - Colombia
+ Copyright  Tecnolog韆 Inform醫ica Coomeva - Colombia
  Package     : VDIR_PACK_CONSULTA_LINEAS
  Caso de Uso : 
- Descripci贸n : Procesos para la consulta los productos - VENTA DIRECTA
+ Descripci髇 : Procesos para la consulta los productos - VENTA DIRECTA
  --------------------------------------------------------------------
  Autor : katherine.latorre@kalettre.com
  Fecha : 23-01-2018  
@@ -12,7 +13,7 @@ CREATE OR REPLACE PACKAGE SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
  --------------------------------------------------------------------
  Historia de Modificaciones
  ---------------------------------------------------------------------
- Fecha Autor Modificaci贸n
+ Fecha Autor Modificaci髇
  ----------------------------------------------------------------- */
 
 	-- ---------------------------------------------------------------------
@@ -76,12 +77,13 @@ CREATE OR REPLACE PACKAGE SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
 END VDIR_PACK_CONSULTA_LINEAS;
 /
 
+/*<TOAD_FILE_CHUNK>*/
 CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
 /* ---------------------------------------------------------------------
- Copyright  Tecnolog铆a Inform谩tica Coomeva - Colombia
+ Copyright  Tecnolog韆 Inform醫ica Coomeva - Colombia
  Package     : VDIR_PACK_CONSULTA_LINEAS
  Caso de Uso : 
- Descripci贸n : Procesos para la consulta los archivos adjuntos - VENTA DIRECTA
+ Descripci髇 : Procesos para la consulta los archivos adjuntos - VENTA DIRECTA
  --------------------------------------------------------------------
  Autor : katherine.latorre@kalettre.com
  Fecha : 23-01-2018  
@@ -90,7 +92,7 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
  --------------------------------------------------------------------
  Historia de Modificaciones
  ---------------------------------------------------------------------
- Fecha Autor Modificaci贸n
+ Fecha Autor Modificaci髇
  ----------------------------------------------------------------- */
 
 	-- ---------------------------------------------------------------------
@@ -99,20 +101,20 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
     FUNCTION fnGetLineas RETURN type_cursor IS
 
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog铆a Inform谩tica Coomeva - Colombia
+	 Copyright   : Tecnolog韆 Inform醫ica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_LINEAS
 	 Caso de Uso : 
-	 Descripci贸n : Retorna los datos de los datos de los productos y 
+	 Descripci髇 : Retorna los datos de los datos de los productos y 
 	               programas asociados a un plan y coberturas
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 24-01-2019  
 	 ----------------------------------------------------------------------
-	 Par谩metros :     Descripci贸n:
+	 Par醡etros :     Descripci髇:
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci贸n
+	 Fecha Autor Modificaci髇
 	 ----------------------------------------------------------------- */
 
 		ltc_datos type_cursor;
@@ -149,19 +151,19 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
     FUNCTION fnGetProductos RETURN type_cursor IS
 
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog铆a Inform谩tica Coomeva - Colombia
+	 Copyright   : Tecnolog韆 Inform醫ica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_LINEAS
 	 Caso de Uso : 
-	 Descripci贸n : Retorna los datos de los productos
+	 Descripci髇 : Retorna los datos de los productos
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 24-01-2019  
 	 ----------------------------------------------------------------------
-	 Par谩metros :     Descripci贸n:
+	 Par醡etros :     Descripci髇:
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci贸n
+	 Fecha Autor Modificaci髇
 	 ----------------------------------------------------------------- */
 
 		ltc_datos type_cursor;
@@ -188,19 +190,19 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
 	RETURN type_cursor IS
 
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog铆a Inform谩tica Coomeva - Colombia
+	 Copyright   : Tecnolog韆 Inform醫ica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_LINEAS
 	 Caso de Uso : 
-	 Descripci贸n : Retorna los datos de los programas
+	 Descripci髇 : Retorna los datos de los programas
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 24-01-2019  
 	 ----------------------------------------------------------------------
-	 Par谩metros :     Descripci贸n:
+	 Par醡etros :     Descripci髇:
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci贸n
+	 Fecha Autor Modificaci髇
 	 ----------------------------------------------------------------- */
 
 		ltc_datos type_cursor;
@@ -224,19 +226,19 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
     FUNCTION fnGetPlanes RETURN type_cursor IS
 
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog铆a Inform谩tica Coomeva - Colombia
+	 Copyright   : Tecnolog韆 Inform醫ica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_LINEAS
 	 Caso de Uso : 
-	 Descripci贸n : Retorna los datos de los planes
+	 Descripci髇 : Retorna los datos de los planes
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 24-01-2019  
 	 ----------------------------------------------------------------------
-	 Par谩metros :     Descripci贸n:
+	 Par醡etros :     Descripci髇:
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci贸n
+	 Fecha Autor Modificaci髇
 	 ----------------------------------------------------------------- */
 
 		ltc_datos type_cursor;
@@ -263,19 +265,19 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
 	RETURN type_cursor IS
 
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog铆a Inform谩tica Coomeva - Colombia
+	 Copyright   : Tecnolog韆 Inform醫ica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_LINEAS
 	 Caso de Uso : 
-	 Descripci贸n : Retorna los datos de los estados
+	 Descripci髇 : Retorna los datos de los estados
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 24-01-2019  
 	 ----------------------------------------------------------------------
-	 Par谩metros :     Descripci贸n:
+	 Par醡etros :     Descripci髇:
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci贸n
+	 Fecha Autor Modificaci髇
 	 ----------------------------------------------------------------- */
 
 		ltc_datos type_cursor;
@@ -302,19 +304,19 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
 	RETURN type_cursor IS
 
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog铆a Inform谩tica Coomeva - Colombia
+	 Copyright   : Tecnolog韆 Inform醫ica Coomeva - Colombia
 	 Package     : VDIR_PACK_CONSULTA_LINEAS
 	 Caso de Uso : 
-	 Descripci贸n : Retorna los datos de los datos del plan programa
+	 Descripci髇 : Retorna los datos de los datos del plan programa
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 24-01-2019  
 	 ----------------------------------------------------------------------
-	 Par谩metros :     Descripci贸n:
+	 Par醡etros :     Descripci髇:
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci贸n
+	 Fecha Autor Modificaci髇
 	 ----------------------------------------------------------------- */
 
 		ltc_datos type_cursor;
@@ -329,7 +331,11 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
 			   plpr.cod_estado,
 			   plpr.cobertura_inicial,
 			   plpr.cobertura_final,
-               plpr.cod_programa_homologa
+               plpr.cod_programa_homologa,
+               plpr.cuenta as opeclave,
+               plpr.sub_cuenta as opesubclave,
+               plpr.programa as opeprograma,
+               plpr.tarifa as opetarifa
 		  FROM VDIR_PROGRAMA      prog,
 			   VDIR_PLAN_PROGRAMA plpr
 	 	 WHERE prog.cod_programa = plpr.cod_programa
@@ -350,21 +356,21 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
 	RETURN type_cursor IS
 
 	/* ---------------------------------------------------------------------
-	 Copyright   : Tecnolog铆a Inform谩tica Coomeva - Colombia
+	 Copyright   : Tecnolog韆 Inform醫ica Coomeva - Colombia
 	 Package     : VDIR_PACK_REGISTRO_PRODUCTOS
 	 Caso de Uso : 
-	 Descripci贸n : Retorna los datos de las imagenes para un programa
+	 Descripci髇 : Retorna los datos de las imagenes para un programa
 	 ----------------------------------------------------------------------
 	 Autor : katherine.latorre@kalettre.com
 	 Fecha : 04-01-2019  
 	 ----------------------------------------------------------------------
-	 Par谩metros :     Descripci贸n:
-	 inu_codPrograma   C贸digo del programa
-	 inu_codPlan       C贸digo del plan
+	 Par醡etros :     Descripci髇:
+	 inu_codPrograma   C骴igo del programa
+	 inu_codPlan       C骴igo del plan
 	 ----------------------------------------------------------------------
 	 Historia de Modificaciones
 	 ----------------------------------------------------------------------
-	 Fecha Autor Modificaci贸n
+	 Fecha Autor Modificaci髇
 	 ----------------------------------------------------------------- */
 
 		ltc_datos type_cursor;
@@ -387,3 +393,4 @@ CREATE OR REPLACE PACKAGE BODY SALUDMP.VDIR_PACK_CONSULTA_LINEAS AS
 
 END VDIR_PACK_CONSULTA_LINEAS;
 /
+

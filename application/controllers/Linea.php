@@ -68,6 +68,10 @@ class Linea extends CI_Controller{
 		$datos['tipoAccion']       = $tipoAccion;
 		$datos['arrayExtensiones'] = $this->Utilidades_model->getParametro(18)->RESULTADO;
 		$datos['codProgramaHomologa'] = '';
+		$datos['opeclave'] = '';
+		$datos['opesubclave'] = '';
+		$datos['opeprograma'] = '';
+		$datos['opetarifa'] = '';
 
 		//Si el tipo de acción es editar
 		if ($tipoAccion == 2){
@@ -76,6 +80,10 @@ class Linea extends CI_Controller{
 			$datos['planPrograma'] = $planPrograma;
 			$datos['programas']    = $this->lm->getProgramas($planPrograma[0]['COD_PRODUCTO']);
 			$datos['codProgramaHomologa'] = $planPrograma[0]['COD_PROGRAMA_HOMOLOGA'];
+			$datos['opeclave'] = $planPrograma[0]['OPECLAVE'];
+			$datos['opesubclave'] = $planPrograma[0]['OPESUBCLAVE'];
+			$datos['opeprograma'] = $planPrograma[0]['OPEPROGRAMA'];
+			$datos['opetarifa'] = $planPrograma[0]['OPETARIFA'];
 		}
 		
 		$vista = $this->load->view('linea/formulario', $datos, true);
@@ -142,12 +150,20 @@ class Linea extends CI_Controller{
 			//Si el tipo de acción es guardar
 			if ($tipoAccion == 1){
 				//Se guarda la información del programa asociado al plan
-				$data = $this->lm->savePlanPrograma($codPlan,$codPrograma,$codEstado,$rutaCI,'',$codProgramHmgl);
+				$data = $this->lm->savePlanPrograma($codPlan,$codPrograma,$codEstado,$rutaCI,'',$codProgramHmgl, 
+				$this->input->post("cuenta"), 
+				$this->input->post("sub_cuenta"),
+				$this->input->post("programa"),
+				$this->input->post("tarifa"));
 			//Si el tipo de acción es actualizar	
 			} else {
 				$codPlanPrograma = $this->input->post("txtCodPlanPrograma");
 				//Se guarda la información del programa asociado al plan
-				$data = $this->lm->updatePlanPrograma($codPlanPrograma,$codPlan,$codPrograma,$codEstado,$rutaCI,'',$codProgramHmgl);
+				$data = $this->lm->updatePlanPrograma($codPlanPrograma,$codPlan,$codPrograma,$codEstado,$rutaCI,'',$codProgramHmgl, 
+				$this->input->post("cuenta"), 
+				$this->input->post("sub_cuenta"),
+				$this->input->post("programa"),
+				$this->input->post("tarifa"));
 			}
 		} else {
 			$data['ret']    = $ret;

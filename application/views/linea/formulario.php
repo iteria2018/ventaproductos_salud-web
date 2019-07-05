@@ -18,9 +18,9 @@
 				</select>
 			</div>
 			<div class="col-sm-6">
-				<label class="obligatorio">Programa</label>
+				<label class="obligatorio">Producto</label>
 				<select id="cmbPrograma" name="cmbPrograma" class="form-control lista-vd" <?php if($tipoAccion != 1) echo 'readonly'; ?> >
-				    <option value="">Seleccione programa</option>
+				    <option value="">Seleccione producto</option>
 					<?php for ($i = 0; $i < count($programas); $i++): ?>
 						<option value="<?php echo $programas[$i]['COD_PROGRAMA']; ?>" <?php if (isset($planPrograma[0]['COD_PROGRAMA'])): echo $res = ($planPrograma[0]['COD_PROGRAMA'] == $programas[$i]['COD_PROGRAMA']) ? "selected" : ""; endif; ?>>
 							<?php echo $programas[$i]['DES_PROGRAMA']; ?>
@@ -75,7 +75,32 @@
 				</div>
 			</div>			
 		</div>
-		
+		<div class="row">
+			<div class="col-sm-3">
+				<label >Cuenta</label>
+				<div>
+					<input class="form-control campo-vd" id="cuenta" name="cuenta" type="text" max-length="100" value="<?php echo $opeclave; ?>">				
+				</div>
+			</div>	
+			<div class="col-sm-3">
+				<label >Sub-cuenta</label>
+				<div>
+					<input class="form-control campo-vd" id="sub_cuenta" name="sub_cuenta" type="text" max-length="100" value="<?php echo $opesubclave; ?>">				
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<label >Programa</label>
+				<div>
+					<input class="form-control campo-vd" id="programa" name="programa" type="text" max-length="100" value="<?php echo $opeprograma; ?>">				
+				</div>
+			</div>	
+			<div class="col-sm-3">
+				<label >Tarifa</label>
+				<div>
+					<input class="form-control campo-vd" id="tarifa" name="tarifa" type="text" max-length="100" value="<?php echo $opetarifa; ?>">				
+				</div>
+			</div>
+		</div>
 	</div>
 </fieldset>
 </form>

@@ -418,6 +418,28 @@ class Solicitud_model extends CI_Model{
         return $query->row();        
     } 
 
+    public function getDatosProgramas($codAfiliacion){
+        $query = ":curs_datos := VDIR_PACK_CONSULTA_SOLICITUD.fnGetDatosProgramas(".$codAfiliacion.")";          
+        $data = $this->Utilidades_model->getDataRefCursor($query); 
+
+        if (count($data) > 0) {
+            return $data;
+        }else{
+            return array();
+        }    
+    }
+
+    public function getBenexPrograma($codAfiliacion,$programa){
+        $query = ":curs_datos := VDIR_PACK_CONSULTA_SOLICITUD.fnGetBenexPrograma(".$codAfiliacion.",".$programa.")";          
+        $data = $this->Utilidades_model->getDataRefCursor($query); 
+
+        if (count($data) > 0) {
+            return $data;
+        }else{
+            return array();
+        }    
+    }
+
 }
 
 ?>

@@ -123,7 +123,12 @@ class Solicitud extends CI_Controller{
 		}
 		
 		$datos['contratante']   = $this->sm->getDatosContratante($codAfiliacion);
-		$datos['beneficiario']  = $this->sm->getDatosBeneficiarios($codAfiliacion);
+		$arrayProgramas = $this->sm->getDatosProgramas($codAfiliacion);
+		foreach ($arrayProgramas as $key => $value) {										
+			$bene = $this->sm->getBenexPrograma($codAfiliacion, $value['COD_PROGRAMA']);
+			$arrayProgramas[$key]['BENEFICIARIOS'] = $bene;						
+		}
+		$datos['beneficiarios']  = $arrayProgramas;
 		$datos['bitacora']      = $this->sm->getBitacoraSolicitud($codAfiliacion);	
 
 		$vista = $this->load->view('solicitud/formularioGestionSolicitud', $datos, true);

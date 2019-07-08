@@ -153,11 +153,24 @@ CREATE OR REPLACE PACKAGE VDIR_PACK_CONSULTA_SOLICITUD AS
 	  	inu_codUsuario      IN VDIR_COLA_SOLICITUD.COD_USUARIO%TYPE
     )
 	RETURN NUMBER; 
+	
+	FUNCTION fnGetDatosProgramas
+    (
+	    inu_codAfiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE
+    )
+	RETURN type_cursor;
+	
+	FUNCTION fnGetBenexPrograma
+    (
+	    inu_codAfiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE,
+	    inu_codprograma IN VDIR_PROGRAMA.COD_PROGRAMA%TYPE
+    )
+	RETURN type_cursor;
 	  
 END VDIR_PACK_CONSULTA_SOLICITUD;
 /
 
-/*<TOAD_FILE_CHUNK>*/
+          /*<TOAD_FILE_CHUNK>*/
 CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 /* ---------------------------------------------------------------------
  Copyright  Tecnolog?a Inform?tica Coomeva - Colombia
@@ -1063,6 +1076,135 @@ CREATE OR REPLACE PACKAGE BODY VDIR_PACK_CONSULTA_SOLICITUD AS
 		RETURN lnu_codAfiliacion;
 	 
 	END fnGetValidaSolicitudEnGestion;	
+	
+	FUNCTION fnGetDatosProgramas
+    (
+	    inu_codAfiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE
+    )
+	RETURN type_cursor IS
+	
+	/* ---------------------------------------------------------------------
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
+	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
+	 Caso de Uso : 
+	 Descripci?n : Retorna los datos del beneficiario por afiliaci?n
+	 ----------------------------------------------------------------------
+	 Autor : jors.castro@iteria.com
+	 Fecha : 05-07-2019  
+	 ----------------------------------------------------------------------
+	 Par?metros :       Descripci?n:
+	 inu_codAfiliacion   C?digo de la afiliaci?n
+	 ----------------------------------------------------------------------
+	 Historia de Modificaciones
+	 ----------------------------------------------------------------------
+	 Fecha Autor Modificaci?n
+	 ----------------------------------------------------------------- */
+	 
+		ltc_datos type_cursor;
+	
+	BEGIN 
+	 
+		  OPEN ltc_datos FOR
+	    SELECT 
+            bp.COD_PROGRAMA,            
+            PP.CUENTA,
+            PP.PROGRAMA,
+            PP.SUB_CUENTA,
+            PP.TARIFA
+		  FROM VDIR_BENEFICIARIO_PROGRAMA bp,
+               VDIR_TARIFA vt,
+               VDIR_PLAN_PROGRAMA PP
+	     WHERE bp.cod_afiliacion = inu_codAfiliacion
+         AND   bp.COD_TARIFA = vt.COD_TARIFA
+         AND   vt.COD_PLAN_PROGRAMA = PP.COD_PLAN_PROGRAMA
+         group by bp.COD_PROGRAMA,PP.CUENTA,PP.PROGRAMA,PP.SUB_CUENTA,PP.TARIFA;
+		   
+		RETURN ltc_datos;
+	 
+	END fnGetDatosProgramas;
+	
+	FUNCTION fnGetBenexPrograma
+    (
+	    inu_codAfiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE,
+	    inu_codprograma IN VDIR_PROGRAMA.COD_PROGRAMA%TYPE
+    )
+	RETURN type_cursor IS
+	
+	/* ---------------------------------------------------------------------
+	 Copyright   : Tecnolog?a Inform?tica Coomeva - Colombia
+	 Package     : VDIR_PACK_CONSULTA_SOLICITUD
+	 Caso de Uso : 
+	 Descripci?n : Retorna los datos del beneficiario por afiliaci?n
+	 ----------------------------------------------------------------------
+	 Autor : jors.castro@iteria.com
+	 Fecha : 05-07-2019  
+	 ----------------------------------------------------------------------
+	 Par?metros :       Descripci?n:
+	 inu_codAfiliacion   C?digo de la afiliaci?n
+	 inu_codprograma    Codigo programa
+	 ----------------------------------------------------------------------
+	 Historia de Modificaciones
+	 ----------------------------------------------------------------------
+	 Fecha Autor Modificaci?n
+	 ----------------------------------------------------------------- */
+	 
+		ltc_datos type_cursor;
+	
+	BEGIN 
+	 
+		  OPEN ltc_datos FOR
+	    SELECT vdpa.abr_parentesco parentesco,
+                TO_CHAR(afil.fecha_creacion, 'yyyy-mm-dd') fecha_radicacion,
+                pers.apellido_1,
+                pers.apellido_2,
+                pers.nombre_1,
+                pers.nombre_2,
+                sexo.des_abr genero,
+                tiid.des_abr tipo_identificacion,
+                pers.numero_identificacion,
+                TO_CHAR(pers.fecha_nacimiento, 'yyyy-mm-dd') fecha_nacimiento,
+                (SELECT pais.abr_pais
+                   FROM VDIR_PAIS         pais,
+                        VDIR_DEPARTAMENTO depa
+                  WHERE pais.cod_pais         = depa.cod_pais
+                    AND depa.cod_departamento = muni.cod_departamento) nacionalidad,
+                esci.abr_estado_civil,
+                veps.des_eps,                                                                                                 			
+				VDIR_PACK_CONSULTA_SOLICITUD.fnGetTipoCompras(afil.cod_afiliacion, pers.cod_persona,vusu.cod_plan) tipo_venta,														
+				pers.cod_persona,
+                afil.cod_afiliacion,
+                pers.cod_sexo,
+                TRUNC(MONTHS_BETWEEN(SYSDATE,pers.fecha_nacimiento)/12) edad,
+				VDIR_PACK_ENCUESTAS.fnGetValidaEncuesta(afil.cod_afiliacion, pers.cod_persona,'2') ind_encuesta_salud,
+				pers.COD_DIRECCION
+		  FROM VDIR_AFILIACION               afil,
+			   VDIR_CONTRATANTE_BENEFICIARIO cobe,
+			   VDIR_BENEFICIARIO_PROGRAMA    bp,
+			   VDIR_PERSONA                  pers,
+			   VDIR_SEXO                     sexo,
+			   VDIR_TIPO_IDENTIFICACION      tiid,
+			   VDIR_MUNICIPIO                muni,
+			   VDIR_ESTADO_CIVIL             esci,
+			   VDIR_EPS                      veps,
+			   VDIR_PARENTESCO               vdpa,
+			   VDIR_USUARIO                  vusu
+	     WHERE bp.COD_PROGRAMA              = inu_codprograma
+           AND bp.COD_AFILIACION            = inu_codAfiliacion
+           AND bp.COD_AFILIACION            = afil.COD_AFILIACION
+           AND bp.COD_BENEFICIARIO          = cobe.COD_BENEFICIARIO
+           AND bp.COD_AFILIACION            = cobe.COD_AFILIACION
+		   AND cobe.cod_beneficiario        = pers.cod_persona 
+		   AND pers.cod_sexo                = sexo.cod_sexo
+		   AND pers.cod_tipo_identificacion = tiid.cod_tipo_identificacion
+		   AND pers.cod_municipio           = muni.cod_municipio
+		   AND pers.cod_estado_civil        = esci.cod_estado_civil
+		   AND pers.cod_eps                 = veps.cod_eps
+		   AND cobe.cod_parentesco          = vdpa.cod_parentesco
+		   AND cobe.cod_contratante         = vusu.cod_persona;		   
+		   
+		RETURN ltc_datos;
+	 
+	END fnGetBenexPrograma;
 			
 END VDIR_PACK_CONSULTA_SOLICITUD;
 /

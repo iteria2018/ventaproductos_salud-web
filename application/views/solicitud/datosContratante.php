@@ -4,7 +4,7 @@
 	
 	<br>
 	<div class="container" id="divContratante">
-	<legend> Informaci&oacute;n domilcilio</legend>
+	<legend> Domilcilio De Facturación</legend>
 		<div class="row">			
 			<div class="col-sm-12 col-md-6 col-lg-2">
 			    <label>Tipo vía</label>
@@ -56,7 +56,7 @@
 				<input type="text" id="txtEmail" class="form-control campo-vd-sm" style="width:300px" value="<?php echo $contratante[0]['EMAIL'] ?>" disabled>
 			</div>	
 		</div><br>
-		<legend> Informaci&oacute;n del contratante </legend>
+		<legend> Responsable Pagador </legend>
 		<div class="row">
 			<div class="col-sm-12 col-md-6 col-lg-2">
 			    <label>Tipo Documento</label>
@@ -111,13 +111,19 @@
 			</div>
 		</div>				
 		<div class="row">															
-			<div class="col-sm-12 col-md-6 col-lg-3 text-center">
+			<div class="col-sm-12 col-md-4 col-lg-4 text-center">
 			    <label></label><br>
 				<button id="btnEncuestaSarlaf" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" class="btn btn-primary boton-vd btn-sm" type="button" >
 					<i class="fa fa-check-square-o" aria-hidden="true"></i> &nbsp; Encuesta SARLAFT
 				</button>				
 			</div>
-			<div class="col-sm-12 col-md-6 col-lg-2 text-center">
+			<div class="col-sm-12 col-md-4 col-lg-4 text-center">
+				<label></label><br>
+				<button codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" nombreBeneficiario="<?php echo $contratante[0]['NOMBRE_1'].' '.$contratante[0]['APELLIDO_1']; ?>" class="verArchivo btn btn-primary btn-sm" type="button" title="Ver Adjunto" style="padding: 0.40625rem 0.6rem;">
+					<i class="fa fa-file-image-o" aria-hidden="true"></i>&nbsp; Archivos Adjuntos
+				</button>
+			</div>  
+			<div class="col-sm-12 col-md-4 col-lg-4 text-center">
 				<label></label><br>
 				<button  id="btnInfoPago" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" class="btn btn-primary boton-vd btn-sm" type="button" >
 					<i class="fa fa-credit-card-alt" aria-hidden="true"></i> &nbsp; Informacion de pago

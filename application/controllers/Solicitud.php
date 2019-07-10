@@ -242,7 +242,7 @@ class Solicitud extends CI_Controller{
 			                      <td><a href="'.$result["PARAM70"].'"><img src="'.$result["PARAM62"].'"></a></td>
 			                    </tr>
 			                    <tr>
-			                      <td><a href="'.$result["PARAM74"].'"><img src="'.$result["PARAM63"].'"></a></td>
+			                      <td><img src="'.$result["PARAM63"].'"><a href="'.$result["PARAM73"].'"><img style="width: 120px; margin-left: 30px; height: 32px; margin-top: 0px;" src="'.$result["PARAM88"].'"></img</a><a href="'.$result["PARAM74"].'"><img style="width: 120px; height: 32px;" src="'.$result["PARAM89"].'"></img</a></td>
 			                      <td><a href="'.$result["PARAM71"].'"><img style="width: 310px;" src="'.$result["PARAM64"].'"></a><a href="'.$result["PARAM72"].'"><img style="width: 310px;" src="'.$result["PARAM75"].'"></a></td>			                      
 								</tr>
                  			 </tbody>

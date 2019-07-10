@@ -13,7 +13,7 @@ $(document).ready(function(){
         var idModal      = 'verCoberturas';
         var botonesModal = [{"id":"cerrarMd","label":"Aceptar","class":"btn-primary"}];
        
-        var url          =  global_url+'asset/public/uploadpdf/cobertura/Cobertura_'+codPrograma+'_'+codPlan+'.pdf'; 
+        var url          =  global_url+'asset/public/uploadPdf/Cobertura/Cobertura_'+codPrograma+'_'+codPlan+'.pdf'; 
         crearModal(idModal, 'Informaci\u00f3n de la Cobertura', '<iframe id="cobertura" src="'+url+'" width="100%" height="100%" style="border: 0; overflow: hidden; min-height: 500px;"></iframe>', botonesModal, false, 'modal-xl', '',true);
         $('#cerrarMd').click(function() {                          
             $('.modal').modal('hide');

@@ -418,6 +418,13 @@ function getColumnTable(tabla){
         {"column":"salud", "label":"Declaración de salud"},
         {"column":"nombreProducto", "label":"Producto"}
     ],
+    "beneficiarios_cotiza2" : [        
+        {"column":"tipoNroId", "label":"Identificación"},
+        {"column":"nombre_completo", "label":"Nombre beneficiario"},
+        {"column":"des_parentesco", "label":"Parantesco"},
+        {"column":"soporte_eps", "label":"Soporte EPS"},        
+        {"column":"nombreProducto", "label":"Producto"}
+    ],
     "realizar_pago" : [
         {"column":"producto", "label":"Producto"},
         {"column":"afiliados", "label":"Afiliados"},            

@@ -1510,8 +1510,7 @@ function llenarDatosTab(abr_tab){
     var programas                = '';
     var programa                 = '';
       
-    if (abr_tab == '_cot'){
-        columnas =  getColumnTable('beneficiarios_cotiza');
+    if (abr_tab == '_cot'){        
         acolums  = [{"width": "90px"},null,null,null,null,null,{"width": "246px"}];
     }
 
@@ -1696,8 +1695,11 @@ function llenarDatosTab(abr_tab){
         }
 
         if (mostrarEncuesta == 1){
+            columnas =  getColumnTable('beneficiarios_cotiza');
             botonEncuesta   += '<a style="margin-left: 60px;" title="Encuesta Salud" id="encuesta'+b+'" nombreBeneficiario="'+global_registro_basico[b].nombre_completo+'" codigoPersona="'+global_registro_basico[b].cod_persona+'" codigoAfiliacion="'+codigoAfiliacion+'" codigoSexo="'+global_registro_basico[b].tipoSexo+'" edad="'+global_registro_basico[b].edad+'" class="encuestaSalud btn-floating btn-lg blue lighten-1 mt-0 float-left"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>';
             global_registro_basico[b].salud =  botonEncuesta;    
+        }else{
+            columnas =  getColumnTable('beneficiarios_cotiza2');
         }
         
         global_registro_basico[b].soporte_eps = botonAdjuntos;          

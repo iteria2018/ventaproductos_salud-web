@@ -69,10 +69,11 @@
         <div class="page-header header-filter" style="background-image: url('<?php echo base_url()?>asset/public/images/inicio_login.jpg'); background-size: cover; background-position: top center;">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3 col-md-3 ml-auto mr-auto my-auto">
-                        <img src="<?php echo base_url()?>asset/public/images/logo_coomeva_mp.png" style="width:100%;height:20%">
+                    <div class="col-lg-4 ml-auto mr-auto my-auto">
+                        <img src="<?php echo base_url()?>asset/public/images/logo_coomeva_mp.png" style="width:26%; position:fixed">
+                        <div style="margin-bottom: 140px;"></div>
                     </div>
-                    <div class="col-lg-8 col-md-8 ml-auto mr-auto my-auto">                        
+                    <div class="col-lg-8 col-md-12 ml-auto mr-auto my-auto">                        
                         <div class="card card-login">
                            <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">

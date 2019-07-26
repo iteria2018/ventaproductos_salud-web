@@ -4,7 +4,7 @@
 	
 	<br>
 	<div class="container" id="divContratante">
-	<legend> Domilcilio De Facturación</legend>
+	<legend> Domicilio De Facturación</legend>
 		<div class="row">			
 			<div class="col-sm-12 col-md-6 col-lg-2">
 			    <label>Tipo vía</label>

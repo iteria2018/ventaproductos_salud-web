@@ -70,7 +70,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 ml-auto mr-auto my-auto">
-                        <img src="<?php echo base_url()?>asset/public/images/logo_coomeva_mp.png" style="width:26%; position:fixed">
+                        <img src="<?php echo base_url()?>asset/public/images/logo_coomeva_mp.png" style="position:fixed">
                         <div style="margin-bottom: 140px;"></div>
                     </div>
                     <div class="col-lg-8 col-md-12 ml-auto mr-auto my-auto">                        

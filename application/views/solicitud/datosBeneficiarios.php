@@ -110,12 +110,9 @@
                             <div class="col-sm-12 col-md-6 col-lg-2">
                                 <label>Tipo de compra</label>
                                 <?php $tiposVenta = explode(",", $beneficiario[$i]['TIPO_VENTA']); $totalTiposVenta = count($tiposVenta); ?>
+                                
                                 <?php if($totalTiposVenta > 1): ?>
-                                    <select multiple class="form-control form-control-sm campo-vd-sm" readonly style="height: 68px;">
-                                        <?php for ($j = 0; $j < $totalTiposVenta; $j++): ?>
-                                            <option><?php echo ($j + 1).'. '.$tiposVenta[$j];?></option>                                        
-                                        <?php endfor;?>                                                             
-                                    </select>
+                                    <input type="text" class="form-control form-control-sm campo-vd-sm" value="<?php echo $tiposVenta[0];?>" disabled>
                                 <?php else: ?>
                                     <input type="text" class="form-control form-control-sm campo-vd-sm" value="<?php echo $beneficiario[$i]['TIPO_VENTA'] ?>" disabled>
                                 <?php endif;?>

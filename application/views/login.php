@@ -131,7 +131,9 @@
                                         <a class="" href="#" id="btn-restablecer">
                                             Olvido su clave?
                                         </a>
-                                        
+                                        <a href="#" id="btn-cambioClave" style="visibility:hidden">
+                                            Cambio clave
+                                        </a>      
                                                                                
                                     </div>
                                      <br>

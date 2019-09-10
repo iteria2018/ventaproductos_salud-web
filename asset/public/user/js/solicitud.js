@@ -39,13 +39,41 @@ $(document).ready(function(){
         solicitudGestion($(this).attr('codSolicitud'));        
     });
 
+    $(document.body).on('click', '#clienteExportarPdf', function(e) {
+        
+        exportarPdf(getParametro(90),14,2,'verSolicitud','nav-tabContent');
+
+            
+    });
+    $(document.body).on('click', '#saludExportarpdf', function(e) {
+
+        exportarPdf(getParametro(92),12,8,'modalConfirmarEncSalud','mdBody_modalConfirmarEncSalud');
+        
+    });
+    
+    $(document.body).on('click', '#sarlaftExportarPdf', function(e) {
+
+        exportarPdf(getParametro(93),12,8,'modalEncuestaSarlafDatos','mdBody_modalEncuestaSarlafDatos');
+        
+    }); 
+    
+    $(document.body).on('click', '.verContrato', function(e) {
+        var botonesModal = [{"id":"cerrarMd","label":"Aceptar","class":"btn-primary"}];
+        var idModal = 'verContratoSolicitud';
+        crearModal(idModal, 'Informaci\u00f3n del Contrato', '<iframe id="verContrato" src="'+e.currentTarget.dataset.url+'" width="100%" height="100%" style="border: 0; overflow: hidden; min-height: 500px;"></iframe>', botonesModal, false, 'modal-xl', '',true);
+                $('#cerrarMd').click(function() {                          
+                    $('#'+idModal).modal('hide');
+                });
+        
+        
+    }); 
 
     $(document.body).on('click', '.verArchivo', function(e) {   
         
         var codPersona         = $(this).attr('codPersona');
         var nombreBeneficiario = $(this).attr('nombreBeneficiario');
         var codAfiliacion      = $(this).attr('codAfiliacion');
-        var url                = './Gc_paso_3/verAdjuntarArchivos/'+codPersona+'/'+codAfiliacion; 
+        var url                = './Gc_paso_3/verAdjuntarArchivos/'+codPersona+'/'+codAfiliacion+'/1'; 
         var botonesModal       = [{"id":"cerrarAr","label":"Cerrar","class":"btn-primary"}];
         var idModal            = 'verAdjuntarArchivos';
         
@@ -76,6 +104,18 @@ $(document).ready(function(){
                     });
                 });
                 
+            });                        
+
+            $(this).contents().find('.docExportarPDF').on('click', function(e) {    
+                
+                var nombre = 'doc.pdf';
+                if (e.currentTarget.dataset.documento == 'Copia de afiliación a la EPS') {
+                    nombre = getParametro(95);
+                } else if(e.currentTarget.dataset.documento == 'Copia de documento de Identidad') {
+                    nombre = getParametro(94);
+                }
+                docExportarPdf(e.currentTarget.dataset.ruta,nombre);
+               
             });
     
         });    
@@ -89,6 +129,7 @@ $(document).ready(function(){
     
     $('#solGestiona TABLE').attr('id','solGestiona_table');
     aplicarDataTable('solGestiona_table');
+
 
 });
 
@@ -359,7 +400,7 @@ function getInfoPago(codAfiliacion) {
         data:parametrosObj,       
         success: function(resp){
             runLoading(false);
-            var mensajeRespuesta = '';
+            var mensajeRespuesta = '<div id="comprobantePago">';
             for (const key in resp) {
                 if (resp.hasOwnProperty(key)) {
                     const element = resp[key];
@@ -367,12 +408,25 @@ function getInfoPago(codAfiliacion) {
                     mensajeRespuesta += '<input type="text" id="txtDescripcion" class="form-control campo-vd-sm" value="  '+element+'" disabled>'        
                     mensajeRespuesta += '</div>';
                 }
-            }
-            
+            }            
+            mensajeRespuesta += '</div><button id="comprobantePdf" class="btn btn-default" data-html2canvas-ignore>Descargar PDF</button>';
             crearModal(idModal, 'Datos de la transacción:', mensajeRespuesta, botonesModal, false, '', '');
             $('#cerrarInfoPago').click(function(){
                 $('#'+idModal).modal('hide');
+            });   
+            //Funcion para descargar pdf por medio de un pantallazo de un elemento
+            $('#comprobantePdf').click(function(){            
+                
+                //Agrego un atributo al boton para que no se visualice en el PDF
+                $('#cerrarInfoPago').attr("data-html2canvas-ignore",true);
+
+                //parametros exportarPdf() 1.Nombre archivo 2.ajustes en X 3.Ajustes en Y 4.nombre componente con scroll 5.nombre componente pantallazo
+
+                exportarPdf(getParametro(91),4,16,'modalInfoPago','modalInfoPago')
+                
             });
+            
+            
         },
         error: function(resp) {
             runLoading(false);
@@ -504,5 +558,40 @@ function solicitudGestion(codSolicitud){
                 $('#'+idModal).modal('hide');
             });
         }
+    });
+}
+
+function exportarPdf(nombrePDF,x,y,scroll,component){
+    //parametros exportarPdf() 1.Nombre archivo 2.ajustes en X 3.Ajustes en Y 4.nombre componente con scroll 5.nombre componente pantallazo
+    runLoading(true);
+    let altoventana = $(window).height();
+    let anchoventana = $(window).width()
+    let scrollPadreY = $(window).scrollTop();
+    let scrollHijoY = $("#"+scroll).scrollTop();                
+
+    // //Capturo la posicion del scroll de la pantalla principal 
+    var posicionY = (scrollHijoY-(scrollHijoY*2))+(altoventana/y)+scrollPadreY;
+    var posicionX = anchoventana/x;                                   
+
+    //Capturo la imagen del elemento
+    html2canvas($("#"+component)[0], { y:posicionY, x:posicionX}).then(canvas => {
+
+            
+            //Returns the image data URL, parameter: image format and clarity (0-1)
+            var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+            //Default vertical direction, size ponits, format a4[595.28,841.89]
+            var pdf = new jsPDF('', 'pt', [canvas.width, canvas.height]);
+
+            //Two parameters after addImage control the size of the added image, where the page height is compressed according to the width-height ratio column of a4 paper.
+            pdf.addImage(pageData,0,0,canvas.width,canvas.height);
+            // if(canvas.height > 600){ // I noticed 365 was the height of my page but for your landscape page it must be lower depending on your unit (pt, or mm or cm etc)
+            //     pdf.addPage();
+            //     pdf.addImage(pageData,0,-600,canvas.width,canvas.height);
+            // }
+            //Descarga
+            pdf.save(nombrePDF);
+
+            runLoading(false);
     });
 }

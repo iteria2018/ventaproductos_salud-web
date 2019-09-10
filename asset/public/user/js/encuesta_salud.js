@@ -249,7 +249,7 @@ function getEncuestaSaludDatos(edad,codigo_sexo,codigo_beneficiario,codigo_afili
               data: {edad:edad,codigo_sexo:codigo_sexo,codigo_beneficiario:codigo_beneficiario,codigo_afiliacion:codigo_afiliacion},  
               success:function(data){
                 runLoading(false);
-	             	crearModal(idModal, 'Estado salud', data.encuestaSaludDilig, botonesModal, false, 'modal-xl', '',true);
+	             	crearModal(idModal, 'Estado salud', data.encuestaSaludDilig+'<button data-html2canvas-ignore class="btn btn-default" id="saludExportarpdf">Descargar PDF</button>', botonesModal, false, 'modal-xl', '',true);
 		            $('#cerrarMdEncSal').click(function() {
 		                $('#'+idModal).modal('toggle');		               
 		            });	
@@ -264,7 +264,7 @@ function getEncuestaSaludDatos(edad,codigo_sexo,codigo_beneficiario,codigo_afili
                     }else{                       
                        $(this).closest("div").next().addClass('d-none');
                     }
-                    console.log(" value ", value);
+                 
                     if(value == 56){
                         $("#pregunta_10").attr('style',"display:none");
                         $("#pregunta_10 > div").attr('style',"display:none");

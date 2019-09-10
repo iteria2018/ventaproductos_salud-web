@@ -16,5 +16,12 @@
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
          <?php $this->load->view('solicitud/tablaBitacora'); ?> 
     </div>
+    
+<!-- <form action="<?php echo base_url(); ?>Solicitud/exportarPdf" target="_blank">
+  <button type="submit" class="btn btn_primary" id="exportarpdf" onclick="exportarPdf()">Descargar PDF</button>
+</form> -->
+
+<button data-html2canvas-ignore class="btn btn-default" id="clienteExportarPdf">Descargar PDF</button>
+    
   
 </div>

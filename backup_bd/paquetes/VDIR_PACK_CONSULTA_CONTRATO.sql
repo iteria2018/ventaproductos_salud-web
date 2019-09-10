@@ -60,6 +60,13 @@ CREATE OR REPLACE PACKAGE SALUDMP.VDIR_PACK_CONSULTA_CONTRATO AS
 		inu_codPersona    IN VDIR_PERSONA_CONTRATO.COD_PERSONA%TYPE
     )
 	RETURN type_cursor;
+	
+	FUNCTION fnGetContrato
+    (      	
+		inu_codPrograma IN VDIR_PROGRAMA.COD_PROGRAMA%TYPE,
+        inu_codAfiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE
+    )
+	RETURN VARCHAR2;
 
 
 END VDIR_PACK_CONSULTA_CONTRATO;
@@ -500,7 +507,50 @@ FUNCTION fnGetValidaInclusion
     RETURN ltc_datos;
 
  END fnGetValidaInclusion;
-
+ 
+ FUNCTION fnGetContrato
+    (
+		inu_codPrograma IN VDIR_PROGRAMA.COD_PROGRAMA%TYPE,
+        inu_codAfiliacion IN VDIR_AFILIACION.COD_AFILIACION%TYPE
+    )
+	RETURN VARCHAR2 IS
+	/* ---------------------------------------------------------------------
+	 Copyright   : Tecnología Informática Coomeva - Colombia
+	 Package     : VDIR_PACK_CONSULTA_CONTRATO
+	 Caso de Uso : 
+	 Descripción : Retorna contrato
+	 ----------------------------------------------------------------------
+	 Autor : jors.castro@iteria.com
+	 Fecha : 10/09/2019
+	 ----------------------------------------------------------------------
+	 Parámetros :     Descripción:
+	 inu_codAfiliacion       Código de la afiliación
+	 inu_codPrograma         Código del programa
+	 ----------------------------------------------------------------------
+	 Historia de Modificaciones
+	 ----------------------------------------------------------------------
+	 Fecha Autor Modificación
+	 ----------------------------------------------------------------- */
+	 
+	 CURSOR cu_contrato IS
+		SELECT pc.NUMERO_CONTRATO_ADOBE
+		  FROM VDIR_PERSONA_CONTRATO pc               
+	     WHERE PC.COD_AFILIACION = inu_codAfiliacion		   
+		   AND PC.COD_PROGRAMA   = inu_codPrograma
+		   group by	pc.NUMERO_CONTRATO_ADOBE;
+    
+    lvc_contrato VARCHAR2(1000);
+	
+BEGIN
+    BEGIN
+        OPEN cu_contrato; 
+		FETCH cu_contrato INTO lvc_contrato; 
+		CLOSE cu_contrato;
+		
+		RETURN lvc_contrato;
+    END;
+        
+END fnGetContrato;
 END VDIR_PACK_CONSULTA_CONTRATO;
 /
 

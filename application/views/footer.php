@@ -92,6 +92,12 @@
     <script src="<?php echo site_url() ?>asset/public/js/PassRequirements.js">
     </script>
 
+<script src="<?php echo site_url() ?>asset/public/js/jspdf.min.js">
+    </script>
+
+<script src="<?php echo site_url() ?>asset/public/js/htm2canvas.min.js">
+    </script>
+
     <script src="<?php echo site_url() ?>asset/public/user/js/header.js"></script>          
     
   </body>

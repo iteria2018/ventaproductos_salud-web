@@ -109,19 +109,19 @@
 		<div class="row">															
 			<div class="col-sm-12 col-md-4 col-lg-4 text-center">
 			    <label></label><br>
-				<button id="btnEncuestaSarlaf" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" class="btn btn-primary boton-vd btn-sm" type="button" >
+				<button data-html2canvas-ignore id="btnEncuestaSarlaf" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" class="btn btn-primary boton-vd btn-sm" type="button" >
 					<i class="fa fa-check-square-o" aria-hidden="true"></i> &nbsp; Encuesta SARLAFT
 				</button>				
 			</div>
 			<div class="col-sm-12 col-md-4 col-lg-4 text-center">
 				<label></label><br>
-				<button codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" nombreBeneficiario="<?php echo $contratante[0]['NOMBRE_1'].' '.$contratante[0]['APELLIDO_1']; ?>" class="verArchivo btn btn-primary btn-sm" type="button" title="Ver Adjunto" style="padding: 0.40625rem 0.6rem;">
+				<button data-html2canvas-ignore codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" nombreBeneficiario="<?php echo $contratante[0]['NOMBRE_1'].' '.$contratante[0]['APELLIDO_1']; ?>" class="verArchivo btn btn-primary btn-sm" type="button" title="Ver Adjunto" style="padding: 0.40625rem 0.6rem;">
 					<i class="fa fa-file-image-o" aria-hidden="true"></i>&nbsp; Archivos Adjuntos
 				</button>
 			</div>  
 			<div class="col-sm-12 col-md-4 col-lg-4 text-center">
 				<label></label><br>
-				<button  id="btnInfoPago" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" class="btn btn-primary boton-vd btn-sm" type="button" >
+				<button data-html2canvas-ignore  id="btnInfoPago" codAfiliacion="<?php echo $contratante[0]['COD_AFILIACION'] ?>" codPersona="<?php echo $contratante[0]['COD_PERSONA'] ?>" class="btn btn-primary boton-vd btn-sm" type="button" >
 					<i class="fa fa-credit-card-alt" aria-hidden="true"></i> &nbsp; Informacion de pago
 				</button>
 			</div>

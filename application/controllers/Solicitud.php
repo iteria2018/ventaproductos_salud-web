@@ -3,12 +3,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Solicitud extends CI_Controller{
 
+
 	public function __construct() {
 		parent::__construct();		
         $this->load->model('Gestion_compra_model');
         $this->load->model('Utilidades_model');	
         $this->load->model('Solicitud_model', 'sm', true);	 
-		$this->load->model('Linea_model', 'lm', true);         
+		$this->load->model('Linea_model', 'lm', true);     
+		$this->load->model('FirmaDigital_model', 'fdm', true);    
 	}
 	
 	/**
@@ -132,6 +134,7 @@ class Solicitud extends CI_Controller{
 		$datos['bitacora']      = $this->sm->getBitacoraSolicitud($codAfiliacion);	
 
 		$vista = $this->load->view('solicitud/formularioGestionSolicitud', $datos, true);
+		$this->session->set_userdata('htmPdf', $vista);
 		$data['vista'] = $vista;
 		$result = json_encode($data);
 		$this->output->set_content_type('application/json')->set_output($result);
@@ -279,4 +282,30 @@ class Solicitud extends CI_Controller{
 		$result = json_encode($data);
 		$this->output->set_content_type('application/json')->set_output($result);	
 	}
+
+	public function getContrato($programa, $afiliacion){
+		
+		$data['heading'] = '<center>No se encontró el contrato</center>';
+		$data['message'] = 'Error al intentar la descarga del contrato, por favor comunicarse con el administrador del sistema';
+		
+		$idContrato = $this->fdm->getNombreContrato($programa,$afiliacion)->DATOS_FIRMA;		
+		
+		if (!empty($idContrato)) {
+			
+			$respuesta = $this->fdm->getContratoFirmado($idContrato);
+			if($respuesta == "error"){
+				
+				$this->load->view('errors/html/error_general',$data);
+			}else{
+				echo $respuesta;
+			}
+		}else{
+			$data['message'] = $data['message'].'<br><p>No se encontro el contrato en la base de datos</p>';
+			$this->load->view('errors/html/error_general',$data);
+		}
+		
+		
+	}
+	
+
 }

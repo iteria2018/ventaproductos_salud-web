@@ -431,6 +431,13 @@ class Gestion_compra extends CI_Controller{
 		$result = json_encode($data);
 		$this->output->set_content_type('application/json')->set_output($result);
 	}
+
+	public function getParametro(){
+		$param = $this->input->post("parametro");
+		$data['parametro'] =$this->Utilidades_model->getParametro($param)->RESULTADO;
+		$result = json_encode($data);
+		$this->output->set_content_type('application/json')->set_output($result);
+	}
 	
 }
 

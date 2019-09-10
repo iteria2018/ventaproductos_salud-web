@@ -1276,6 +1276,49 @@
          }
    }
 
+
+//Exportar a pdf con la libreria DOMPDF
+//    public function exportarPdf($htmlVista='',$css,$hasta,$desde,$NumArchivo){
+//         $exito = false;
+//         try{
+//             if (strlen($htmlVista)>0) {
+//                 $html = $htmlVista;
+//             }else{
+//                 $html = $this->session->userdata('htmPdf');
+//             }
+//             if (strlen($hasta)>0) {
+//                 $html = substr($html,0,strripos($html,$hasta));
+//             }
+//             if (strlen($desde)>0) {
+//                 $html = substr($html,strpos($html,$desde)+strlen($desde),strlen($html));
+//             }	
+            
+//             $html = $css.$html;
+//             // print_r($css);
+//             $this->load->library('pdf');
+            
+//             // Load HTML content
+//             $this->dompdf->loadHtml($html);
+//             $this->dompdf->setPaper('A4', 'landscape');
+            
+//             // Render the HTML as PDF
+//             $this->dompdf->render();
+            
+//             // Output the generated PDF (1 = download and 0 = preview)
+//             $nomArchivo = $this->getParametro($NumArchivo)->RESULTADO;
+//             $download = $this->getParametro(91)->RESULTADO;
+//             $this->dompdf->stream($nomArchivo, array("Attachment"=>$download));		
+    
+//             //Limpio la variable session
+//             $this->session->set_userdata('htmPdf', '');
+
+//             $exito = true;
+//         } catch (Exception $e) {
+//             $exito = false;
+//         }
+//        return $exito;
+//    }
+
  }
 
 

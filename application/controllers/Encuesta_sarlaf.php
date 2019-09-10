@@ -141,7 +141,8 @@ class Encuesta_sarlaf extends CI_Controller{
 	  	 $codigo_afiliacion = $this->input->post("codigo_afiliacion");
 	  	 $codigo_beneficiario = $this->input->post("codigo_beneficiario");
 
-	 	 $data["encuestaSaludDilig"] = $this->Encuesta_sarlaf_model->getDataEncuestaSaludDatos($edad,$codigo_sexo,$codigo_afiliacion,$codigo_beneficiario); 
+		  $data["encuestaSaludDilig"] = $this->Encuesta_sarlaf_model->getDataEncuestaSaludDatos($edad,$codigo_sexo,$codigo_afiliacion,$codigo_beneficiario); 
+		  $this->session->set_userdata('htmPdf', $data["encuestaSaludDilig"]);
 	 	 $this->output->set_content_type('application/json')->set_output(json_encode($data));
 
 	}
@@ -207,6 +208,8 @@ class Encuesta_sarlaf extends CI_Controller{
        $this->output->set_content_type('application/json')->set_output(json_encode($formularioFinal));
 
   }
+
+  
 
 	
 }

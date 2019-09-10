@@ -326,7 +326,7 @@ function getEncuestaSarlafDatos(codigo_afiliacion,codigo_contratante){
               data: {codigo_afiliacion:codigo_afiliacion,codigo_contratante:codigo_contratante},  
               success:function(data){
                 	runLoading(false);
-	             	crearModal(idModal, 'Encuesta Sarlaf', data.encuestaSarlafDilig, botonesModal, false, 'modal-xl', '',true);
+	             	crearModal(idModal, 'Encuesta Sarlaf', data.encuestaSarlafDilig+'<button data-html2canvas-ignore id="sarlaftExportarPdf" class="btn btn-default">Descargar PDF</button>', botonesModal, false, 'modal-xl', '',true);
 		            $('#cerrarSarlafD').click(function() {
 		                $('#'+idModal).modal('toggle');		               
 		            });	

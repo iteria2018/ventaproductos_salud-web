@@ -54,7 +54,7 @@ class Gc_paso_3 extends CI_Controller{
 	 *  
 	 * @return html  Vista para adjuntar archivos
 	 */
-	public function verAdjuntarArchivos($codPersona,$codAfiliacion){
+	public function verAdjuntarArchivos($codPersona,$codAfiliacion,$tipo=0){
 		
 		$data = array();
 		$tamanoPermitido = $this->Utilidades_model->getParametro(16)->RESULTADO;
@@ -62,12 +62,14 @@ class Gc_paso_3 extends CI_Controller{
 		$data['arrayExtensiones']   = $this->Utilidades_model->getParametro(15)->RESULTADO;
 		$data['tamanoAdjunto']      = $tamanoPermitido != '' ? $tamanoPermitido.'MB' : '';
 		$data['datosArchivos']      = $datosArchivos;
+		$data['tipo']				= $tipo;
 		
         if (empty($datosArchivos)){
 		    $this->load->view('adjuntar_archivos', $data);
 		} else {
 		    $this->load->view('ver_adjuntos', $data);
-		}
+		}		
+		
         
 	}
 

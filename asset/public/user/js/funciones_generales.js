@@ -1301,3 +1301,70 @@ function carrarModal(idModal){
 function getParam(param){
   return new URLSearchParams(window.location.search).get(param);
 }
+
+
+
+// Funciones para exportar a pdf una imagen
+function getImgFromUrl(logo_url, callback) {
+
+    var img = new Image();
+    img.src = logo_url;
+    
+    img.onload = function (e) {        
+        callback(img);
+    };
+    img.onerror = function(e) {
+        var botonesModal  = [{"id":"cerrarMsgSolicitud","label":"Aceptar","class":"btn-primary"}];
+        crearModal('verError', 'Confirmaci\u00f3n', 'No se puede cargar la imagen. Verificar imagen', botonesModal, false, '', '');
+            $('#cerrarMsgSolicitud').click(function(){
+                $('#verError').modal('hide');
+            });
+    };
+   
+} 
+
+function generatePDF(img,documento){
+    try{
+        var options = {orientation: 'p', unit: 'mm', format: 'A4'};
+        var doc = new jsPDF(options);    
+        doc.addImage(img, 'JPEG', 10, 40, 180, 140);
+        let x = 80;
+        let xfinal = x-(documento.length/2);
+        doc.text(xfinal, 20, documento);
+        doc.save(documento+'.pdf');
+    }catch(exception){
+        alert("Error al descargar PDF");
+        console.log(exception);
+    }
+    
+}
+
+
+function docExportarPdf(ruta,doc){
+    var logo_url = pointToUrl()+ruta;
+    getImgFromUrl(logo_url, function (img) {
+    generatePDF(img,doc);
+    });    
+
+}
+
+function getParametro(parametro) {
+    var paramsObj             = {};
+    paramsObj['parametro'] = parametro;    
+    
+    var r = $.ajax({
+        url: "Gestion_compra/getParametro",  
+        type: "POST",  
+        dataType: "json",
+        data: paramsObj,   
+        async: false, 
+        success: function(resp){
+            console.log("ok",resp);            
+        },
+        error: function(resp) {
+          alert("error PARAMETRO NO ENCONTRADO");
+        }
+    });
+
+    return r.responseJSON.parametro;
+}

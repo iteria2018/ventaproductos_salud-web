@@ -165,28 +165,39 @@ class FirmaDigital_model extends CI_Model{
 
         $urlAdobeSign   = $this->Utilidades_model->getParametro(11)->RESULTADO;
         $rutaLocal      = $this->Utilidades_model->getParametro(10)->RESULTADO;
+        $pdf      = $this->Utilidades_model->getParametro(96)->RESULTADO;
         $accessToken    = $this->getAccessToken();
         $urlLocal       = $_SERVER['DOCUMENT_ROOT'].$rutaLocal;
         $nombreContrato = $idContrato.'.pdf';
-        $urlApiEchoSign = $urlAdobeSign.'/api/rest/v5/agreements/'.$idContrato.'/combinedDocument';
+        $urlApiEchoSign = $urlAdobeSign.'/api/rest/v5/agreements/'.$idContrato.'/combinedDocument';        
         $header         = array('Authorization: Bearer '.$accessToken,
                                 'Content-Type: application/json;charset=UTF-8');
 
         $ch = curl_init($urlApiEchoSign);
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER,  $header);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLINFO_HEADER_OUT, true);
         
         $response = curl_exec($ch);
-        curl_close($ch);
+
+        if (!curl_errno($ch)) {
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        }
+
+        curl_close($ch);        
         
-        file_put_contents($urlLocal.$nombreContrato, $response);
-    
-        header('Content-type: application/pdf');
-        header('Content-Disposition: inline; filename="'.$nombreContrato.'"');
-        echo $response;
+        if ($http_code == 200) {
+            file_put_contents($urlLocal.$nombreContrato, $response);    
+            header('Content-type: application/pdf');
+            header('Content-Disposition: inline; filename="'.$pdf.'"');
+            return $response;
+        } else {
+            return "error";
+        }
+        
+        
 
     }
 
@@ -287,6 +298,25 @@ class FirmaDigital_model extends CI_Model{
         curl_close($ch);
 
         return $response;
+    }
+
+    /**
+     * Retorna una cadena con los datos JSON para firmar el contrato
+     * 
+     * @author: Jors Castro
+     * @date  : 09/10/2019
+     * 
+     * @param integer  $codAfiliacion  Código de afiliacion
+     * @param integer  $codPrograma Código del programa
+     * 
+     * @return string Ccontrato
+     */
+    public function getNombreContrato($codPrograma,$codAfiliacion){
+
+        $query = "SELECT VDIR_PACK_CONSULTA_CONTRATO.fnGetContrato(?,?) AS datos_firma FROM DUAL";
+        $consulta = $this->db->query($query,array('param1' => $codPrograma,'param2' => $codAfiliacion));        
+        return $consulta->row();
+
     }
 
 

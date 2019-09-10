@@ -21,6 +21,9 @@
                     <button class="verAdjunto btn btn-primary btn-sm" type="button" ruta="<?php echo $datosArchivos[$i]['RUTA']; ?>" title="Ver Adjunto" style="padding: 0.40625rem 0.6rem;">
                         <i class="fa fa-file-image-o" aria-hidden="true"></i>
                     </button>
+                    <button class="docExportarPDF btn btn-primary btn-sm" type="button" title="Descargar" data-ruta="<?php echo $datosArchivos[$i]['RUTA'] ?>" data-documento="<?php echo $datosArchivos[$i]['DES_FILE']; ?>" style="padding: 0.40625rem 0.6rem;">
+                        Descargar PDF
+                    </button>
                 </div>
            
               <?php endfor;?>

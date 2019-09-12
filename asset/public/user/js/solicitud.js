@@ -41,7 +41,7 @@ $(document).ready(function(){
 
     $(document.body).on('click', '#clienteExportarPdf', function(e) {
         
-        exportarPdf(getParametro(90),14,2,'verSolicitud','nav-tabContent');
+        exportarPdf(getParametro(90),14,4,'verSolicitud','nav-tabContent');
 
             
     });

@@ -30,9 +30,11 @@
 
         <div class="row">
             <div class="col-12 footer-copyright text-center py-3 bg-secondary text-white">
+            <img src="<?php echo base_url()?>asset/public/images/vigilado Supersalud.png" style="width:120px;height:90px;position: absolute;top: -22px;margin-left:auto;margin-right:auto;right:0;left:0;"> <br>
               Copyright ©
                 <?php echo date('Y'); ?> COOMEVA MEDICINA PREPAGADA S.A
             , Todos los derechos reservados.
+            
             </div>
         </div>
       

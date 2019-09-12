@@ -70,8 +70,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 ml-auto mr-auto my-auto">
-                        <img src="<?php echo base_url()?>asset/public/images/logo_coomeva_mp.png" style="position:fixed">
-                        <div style="margin-bottom: 140px;"></div>
+                        <img src="<?php echo base_url()?>asset/public/images/logo_coomeva_mp.png" style="width:20rem;">                        
                     </div>
                     <div class="col-lg-8 col-md-12 ml-auto mr-auto my-auto">                        
                         <div class="card card-login">
@@ -158,7 +157,9 @@
            
             <footer class="footer">
                 <div class="container">
+                <img src="<?php echo base_url()?>asset/public/images/vigilado Supersalud.png" style="width:180px;position: absolute;bottom: 1px;margin-left:auto;margin-right:auto;right:0;left:0;"> 
                     <div class="copyright center">
+                    
                     Copyright ©
                     <?php echo date('Y'); ?> COOMEVA MEDICINA PREPAGADA S.A
                     , Todos los derechos reservados.

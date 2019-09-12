@@ -617,22 +617,11 @@ function agregarBeneficiario(p_idx){
     //Aplicar validacion por edad del beneficiario
     $('#fechaNacimiento_'+idx).change(function(){        
         var fechaSel = $(this).val();
-        var idModalFch = 'modalValidFecha';
-        var botonesFch = [{"id":"aceptarFch","label":"Aceptar","class":"btn-primary"}];
-        var vEdadAdulto = 45;
         var vMayoriaEdad = 18;
-        var vEdadMenor = 0;
         
         if(fechaSel != ''){
             var edadPersona = validaEdad(fechaSel);
-            if(edadPersona > vEdadAdulto || edadPersona < vEdadMenor){
-                crearModal(idModalFch, 'Confirmaci&oacute;n', 'Edad no permitida para realizar la solicitud, por favor comun&iacute;quese con un asesor.', botonesFch, false, '', '');
-                $(this).val('');
-                $('#aceptarFch').click(function(){
-                    $('#'+idModalFch).modal('toggle');
-                });
-            }
-
+            
             if(edadPersona < vMayoriaEdad){
                 $('#telefono_'+idx).val($('#telefono_ctr').val());
                 $('#celular_'+idx).val($('#celular_ctr').val());
@@ -1072,7 +1061,7 @@ function pintarTablasBenefiProd(abr_tab){
                 }
     
                 beneficiariox['tarifa'] = objBenfi[llaveBenefi]['tarifa'];
-                beneficiariox['aplica'] = '<input type="checkbox" id="ch_'+producto['COD_PRODUCTO']+'_'+programa['cod_programa']+'_'+beneficiariox['cod_persona']+'" data-producto="'+producto['COD_PRODUCTO']+'" data-programa="'+programa['cod_programa']+'" data-tipodoc="'+beneficiariox['tipoDocumento']+'" data-numdoc="'+beneficiariox['numeroDocumento']+'" '+checkedBenefi+' onChange="validBenefiProd(this);">';
+                beneficiariox['aplica'] = '<input type="checkbox" id="ch_'+producto['COD_PRODUCTO']+'_'+programa['cod_programa']+'_'+beneficiariox['cod_persona']+'" data-producto="'+producto['COD_PRODUCTO']+'" data-programa="'+programa['cod_programa']+'" data-tipodoc="'+beneficiariox['tipoDocumento']+'" data-numdoc="'+beneficiariox['numeroDocumento']+'" data-edad="'+beneficiariox['edad']+'" '+checkedBenefi+' onChange="validBenefiProd(this);">';
                 auxDatos.push(beneficiariox);
             }
 
@@ -1092,10 +1081,12 @@ function validBenefiProd(campo){
     var programa = $('#'+idCampo).attr('data-programa');
     var tipoDoc = $('#'+idCampo).attr('data-tipodoc');
     var numDoc = $('#'+idCampo).attr('data-numdoc');
+    var edadben = $('#'+idCampo).attr('data-edad');
     var llaveBenefi = tipoDoc+'_'+numDoc;
     var chMarcado = 0;
     var idModal = 'modalValidBenefi';
     var botonesModal = [{"id":"cerrarMr","label":"Aceptar","class":"btn-primary"}];
+    
 
     if($('#'+idCampo).is(':checked')){
         chMarcado = 1;
@@ -1117,48 +1108,63 @@ function validBenefiProd(campo){
             }            
         }
     }else{
-        aplicaBenefiValid(producto, programa, tipoDoc, numDoc, function(objAplica){
-           
-            var msj = '';    
-            if(objAplica['disponibleVd'] != -1 || objAplica['disponibleAfilmed'] != -1){
-                msj = 'El beneficiario '+ global_aux_prodbenefi[producto][programa][llaveBenefi]['nombre_completo'] +', ya se encuentra afiliado a este u otro producto.';
-            }else{
-                if(objAplica['disponibleUbicacion'] != -1){
-                    if(objAplica['disponibleUbicacion']['aprobado'] != 'S'){
-                        //msj = 'El producto seleccionado no cuenta con cobertura en la ubicaci&oacute;n ingresada';
-                        msj = objAplica['disponibleUbicacion']['mensaje'];
+        if (permiteEdad(programa, edadben)){
+            aplicaBenefiValid(producto, programa, tipoDoc, numDoc, function(objAplica){
+            
+                var msj = '';    
+                if(objAplica['disponibleVd'] != -1 || objAplica['disponibleAfilmed'] != -1){
+                    msj = 'El beneficiario '+ global_aux_prodbenefi[producto][programa][llaveBenefi]['nombre_completo'] +', ya se encuentra afiliado a este u otro producto.';
+                }else{
+                    if(objAplica['disponibleUbicacion'] != -1){
+                        if(objAplica['disponibleUbicacion']['aprobado'] != 'S'){
+                            //msj = 'El producto seleccionado no cuenta con cobertura en la ubicaci&oacute;n ingresada';
+                            msj = objAplica['disponibleUbicacion']['mensaje'];
+                        }else if(producto == 3){
+                            alertify.notify('La ubicacion ingresada si tiene cobertura', 'success', 5, null);
+                        }
                     }else if(producto == 3){
                         alertify.notify('La ubicacion ingresada si tiene cobertura', 'success', 5, null);
                     }
-                }else if(producto == 3){
-                    alertify.notify('La ubicacion ingresada si tiene cobertura', 'success', 5, null);
                 }
-            }
 
-            if(msj != ''){
-                $('#'+idCampo).prop('checked', false);                    
-                crearModal(idModal, 'Confirmaci\u00f3n', msj, botonesModal, false, '', '');
-                $('#cerrarMr').click(function(){
-                    $('#'+idModal).modal('hide');
-                });
-            }else{
-                if(global_aux_prodbenefi[producto] != undefined){
-                    if(global_aux_prodbenefi[producto][programa] != undefined){
-                        if(global_aux_prodbenefi[producto][programa][llaveBenefi] != undefined){
-                            global_aux_prodbenefi[producto][programa][llaveBenefi]['marcaAplica'] = chMarcado;
-                            registrarBenefiPrograma(producto, programa, tipoDoc, numDoc, chMarcado, idCampo, function(nadaTarifa){
-                                if(nadaTarifa){
-                                    $('.add-prodcar').removeClass('disabled-add-prodcar');
-                                }else{ //Se quita la seleccion del programa
-                                    $('#'+idCampo).prop('checked', false);
-                                    global_aux_prodbenefi[producto][programa][llaveBenefi]['marcaAplica'] = 0;      
-                                }                                
-                            });                            
-                        }
-                    }                    
+                if(msj != ''){
+                    $('#'+idCampo).prop('checked', false);                    
+                    crearModal(idModal, 'Confirmaci\u00f3n', msj, botonesModal, false, '', '');
+                    $('#cerrarMr').click(function(){
+                        $('#'+idModal).modal('hide');
+                    });
+                }else{
+                    if(global_aux_prodbenefi[producto] != undefined){
+                        if(global_aux_prodbenefi[producto][programa] != undefined){
+                            if(global_aux_prodbenefi[producto][programa][llaveBenefi] != undefined){
+                                global_aux_prodbenefi[producto][programa][llaveBenefi]['marcaAplica'] = chMarcado;
+                                registrarBenefiPrograma(producto, programa, tipoDoc, numDoc, chMarcado, idCampo, function(nadaTarifa){
+                                    if(nadaTarifa){
+                                        $('.add-prodcar').removeClass('disabled-add-prodcar');
+                                    }else{ //Se quita la seleccion del programa
+                                        $('#'+idCampo).prop('checked', false);
+                                        global_aux_prodbenefi[producto][programa][llaveBenefi]['marcaAplica'] = 0;      
+                                    }                                
+                                });                            
+                            }
+                        }                    
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            $('#'+idCampo).prop('checked', false);
+                    idTablaContact = "idTablaContact";
+                    columnasContact = getColumnTable('Contactos'); 
+                    datosContactos = JSON.parse(getParametro(98));
+                    mensaje = "<p>El beneficiario no cumple con la edad mínima o máxima para acceder a la compra del programa ";
+                    mensaje += "seleccionado.</p><br>Por favor comunicarse con alguna de nuestras lineas de atención: <br>";
+                    crearModal(idModal, 'Confirmaci\u00f3n', mensaje+"<div id='idDivContactos'></div>", botonesModal, false, '', '');
+                    tablaContact = createTable(idTablaContact, columnasContact, datosContactos.datos);
+                    $("#idDivContactos").html(tablaContact);
+                    $('#cerrarMr').click(function(){
+                        $('#'+idModal).modal('hide');
+                    });
+        }
     }
 }
 
@@ -2710,4 +2716,43 @@ function resultSubmitFileBenefi(idModal, success, msj){
     }else{
         alertify.notify('Fallo la operaci&oacute;n', 'error', 3, null);
     }   
+}
+
+
+//Valida rango de edades de acuerdo a lo parametrizado en base de datos
+function permiteEdad(programa, edad) {
+    //Obtengo el parametro 97 de la BD y lo convierto en JSON
+    var edadPermitida = JSON.parse(getParametro(97));
+    //Variable a retornar
+    var permitido = false;    
+
+    //Condiciono edades de cada uno de los programas
+    if (programa == 3) {
+        if (edad >= edadPermitida.edad_min_oroplus && edad <= edadPermitida.edad_max_oroplus ) {
+            permitido = true;
+        } 
+    } else if (programa == 4){
+        if (edad >= edadPermitida.edad_min_platajoven && edad <= edadPermitida.edad_max_platajoven ) {
+            permitido = true;
+        } 
+    } else if (programa == 5){
+        if (edad >= edadPermitida.edad_min_te && edad <= edadPermitida.edad_max_te ) {
+            permitido = true;
+        } 
+    } else if (programa == 6){
+        if (edad >= edadPermitida.edad_min_asociado && edad <= edadPermitida.edad_max_asociado ) {
+            permitido = true;
+        } 
+    } else if (programa == 1){
+        if (edad >= edadPermitida.edad_min_cem && edad <= edadPermitida.edad_max_cem ) {
+            permitido = true;
+        } 
+    } else if (programa == 2){       
+        if (edad >= edadPermitida.edad_min_sd && edad <= edadPermitida.edad_max_sd ) {
+            permitido = true;
+        } 
+    }
+
+    return permitido;
+    
 }

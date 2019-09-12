@@ -437,6 +437,12 @@ function getColumnTable(tabla){
         {"column":"telefono", "label":"Teléfono"},
         {"column":"correo", "label":"Correo electrónico"},
         {"column":"tarifaProducto", "label":"Tarifa mensual"}
+    ],
+    "Contactos" : [
+        {"column":"lugar", "label":"Lugar"},
+        {"column":"telefono", "label":"Número de Telefono"},
+        {"column":"lugar2", "label":"Lugar"},
+        {"column":"telefono2", "label":"Número de Telefono"}
     ]
   };
 
@@ -1359,7 +1365,7 @@ function getParametro(parametro) {
         data: paramsObj,   
         async: false, 
         success: function(resp){
-            console.log("ok",resp);            
+            return true;            
         },
         error: function(resp) {
           alert("error PARAMETRO NO ENCONTRADO");

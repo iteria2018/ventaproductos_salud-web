@@ -179,26 +179,26 @@ class FirmaDigital_model extends CI_Model{
         // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+
+        if (indProxy == 1){
+            curl_setopt($ch, CURLOPT_PROXY, proxyCurl);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, userPwdProxy);            
+        }
         
         $response = curl_exec($ch);
-
-        if (!curl_errno($ch)) {
-            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        }
-
-        curl_close($ch);        
+        $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         
-        if ($http_code == 200) {
+        if ($status != 200 && $status != 201) {
+            return "error";
+        }else{
             file_put_contents($urlLocal.$nombreContrato, $response);    
             header('Content-type: application/pdf');
             header('Content-Disposition: inline; filename="'.$pdf.'"');
             return $response;
-        } else {
-            return "error";
-        }
-        
-        
+        }    
 
+        curl_close($ch);                       
+        
     }
 
     /**

@@ -63,6 +63,18 @@
         <link href="<?php echo base_url()?>asset/public/css/demo.css" rel="stylesheet" type="text/css"/>
         <link href="<?php echo base_url()?>asset/public/user/css/styles_general.css" rel="stylesheet" type="text/css"/>
         <link href="<?php echo base_url()?>asset/public/css/jquerysctipttop.css" rel="stylesheet" type="text/css"/>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148877335-1"></script>
+
+    <script>
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-148877335-1');
+
+    </script>
     </head>
     <!--<body class="login-page sidebar-collapse" oncontextmenu="return false" ondragstart="return false" onselectstart="return false"> -->
     <body class="login-page sidebar-collapse">

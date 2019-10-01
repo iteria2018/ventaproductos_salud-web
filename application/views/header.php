@@ -97,6 +97,19 @@
       const global_roles = <?php echo json_encode($codRol); ?>;
       const global_tiempoMaxInact = <?php echo  $this->Utilidades_model->getParametro(77)->RESULTADO?>;
   </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148877335-1"></script>
+
+    <script>
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-148877335-1');
+
+    </script>
+
 </head>
 
 <body class="login-page sidebar-collapse">
